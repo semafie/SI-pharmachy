@@ -1,22 +1,22 @@
 
 package repository;
 
-import entity.user;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
+import entity.supplier;
+import java.util.List;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.List;
 import util.Conn;
+import java.sql.Connection;
+import java.sql.Statement;
+import java.sql.PreparedStatement;
 
-public class userRepository implements Repository<user>{
-    private String tableName = user.tableName;
+public class supplierRepository implements Repository<supplier>{
+    private String tableName = supplier.tableName;
     @Override
-    public List<user> get() {
-        String sql = "Select * from "+ tableName+" where level = 2";
-        List<user> user = new ArrayList<>();
+    public List<supplier> get() {
+    String sql = "Select * from "+ tableName;
+        List<supplier> user = new ArrayList<>();
         try {
             Connection koneksi = (Connection)Conn.configDB();
             Statement stm = koneksi.createStatement();
@@ -31,9 +31,9 @@ public class userRepository implements Repository<user>{
     }
 
     @Override
-    public user get(Integer id) {
-    String sql = "select * from "+tableName+" where id = ?";
-        user us = new user();
+    public supplier get(Integer id) {
+        String sql = "select * from "+tableName+" where id = ?";
+        supplier us = new supplier();
         
         try {
             Connection koneksi = (Connection)Conn.configDB();
@@ -46,24 +46,19 @@ public class userRepository implements Repository<user>{
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return us;   
+        return us;
     }
 
     @Override
-    public boolean add(user us) {
-        String sql = "INSERT INTO "+tableName+"( `nama`, `username`, `password`, `email`, `jenis_kelamin`, `alamat`, `no_tlp`, `level`, `token`) VALUES(?,?,?,?,?,?,?,?,?)";
+    public boolean add(supplier us) {
+    String sql = "INSERT INTO "+tableName+"( `nama_supplier`, `no_tlp`, `alamat`) VALUES(?,?,?)";
         try {
             Connection koneksi = (Connection)Conn.configDB();
             PreparedStatement pst = koneksi.prepareStatement(sql);
             
-            pst.setString(1, us.getNama());
-            pst.setString(2, us.getUsername());
-            pst.setString(3, us.getPassword());
-            pst.setString(4, us.getEmail());
-            pst.setString(5, us.getJenis_kelamin());
-            pst.setString(6, us.getAlamat());
-            pst.setString(7, us.getNo_tlp());
-            pst.setInt(8, us.getLevel());
+            pst.setString(1, us.getNama_supplier());
+            pst.setString(2, us.getNo_tlp());
+            pst.setString(3, us.getNo_tlp());
             pst.execute();
             return  true;
         } catch (Exception e) {
@@ -73,25 +68,23 @@ public class userRepository implements Repository<user>{
     }
 
     @Override
-    public boolean update(user us) {
-     String sql = "update "+tableName+" set nama, ? username = ?, password = ?, email = ?, jenis_kelamin = ?, alamat = ?, no_telp = ? ,level = ? where id = ?";
+    public boolean update(supplier us) {
+    String sql = "update "+tableName+" set nama_supplier = ?, no_tlp = ?, alamat = ?  where id = ?";
         try {
             Connection koneksi =(Connection)Conn.configDB();
             PreparedStatement pst = koneksi.prepareStatement(sql);
-            pst.setString(1, us.getNama());
-            pst.setString(2, us.getUsername());
-            pst.setString(3, us.getPassword());
-            pst.setString(4, us.getJenis_kelamin());
-            pst.setString(5, us.getNo_tlp());
-            pst.setInt(6, us.getLevel());
-            pst.setInt(7, us.getId());
+            pst.setString(1, us.getNama_supplier());
+            pst.setString(2, us.getNo_tlp());
+            pst.setString(3, us.getAlamat());
+            pst.setInt(4, us.getId());
             pst.execute();
             return true;
         } catch (Exception e) {
             e.printStackTrace();
             System.out.println(e.getMessage());
             return false;
-        }   }
+        }
+    }
 
     @Override
     public boolean delete(int id) {
@@ -108,17 +101,11 @@ public class userRepository implements Repository<user>{
         } 
     }
     
-    private user mapToEntity(ResultSet res) throws SQLException {
-        user us = new user(
-                res.getString("nama"),
-                res.getString("username"),
-                res.getString("password"),
-                res.getString("email"),
-                res.getString("jenis_kelamin"),
-                res.getString("alamat"),
+    private supplier mapToEntity(ResultSet res) throws SQLException {
+        supplier us = new supplier(
+                res.getString("nama_supplier"),
                 res.getString("no_tlp"),
-                res.getInt("level"),
-                res.getString("token"));
+                res.getString("alamat"));
         us.setId(res.getInt("id"));
         return us;
     }

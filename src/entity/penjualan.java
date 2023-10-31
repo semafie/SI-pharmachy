@@ -1,14 +1,19 @@
 
 package entity;
 
-import java.security.Timestamp;
+import java.sql.Timestamp;
 import java.util.Date;
 
-public class penjualan {
+public class penjualan implements Entity{
     public static String tableName = "penjualan";
     private Date tanggal;
     private Timestamp jam;
-    private int total_harga;
+    private int total_harga, id;
+    
+    public penjualan(){
+        
+    }
+    
     public penjualan(Date tanggal, Timestamp jam, int total_harga){
         this.tanggal = tanggal; 
         this.jam =jam;
@@ -38,5 +43,14 @@ public class penjualan {
     public int getTotal_harga() {
         return total_harga;
     }
-    
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public int getId() {
+        return id;
+    }
+     
+   
 }

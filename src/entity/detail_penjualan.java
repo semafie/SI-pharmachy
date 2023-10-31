@@ -1,10 +1,10 @@
 package entity;
 
-public class detail_penjualan {
+public class detail_penjualan implements Entity{
     public static String tableName = "detail_penjualan";
     private penjualan penjualan;
     private String nama_obat;
-    private int harga, jumlah_beli, sub_total;
+    private int harga, jumlah_beli, sub_total, id;
     public detail_penjualan(){
         
     }
@@ -56,5 +56,15 @@ public class detail_penjualan {
     public int getSub_total() {
         return sub_total;
     }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public int getId() {
+        return id;
+    }
+    
+    
     
 }

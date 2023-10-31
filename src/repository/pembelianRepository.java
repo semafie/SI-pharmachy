@@ -1,22 +1,25 @@
 
 package repository;
 
-import entity.user;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.ArrayList;
+import entity.pembelian;
 import java.util.List;
+import java.sql.SQLException;
+import java.sql.ResultSet;
+import java.sql.Connection;
+import java.sql.Date;
+import java.sql.Statement;
+import java.sql.PreparedStatement;
+import java.util.ArrayList;
+import java.sql.Time;
 import util.Conn;
 
-public class userRepository implements Repository<user>{
-    private String tableName = user.tableName;
+public class pembelianRepository implements Repository<pembelian>{
+    private String tableName = pembelian.tableName;
+
     @Override
-    public List<user> get() {
-        String sql = "Select * from "+ tableName+" where level = 2";
-        List<user> user = new ArrayList<>();
+    public List<pembelian> get() {
+    String sql = "Select * from "+ tableName;
+        List<pembelian> user = new ArrayList<>();
         try {
             Connection koneksi = (Connection)Conn.configDB();
             Statement stm = koneksi.createStatement();
@@ -31,9 +34,9 @@ public class userRepository implements Repository<user>{
     }
 
     @Override
-    public user get(Integer id) {
+    public pembelian get(Integer id) {
     String sql = "select * from "+tableName+" where id = ?";
-        user us = new user();
+        pembelian us = new pembelian();
         
         try {
             Connection koneksi = (Connection)Conn.configDB();
@@ -46,24 +49,20 @@ public class userRepository implements Repository<user>{
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return us;   
+        return us;
     }
 
     @Override
-    public boolean add(user us) {
-        String sql = "INSERT INTO "+tableName+"( `nama`, `username`, `password`, `email`, `jenis_kelamin`, `alamat`, `no_tlp`, `level`, `token`) VALUES(?,?,?,?,?,?,?,?,?)";
+    public boolean add(pembelian us) {
+    String sql = "INSERT INTO "+tableName+"( `id_supllier`, `tanggal`, `jam`, `total_harga`) VALUES(?,?,?,?)";
         try {
             Connection koneksi = (Connection)Conn.configDB();
             PreparedStatement pst = koneksi.prepareStatement(sql);
             
-            pst.setString(1, us.getNama());
-            pst.setString(2, us.getUsername());
-            pst.setString(3, us.getPassword());
-            pst.setString(4, us.getEmail());
-            pst.setString(5, us.getJenis_kelamin());
-            pst.setString(6, us.getAlamat());
-            pst.setString(7, us.getNo_tlp());
-            pst.setInt(8, us.getLevel());
+            pst.setInt(1, us.getSupplier().getId());
+            pst.setDate(2,new Date(us.getTanggal().getTime()));
+            pst.setTime(3, new Time(us.getJam().getTime()));
+            pst.setInt(4, us.getTotal_harga());
             pst.execute();
             return  true;
         } catch (Exception e) {
@@ -73,25 +72,24 @@ public class userRepository implements Repository<user>{
     }
 
     @Override
-    public boolean update(user us) {
-     String sql = "update "+tableName+" set nama, ? username = ?, password = ?, email = ?, jenis_kelamin = ?, alamat = ?, no_telp = ? ,level = ? where id = ?";
+    public boolean update(pembelian us) {
+    String sql = "update "+tableName+" set id_supllier = ?, tanggal = ?, jam = ?, total_harga = ?  where id = ?";
         try {
             Connection koneksi =(Connection)Conn.configDB();
             PreparedStatement pst = koneksi.prepareStatement(sql);
-            pst.setString(1, us.getNama());
-            pst.setString(2, us.getUsername());
-            pst.setString(3, us.getPassword());
-            pst.setString(4, us.getJenis_kelamin());
-            pst.setString(5, us.getNo_tlp());
-            pst.setInt(6, us.getLevel());
-            pst.setInt(7, us.getId());
+            pst.setInt(1, us.getSupplier().getId());
+            pst.setDate(2, new Date(us.getTanggal().getTime()));
+            pst.setTime(3, new Time(us.getJam().getTime()));
+            pst.setInt(4, us.getTotal_harga());
+            pst.setInt(5, us.getId());
             pst.execute();
             return true;
         } catch (Exception e) {
             e.printStackTrace();
             System.out.println(e.getMessage());
             return false;
-        }   }
+        }
+    }
 
     @Override
     public boolean delete(int id) {
@@ -105,21 +103,19 @@ public class userRepository implements Repository<user>{
         } catch (Exception e) {
             e.printStackTrace();
             return false;
-        } 
+        }     
     }
     
-    private user mapToEntity(ResultSet res) throws SQLException {
-        user us = new user(
-                res.getString("nama"),
-                res.getString("username"),
-                res.getString("password"),
-                res.getString("email"),
-                res.getString("jenis_kelamin"),
-                res.getString("alamat"),
-                res.getString("no_tlp"),
-                res.getInt("level"),
-                res.getString("token"));
-        us.setId(res.getInt("id"));
+    private pembelian mapToEntity(ResultSet res) throws SQLException {
+        pembelian us = new pembelian(
+                new supplierRepository().get(res.getInt("id_supplier")),
+                res.getDate("tanggal"),
+                res.getTimestamp("jam"),
+                res.getInt("total_harga")
+        );
+        us.setId(res.getInt("id")
+        );
         return us;
     }
+    
 }

@@ -1,16 +1,19 @@
 
 package entity;
 
-import java.security.Timestamp;
+import java.sql.Timestamp;
 import java.util.Date;
 
 public class pembelian implements Entity{
     public  static String tableName = "pembelian";
     private supplier supplier;
-    private int total_harga;
+    private int total_harga, id;
     private Date tanggal;
     private Timestamp jam;
     
+    public pembelian(){
+        
+    }
     public pembelian(supplier supplier, Date tanggal, Timestamp jam, int total_harga ) {
     this. supplier = supplier;
 
@@ -49,6 +52,14 @@ public class pembelian implements Entity{
 
     public int getTotal_harga() {
         return total_harga;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public int getId() {
+        return id;
     }
     
     
