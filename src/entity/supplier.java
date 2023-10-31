@@ -4,6 +4,7 @@ package entity;
 public class supplier implements Entity{
     public  static String tableName = "supplier";
     private String nama_supplier, no_tlp, alamat;
+    private int  id;
     public supplier(){
         
     }
@@ -36,6 +37,14 @@ public class supplier implements Entity{
 
     public String getNo_tlp() {
         return no_tlp;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public int getId() {
+        return id;
     }
     
     

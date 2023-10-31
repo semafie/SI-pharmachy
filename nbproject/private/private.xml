@@ -3,18 +3,10 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/E:/SEMUA%20FOLDER/imam/kuliah/semester%203/joki/SI-pharmachy/src/repository/penjualanRepository.java</file>
-            <file>file:/E:/SEMUA%20FOLDER/imam/kuliah/semester%203/joki/SI-pharmachy/src/entity/obat.java</file>
-            <file>file:/E:/SEMUA%20FOLDER/imam/kuliah/semester%203/joki/SI-pharmachy/src/repository/pembelianRepository.java</file>
-            <file>file:/E:/SEMUA%20FOLDER/imam/kuliah/semester%203/joki/SI-pharmachy/src/entity/penjualan.java</file>
-            <file>file:/E:/SEMUA%20FOLDER/imam/kuliah/semester%203/joki/SI-pharmachy/src/entity/detail_pembelian.java</file>
-            <file>file:/E:/SEMUA%20FOLDER/imam/kuliah/semester%203/joki/SI-pharmachy/src/repository/detail_pembelianRepository.java</file>
-            <file>file:/E:/SEMUA%20FOLDER/imam/kuliah/semester%203/joki/SI-pharmachy/src/repository/supplierRepository.java</file>
-            <file>file:/E:/SEMUA%20FOLDER/imam/kuliah/semester%203/joki/SI-pharmachy/src/entity/pembelian.java</file>
-            <file>file:/E:/SEMUA%20FOLDER/imam/kuliah/semester%203/joki/SI-pharmachy/src/repository/obatRepository.java</file>
-            <file>file:/E:/SEMUA%20FOLDER/imam/kuliah/semester%203/joki/SI-pharmachy/src/repository/userRepository.java</file>
-            <file>file:/E:/SEMUA%20FOLDER/imam/kuliah/semester%203/joki/SI-pharmachy/src/repository/detail_penjualanRepository.java</file>
-            <file>file:/E:/SEMUA%20FOLDER/imam/kuliah/semester%203/joki/SI-pharmachy/src/entity/detail_penjualan.java</file>
+            <file>file:/D:/restu/SI-pharmachy/src/repository/supplierRepository.java</file>
+            <file>file:/D:/restu/SI-pharmachy/src/entity/penjualan.java</file>
+            <file>file:/D:/restu/SI-pharmachy/src/repository/pembelianRepository.java</file>
+            <file>file:/D:/restu/SI-pharmachy/src/entity/supplier.java</file>
         </group>
     </open-files>
 </project-private>
