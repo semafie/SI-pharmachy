@@ -25,6 +25,7 @@ public class mainlogin extends javax.swing.JFrame {
 //        this.setShape(new RoundRectangle2D.Double(0, 0, getWidth(), getHeight(), 35, 35));
         setLocationRelativeTo(this);
         showlogin();
+        this.setShape(new RoundRectangle2D.Double(0, 0, getWidth(), getHeight(), 30, 30));
     }
     public void showlogin(){
         login a = new login();
@@ -41,13 +42,13 @@ public class mainlogin extends javax.swing.JFrame {
         this.repaint();
     }
 
-//    public void showlupapassword(){
-//        login_lupapassword a = new login_lupapassword();
-//        a.setSize(1044,587);
-//        this.add(a);
-//        this.revalidate();
-//        this.repaint();
-//    }
+    public void showlupapassword(){
+        login_lupapassword a = new login_lupapassword();
+        a.setSize(1044,587);
+        this.add(a);
+        this.revalidate();
+        this.repaint();
+    }
     
 
     /**

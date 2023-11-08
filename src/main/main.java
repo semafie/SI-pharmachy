@@ -8,22 +8,22 @@ public class main extends javax.swing.JFrame {
 
     public main() {
         initComponents();
-//        showDasboardOwner();
+        showDasboardOwner();
     }
-//    public void showDasboardOwner(){
-//        DasboardOwner a = new DasboardOwner();
-//        a.setSize(1366,768);
-//        this.add(a);
-//        this.revalidate();
-//        this.repaint();
-//    }
-//    public void showDasboard(){
-//        Dasboard a = new Dasboard();
-//        a.setSize(1366,768);
-//        this.add(a);
-//        this.revalidate();
-//        this.repaint();
-//    }
+    public void showDasboardOwner(){
+        DasboardOwner a = new DasboardOwner();
+        a.setSize(1366,768);
+        this.add(a);
+        this.revalidate();
+        this.repaint();
+    }
+    public void showDasboard(){
+        Dasboard a = new Dasboard();
+        a.setSize(1366,768);
+        this.add(a);
+        this.revalidate();
+        this.repaint();
+    }
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents

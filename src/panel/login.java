@@ -3,10 +3,14 @@ package panel;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
+import javax.swing.JPasswordField;
 import javax.swing.SwingUtilities;
 import main.main;
 import main.mainlogin;
 import service.Auth;
+import view.dialog.Validasilogout;
 
 public class login extends javax.swing.JPanel {
 private static boolean isHidden = true;
@@ -14,9 +18,38 @@ private static boolean isHidden = true;
 
     public login() {
         initComponents();
+        
         Font font = new Font("Quicksand", Font.PLAIN, 22);
+        setHintText(txt_password, "Input Password");
         txt_username.setFont(font);
         txt_password.setFont(font);
+        txt_username.setForeground(Color.GRAY);
+    }
+    public static void setHintText(JPasswordField passwordField, String hintText) {
+        passwordField.setText(hintText);
+        passwordField.setEchoChar((char) 0);
+        passwordField.setForeground(Color.GRAY);// Set echo character to '*'
+        
+        passwordField.addFocusListener(new FocusAdapter() {
+            @Override
+            public void focusGained(FocusEvent e) {
+                if (String.valueOf(passwordField.getPassword()).equals(hintText)) {
+                    passwordField.setEchoChar('*'); // Show '*' for hint text
+                    passwordField.setText("");
+                    passwordField.setForeground(Color.BLACK);
+                }
+            }
+
+            @Override
+            public void focusLost(FocusEvent e) {
+                if (String.valueOf(passwordField.getPassword()).equals("")) {
+                    passwordField.setEchoChar((char) 0); // Show actual characters for input
+                    passwordField.setText(hintText);
+                    passwordField.setForeground(Color.GRAY);
+                    
+                }
+            }
+        });
     }
 
     @SuppressWarnings("unchecked")
@@ -30,6 +63,7 @@ private static boolean isHidden = true;
         btn_login = new javax.swing.JLabel();
         btn_keluar = new javax.swing.JLabel();
         bg = new javax.swing.JLabel();
+        jTextField1 = new javax.swing.JTextField();
 
         setLayout(null);
 
@@ -52,7 +86,16 @@ private static boolean isHidden = true;
         btnlupa_password.setBounds(800, 370, 190, 40);
 
         txt_username.setBackground(new Color(0,0,0,0));
+        txt_username.setText("Input Username");
         txt_username.setBorder(null);
+        txt_username.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                txt_usernameFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txt_usernameFocusLost(evt);
+            }
+        });
         add(txt_username);
         txt_username.setBounds(630, 240, 290, 40);
 
@@ -109,6 +152,8 @@ private static boolean isHidden = true;
         bg.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/imagebg/bg Login.png"))); // NOI18N
         add(bg);
         bg.setBounds(0, 0, 1044, 587);
+        add(jTextField1);
+        jTextField1.setBounds(560, 180, 64, 22);
     }// </editor-fold>//GEN-END:initComponents
 
     private void btn_loginMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_loginMouseClicked
@@ -119,9 +164,10 @@ private static boolean isHidden = true;
         System.out.println(user);
     if(ap.login(user, pass)){
         
-            main wow = (main)SwingUtilities.getWindowAncestor(this);
+            
             mainlogin wow1 = (mainlogin)SwingUtilities.getWindowAncestor(this);
-        wow.setVisible(true);  
+            wow1.dispose();
+        new main().setVisible(true);
     }else{
         System.out.println("gagal login");
     }
@@ -135,7 +181,8 @@ private static boolean isHidden = true;
 
     private void btn_keluarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_keluarMouseClicked
     mainlogin apa =(mainlogin)SwingUtilities.getWindowAncestor(this);
-    apa.dispose();
+        Validasilogout val = new Validasilogout(apa);
+        val.showPopUp();
     }//GEN-LAST:event_btn_keluarMouseClicked
 
     private void btn_loginMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_loginMouseEntered
@@ -178,15 +225,29 @@ private static boolean isHidden = true;
     if (isHidden) {
            txt_password.setEchoChar((char) 0);
 //            toggleButton.setText("Hide Password");
-            btneye.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/imagetxt/eye2.png")));
+            btneye.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/images/eye2.png")));
             isHidden = false;
         } else {
             txt_password.setEchoChar('*');
-            btneye.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/imagetxt/eye1.png")));
+            btneye.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/images/eye1.png")));
 //            toggleButton.setText("Show Password");
             isHidden = true;
     }
     }//GEN-LAST:event_btneyeMouseClicked
+
+    private void txt_usernameFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txt_usernameFocusGained
+    if (txt_username.getText().equals("Input Username")) {
+            txt_username.setText("");
+            txt_username.setForeground(Color.BLACK);
+        }
+    }//GEN-LAST:event_txt_usernameFocusGained
+
+    private void txt_usernameFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txt_usernameFocusLost
+    if (txt_username.getText().isEmpty()) {
+            txt_username.setText("Input Username");
+            txt_username.setForeground(Color.GRAY);
+        }
+    }//GEN-LAST:event_txt_usernameFocusLost
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -195,6 +256,7 @@ private static boolean isHidden = true;
     private javax.swing.JLabel btn_login;
     private javax.swing.JLabel btneye;
     private javax.swing.JLabel btnlupa_password;
+    private javax.swing.JTextField jTextField1;
     private javax.swing.JPasswordField txt_password;
     private javax.swing.JTextField txt_username;
     // End of variables declaration//GEN-END:variables
