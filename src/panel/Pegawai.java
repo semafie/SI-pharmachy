@@ -29,6 +29,9 @@ public class Pegawai extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        btnHapus = new javax.swing.JLabel();
+        btnEdit = new javax.swing.JLabel();
+        btnTambah = new javax.swing.JLabel();
         btnSuplier = new javax.swing.JLabel();
         btnTransaksi = new javax.swing.JLabel();
         btnSupplier = new javax.swing.JLabel();
@@ -36,9 +39,65 @@ public class Pegawai extends javax.swing.JPanel {
         btnDasboard = new javax.swing.JLabel();
         btnLaporan = new javax.swing.JLabel();
         btnLogout = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        table1 = new view.swing.Table();
         bg = new javax.swing.JLabel();
 
         setLayout(null);
+
+        btnHapus.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/imagebtn/btnformhapus1.png"))); // NOI18N
+        btnHapus.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnHapusMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnHapusMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnHapusMouseExited(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                btnHapusMousePressed(evt);
+            }
+        });
+        add(btnHapus);
+        btnHapus.setBounds(640, 100, 170, 60);
+
+        btnEdit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/imagebtn/btnformedit1.png"))); // NOI18N
+        btnEdit.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnEditMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnEditMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnEditMouseExited(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                btnEditMousePressed(evt);
+            }
+        });
+        add(btnEdit);
+        btnEdit.setBounds(500, 100, 135, 60);
+
+        btnTambah.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/imagebtn/btnformtambah1.png"))); // NOI18N
+        btnTambah.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnTambahMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnTambahMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnTambahMouseExited(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                btnTambahMousePressed(evt);
+            }
+        });
+        add(btnTambah);
+        btnTambah.setBounds(300, 100, 195, 60);
 
         btnSuplier.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/imagebtn/btnpegawai1.png"))); // NOI18N
         add(btnSuplier);
@@ -152,6 +211,22 @@ public class Pegawai extends javax.swing.JPanel {
         add(btnLogout);
         btnLogout.setBounds(0, 680, 230, 50);
 
+        table1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane1.setViewportView(table1);
+
+        add(jScrollPane1);
+        jScrollPane1.setBounds(312, 200, 1020, 510);
+
         bg.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/imagebg/bg Akun Pegawai.png"))); // NOI18N
         add(bg);
         bg.setBounds(0, 0, 1366, 768);
@@ -264,15 +339,68 @@ public class Pegawai extends javax.swing.JPanel {
         btnLogout.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/imagebtn/btnlogout3.png")));
     }//GEN-LAST:event_btnLogoutMousePressed
 
+    private void btnTambahMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnTambahMouseClicked
+        btnTambah.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/imagebtn/btnformtambah1.png")));
+    }//GEN-LAST:event_btnTambahMouseClicked
+
+    private void btnEditMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEditMouseClicked
+        btnEdit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/imagebtn/btnformedit1.png")));
+    }//GEN-LAST:event_btnEditMouseClicked
+
+    private void btnHapusMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnHapusMouseClicked
+        btnHapus.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/imagebtn/btnformhapus1.png")));
+    }//GEN-LAST:event_btnHapusMouseClicked
+
+    private void btnTambahMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnTambahMouseEntered
+        btnTambah.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/imagebtn/btnformtambah2.png")));
+    }//GEN-LAST:event_btnTambahMouseEntered
+
+    private void btnTambahMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnTambahMouseExited
+        btnTambah.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/imagebtn/btnformtambah1.png")));
+    }//GEN-LAST:event_btnTambahMouseExited
+
+    private void btnTambahMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnTambahMousePressed
+        btnTambah.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/imagebtn/btnformtambah3.png")));
+    }//GEN-LAST:event_btnTambahMousePressed
+
+    private void btnEditMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEditMouseEntered
+        btnEdit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/imagebtn/btnformedit2.png")));
+    }//GEN-LAST:event_btnEditMouseEntered
+
+    private void btnEditMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEditMouseExited
+        btnEdit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/imagebtn/btnformedit1.png")));
+    }//GEN-LAST:event_btnEditMouseExited
+
+    private void btnEditMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEditMousePressed
+        btnEdit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/imagebtn/btnformedit3.png")));
+    }//GEN-LAST:event_btnEditMousePressed
+
+    private void btnHapusMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnHapusMouseEntered
+        btnHapus.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/imagebtn/btnformhapus2.png")));
+    }//GEN-LAST:event_btnHapusMouseEntered
+
+    private void btnHapusMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnHapusMouseExited
+        btnHapus.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/imagebtn/btnformhapus1.png")));
+    }//GEN-LAST:event_btnHapusMouseExited
+
+    private void btnHapusMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnHapusMousePressed
+        btnHapus.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/imagebtn/btnformhapus3.png")));
+    }//GEN-LAST:event_btnHapusMousePressed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel bg;
     private javax.swing.JLabel btnDasboard;
+    private javax.swing.JLabel btnEdit;
+    private javax.swing.JLabel btnHapus;
     private javax.swing.JLabel btnLaporan;
     private javax.swing.JLabel btnLogout;
     private javax.swing.JLabel btnObat;
     private javax.swing.JLabel btnSuplier;
     private javax.swing.JLabel btnSupplier;
+    private javax.swing.JLabel btnTambah;
     private javax.swing.JLabel btnTransaksi;
+    private javax.swing.JScrollPane jScrollPane1;
+    private view.swing.Table table1;
     // End of variables declaration//GEN-END:variables
 }
