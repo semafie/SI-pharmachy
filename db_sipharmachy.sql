@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 30, 2023 at 11:55 AM
+-- Generation Time: Nov 14, 2023 at 07:22 AM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -29,6 +29,7 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `detail_pembelian` (
   `id` int(11) NOT NULL,
+  `id_pembelian` int(11) NOT NULL,
   `nama_obat` varchar(50) NOT NULL,
   `harga` int(35) NOT NULL,
   `jumlah_beli` int(35) NOT NULL,
@@ -43,6 +44,7 @@ CREATE TABLE `detail_pembelian` (
 
 CREATE TABLE `detail_penjualan` (
   `id` int(11) NOT NULL,
+  `id_penjualan` int(11) NOT NULL,
   `nama_obat` varchar(50) NOT NULL,
   `harga` int(35) NOT NULL,
   `jumlah_beli` int(35) NOT NULL,
@@ -90,7 +92,6 @@ CREATE TABLE `obat` (
 CREATE TABLE `pembelian` (
   `id` int(11) NOT NULL,
   `id_supllier` int(8) NOT NULL,
-  `id_detail` int(8) NOT NULL,
   `tanggal` date NOT NULL,
   `jam` time NOT NULL,
   `total_harga` int(35) NOT NULL
@@ -104,7 +105,6 @@ CREATE TABLE `pembelian` (
 
 CREATE TABLE `penjualan` (
   `id` int(11) NOT NULL,
-  `id_detail` int(8) NOT NULL,
   `tanggal` date NOT NULL,
   `jam` time NOT NULL,
   `total_harga` int(35) NOT NULL
@@ -119,7 +119,7 @@ CREATE TABLE `penjualan` (
 CREATE TABLE `supplier` (
   `id` int(11) NOT NULL,
   `nama_supplier` varchar(50) NOT NULL,
-  `no_telp` varchar(13) NOT NULL,
+  `no_tlp` varchar(13) NOT NULL,
   `alamat` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -134,13 +134,19 @@ CREATE TABLE `user` (
   `nama` varchar(30) NOT NULL,
   `username` varchar(50) NOT NULL,
   `password` varchar(50) NOT NULL,
-  `email` varchar(50) NOT NULL,
+  `nik` varchar(50) NOT NULL,
   `jenis_kelamin` varchar(20) NOT NULL,
   `alamat` varchar(50) NOT NULL,
   `no_tlp` varchar(13) NOT NULL,
-  `level` int(2) NOT NULL,
-  `token` varchar(5) NOT NULL
+  `level` int(2) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `user`
+--
+
+INSERT INTO `user` (`id`, `nama`, `username`, `password`, `nik`, `jenis_kelamin`, `alamat`, `no_tlp`, `level`) VALUES
+(3, '', 'owner', 'owner123', '4532423234423', '[value-6]', '[value-7]', '[value-8]', 1);
 
 --
 -- Indexes for dumped tables
@@ -150,13 +156,15 @@ CREATE TABLE `user` (
 -- Indexes for table `detail_pembelian`
 --
 ALTER TABLE `detail_pembelian`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `id_pembelian` (`id_pembelian`);
 
 --
 -- Indexes for table `detail_penjualan`
 --
 ALTER TABLE `detail_penjualan`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `id_penjualan` (`id_penjualan`);
 
 --
 -- Indexes for table `id_level`
@@ -175,15 +183,13 @@ ALTER TABLE `obat`
 --
 ALTER TABLE `pembelian`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `id_detail` (`id_detail`),
   ADD KEY `id_supllier` (`id_supllier`);
 
 --
 -- Indexes for table `penjualan`
 --
 ALTER TABLE `penjualan`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `id_detail` (`id_detail`);
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `supplier`
@@ -242,24 +248,29 @@ ALTER TABLE `supplier`
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- Constraints for dumped tables
 --
 
 --
+-- Constraints for table `detail_pembelian`
+--
+ALTER TABLE `detail_pembelian`
+  ADD CONSTRAINT `detail_pembelian_ibfk_1` FOREIGN KEY (`id_pembelian`) REFERENCES `pembelian` (`id`);
+
+--
+-- Constraints for table `detail_penjualan`
+--
+ALTER TABLE `detail_penjualan`
+  ADD CONSTRAINT `detail_penjualan_ibfk_1` FOREIGN KEY (`id_penjualan`) REFERENCES `penjualan` (`id`);
+
+--
 -- Constraints for table `pembelian`
 --
 ALTER TABLE `pembelian`
-  ADD CONSTRAINT `pembelian_ibfk_1` FOREIGN KEY (`id_detail`) REFERENCES `detail_pembelian` (`id`),
-  ADD CONSTRAINT `pembelian_ibfk_2` FOREIGN KEY (`id_supllier`) REFERENCES `supplier` (`id`);
-
---
--- Constraints for table `penjualan`
---
-ALTER TABLE `penjualan`
-  ADD CONSTRAINT `penjualan_ibfk_1` FOREIGN KEY (`id_detail`) REFERENCES `detail_penjualan` (`id`);
+  ADD CONSTRAINT `pembelian_ibfk_1` FOREIGN KEY (`id_supllier`) REFERENCES `supplier` (`id`);
 
 --
 -- Constraints for table `user`

@@ -3,6 +3,11 @@ package main;
 
 import panel.Dasboard;
 import panel.DasboardOwner;
+import panel.Laporan;
+import panel.Obat;
+import panel.Pegawai;
+import panel.Suplier;
+import panel.Transaksi;
 
 public class main extends javax.swing.JFrame {
 
@@ -19,6 +24,41 @@ public class main extends javax.swing.JFrame {
     }
     public void showDasboard(){
         Dasboard a = new Dasboard();
+        a.setSize(1366,768);
+        this.add(a);
+        this.revalidate();
+        this.repaint();
+    }
+    public void showObat(){
+        Obat a = new Obat();
+        a.setSize(1366,768);
+        this.add(a);
+        this.revalidate();
+        this.repaint();
+    }
+    public void showSuplier(){
+        Suplier a = new Suplier();
+        a.setSize(1366,768);
+        this.add(a);
+        this.revalidate();
+        this.repaint();
+    }
+    public void showTransaksi(){
+        Transaksi a = new Transaksi();
+        a.setSize(1366,768);
+        this.add(a);
+        this.revalidate();
+        this.repaint();
+    }
+    public void showLaporan(){
+        Laporan a = new Laporan();
+        a.setSize(1366,768);
+        this.add(a);
+        this.revalidate();
+        this.repaint();
+    }
+    public void showPegawai(){
+        Pegawai a = new Pegawai();
         a.setSize(1366,768);
         this.add(a);
         this.revalidate();
