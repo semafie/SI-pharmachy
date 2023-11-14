@@ -58,7 +58,7 @@ public class supplierRepository implements Repository<supplier>{
             
             pst.setString(1, us.getNama_supplier());
             pst.setString(2, us.getNo_tlp());
-            pst.setString(3, us.getNo_tlp());
+            pst.setString(3, us.getAlamat());
             pst.execute();
             return  true;
         } catch (Exception e) {

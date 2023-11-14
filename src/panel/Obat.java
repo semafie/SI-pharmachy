@@ -647,6 +647,7 @@ private String pilih;
     boolean cobak = datamaster.delete(id);
     if(cobak){
         System.out.println("berhasil");
+        load_tabel();
     } else {
         System.out.println("gagal");
     }

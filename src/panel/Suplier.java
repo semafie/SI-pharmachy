@@ -454,6 +454,7 @@ public class Suplier extends javax.swing.JPanel {
     boolean cobak = supp.delete(id);
         if (cobak) {
             System.out.println("berhasil hapus");
+            load_tabel();
         } else {
             System.out.println("gagal hapus suplier");
         }

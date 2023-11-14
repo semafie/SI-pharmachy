@@ -4,7 +4,9 @@
  */
 package view.dialog;
 
+import entity.user;
 import javax.swing.JFrame;
+import panel.Pegawai;
 import repository.userRepository;
 
 /**
@@ -12,11 +14,13 @@ import repository.userRepository;
  * @author Be Mine
  */
 public class tambahPegawai extends Dialog {
-    userRepository pegawai = new userRepository();
-    
+    userRepository segawai = new userRepository();
+    Pegawai das = new Pegawai();
+    private int id = das.id;
     public tambahPegawai(JFrame frame) {
         super(frame);
         initComponents();
+        
     }
 
     /**
@@ -124,7 +128,18 @@ public class tambahPegawai extends Dialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btntambahMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btntambahMouseClicked
-        btntambah.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/imagebtn/btntambah1.png")));
+    Object ses = cmb_jeniskelamin.getSelectedItem();
+        String jnk = ses.toString();
+        user dede = new user(txt_namaPegawai.getText(), txt_username.getText(), txt_password.getText(), txt_nik.getText(), jnk, txt_alamat.getText(),
+                txt_alamat.getText(), 2);
+        boolean cobak = segawai.add(dede);
+        if(cobak){
+            System.out.println("berhasil Menambahkan pegawai");
+            closeMessage();
+            das.load_tabel();
+        }else {
+            System.out.println("Gagal menambahkan pegawai");
+        }
     }//GEN-LAST:event_btntambahMouseClicked
 
     private void btnbatalMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnbatalMouseClicked

@@ -135,6 +135,7 @@ public class editSupplier extends Dialog {
     supplier gas = new supplier(txt_namaSupplier.getText(), txt_notlp.getText(), txt_notlp.getText());
     boolean cobak = supplier.update(gas);
     if(cobak){
+        suup.load_tabel();
         System.out.println("Berhasil edit supplier");
     } else{
         System.out.println("gagal edit supplier");

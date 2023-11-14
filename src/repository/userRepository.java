@@ -113,12 +113,11 @@ public class userRepository implements Repository<user>{
                 res.getString("nama"),
                 res.getString("username"),
                 res.getString("password"),
-                res.getString("email"),
+                res.getString("nik"),
                 res.getString("jenis_kelamin"),
                 res.getString("alamat"),
                 res.getString("no_tlp"),
-                res.getInt("level"),
-                res.getString("token"));
+                res.getInt("level"));
         us.setId(res.getInt("id"));
         return us;
     }

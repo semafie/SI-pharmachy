@@ -10,7 +10,7 @@ public class user implements Entity{
         
     }
     
-    public  user(String nama, String username,String password, String email, String jenis_kelamin,String alamat, String no_tlp,int level, String token){
+    public  user(String nama, String username,String password, String email, String jenis_kelamin,String alamat, String no_tlp,int level){
         this.nama = nama;
         this.username = username;
         this.password = password;
