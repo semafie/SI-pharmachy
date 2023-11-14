@@ -10,6 +10,7 @@ import javax.swing.table.DefaultTableModel;
 import main.main;
 import repository.obatRepository;
 import util.Conn;
+import view.dialog.Validasilogout1;
 
 public class Obat extends javax.swing.JPanel {
 private String pilih;
@@ -367,7 +368,7 @@ private String pilih;
             }
         });
         add(btnCetak);
-        btnCetak.setBounds(280, 150, 195, 60);
+        btnCetak.setBounds(280, 150, 150, 60);
 
         bg.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/imagebg/bg Obat Semua Stok.png"))); // NOI18N
         add(bg);
@@ -448,7 +449,8 @@ private String pilih;
 
     private void btnLogoutMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnLogoutMouseClicked
         main main = (main)SwingUtilities.getWindowAncestor(this);
-        main.dispose();
+        Validasilogout1 apa = new Validasilogout1(main);
+        apa.showPopUp();
     }//GEN-LAST:event_btnLogoutMouseClicked
 
     private void btnLogoutMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnLogoutMouseEntered

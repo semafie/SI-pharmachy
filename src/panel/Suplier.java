@@ -6,6 +6,7 @@ package panel;
 import java.awt.Color;
 import javax.swing.SwingUtilities;
 import main.main;
+import view.dialog.Validasilogout1;
 
 /**
  *
@@ -337,7 +338,8 @@ public class Suplier extends javax.swing.JPanel {
 
     private void btnLogoutMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnLogoutMouseClicked
         main main = (main)SwingUtilities.getWindowAncestor(this);
-        main.dispose();
+        Validasilogout1 apa = new Validasilogout1(main);
+        apa.showPopUp();
     }//GEN-LAST:event_btnLogoutMouseClicked
 
     private void btnLogoutMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnLogoutMouseEntered

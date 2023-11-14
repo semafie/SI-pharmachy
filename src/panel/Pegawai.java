@@ -3,9 +3,10 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
  */
 package panel;
-
+import java.awt.Color;
 import javax.swing.SwingUtilities;
 import main.main;
+import view.dialog.Validasilogout1;
 
 /**
  *
@@ -41,6 +42,7 @@ public class Pegawai extends javax.swing.JPanel {
         btnLogout = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         table1 = new view.swing.Table();
+        search = new javax.swing.JTextField();
         bg = new javax.swing.JLabel();
 
         setLayout(null);
@@ -227,6 +229,16 @@ public class Pegawai extends javax.swing.JPanel {
         add(jScrollPane1);
         jScrollPane1.setBounds(312, 200, 1020, 510);
 
+        search.setBackground(new Color(0,0,0,0));
+        search.setBorder(null);
+        search.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                searchKeyReleased(evt);
+            }
+        });
+        add(search);
+        search.setBounds(1010, 130, 300, 30);
+
         bg.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/imagebg/bg Akun Pegawai.png"))); // NOI18N
         add(bg);
         bg.setBounds(0, 0, 1366, 768);
@@ -324,7 +336,8 @@ public class Pegawai extends javax.swing.JPanel {
 
     private void btnLogoutMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnLogoutMouseClicked
         main main = (main)SwingUtilities.getWindowAncestor(this);
-        main.dispose();
+        Validasilogout1 apa = new Validasilogout1(main);
+        apa.showPopUp();
     }//GEN-LAST:event_btnLogoutMouseClicked
 
     private void btnLogoutMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnLogoutMouseEntered
@@ -387,6 +400,10 @@ public class Pegawai extends javax.swing.JPanel {
         btnHapus.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/imagebtn/btnformhapus3.png")));
     }//GEN-LAST:event_btnHapusMousePressed
 
+    private void searchKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_searchKeyReleased
+        //        load_tabel(search.getText());
+    }//GEN-LAST:event_searchKeyReleased
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel bg;
@@ -401,6 +418,7 @@ public class Pegawai extends javax.swing.JPanel {
     private javax.swing.JLabel btnTambah;
     private javax.swing.JLabel btnTransaksi;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTextField search;
     private view.swing.Table table1;
     // End of variables declaration//GEN-END:variables
 }
