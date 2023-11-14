@@ -104,6 +104,7 @@ public class login_konfirmasinik extends javax.swing.JPanel {
     Auth apa = new Auth();
     boolean wow = apa.konfirmasinik(txt_nik.getText());
     if (wow){
+        apa.nik = txt_nik.getText();
         mainlogin main =(mainlogin)SwingUtilities.getWindowAncestor(this);
         this.setVisible(false);
         main.showlupapassword();

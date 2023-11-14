@@ -43,6 +43,28 @@ private String pilih;
             System.out.println(e.getMessage());
         }
     }
+    public void load_tabel1(){
+        DefaultTableModel model = new DefaultTableModel();
+        model.addColumn("ID");
+        model.addColumn("NAMA_OBAT");
+        model.addColumn("HARGA_OBAT");
+        model.addColumn("JUMLAH_STOK");
+    
+        try {
+            for(obat apa:datamaster.getstoktipis()){
+                model.addRow(new Object[]{
+                    apa.getId(),
+                    apa.getNama_obat(),
+                    apa.getHarga_obat(),
+                    apa.getJumlah_stok()
+
+                });
+            }
+            table.setModel(model);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }
     public void load_tabel(String search) {
     DefaultTableModel model = new DefaultTableModel();
     model.addColumn("ID");
@@ -387,6 +409,9 @@ private String pilih;
     btnstokmenipis.setVisible(true);
     btnstokmenipis1.setVisible(false);
     pilih = "semua stok";
+    
+    load_tabel();
+    
     }//GEN-LAST:event_btnsemuastokMouseClicked
 
     private void btnstokmenipisMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnstokmenipisMouseClicked
@@ -397,10 +422,13 @@ private String pilih;
     btnstokmenipis.setVisible(false);
     btnstokmenipis1.setVisible(true);
     pilih = "stok menipis";
+    load_tabel1();
     }//GEN-LAST:event_btnstokmenipisMouseClicked
 
     private void searchKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_searchKeyReleased
     if( pilih.equals("semua stok")){
+        
+    } else {
         
     }
     }//GEN-LAST:event_searchKeyReleased

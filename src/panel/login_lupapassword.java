@@ -128,11 +128,11 @@ public class login_lupapassword extends javax.swing.JPanel {
         if (isHidden) {
             txt_password1.setEchoChar((char) 0);
             //            toggleButton.setText("Hide Password");
-            btneye.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/images/eye2.png")));
+            btneye2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/images/eye2.png")));
             isHidden = false;
         } else {
             txt_password1.setEchoChar('*');
-            btneye.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/images/eye1.png")));
+            btneye2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/images/eye1.png")));
             //            toggleButton.setText("Show Password");
             isHidden = true;
         }
@@ -147,6 +147,7 @@ public class login_lupapassword extends javax.swing.JPanel {
     String hayo1 = txt_password1.getText();
     Auth apa = new Auth();
     String nikyo = apa.nik;
+        System.out.println(nikyo);
     if(hayo.equals(hayo1)){
         boolean uwow = apa.changePass(hayo, nikyo);
         if(uwow){
@@ -154,7 +155,7 @@ public class login_lupapassword extends javax.swing.JPanel {
         this.setVisible(false);
         main.showlogin();
         } else {
-            System.out.println("gagal");
+            System.out.println("gagal ubah pass");
         }
     }else{
         

@@ -30,6 +30,21 @@ public class obatRepository implements Repository<obat>{
         }
         return user;
     }
+    public List<obat> getstoktipis() {
+    String sql = "Select * from "+ tableName + " where jumlah_stok <= 10";
+        List<obat> user = new ArrayList<>();
+        try {
+            Connection koneksi = (Connection)Conn.configDB();
+            Statement stm = koneksi.createStatement();
+            ResultSet res = stm.executeQuery(sql);
+            while (res.next()) {
+                user.add(mapToEntity(res));
+            }
+        } catch (Exception e) {
+        e.printStackTrace();
+        }
+        return user;
+    }
 
     @Override
     public obat get(Integer id) {
