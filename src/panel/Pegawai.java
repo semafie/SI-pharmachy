@@ -61,7 +61,7 @@ public class Pegawai extends javax.swing.JPanel {
             }
         });
         add(btnHapus);
-        btnHapus.setBounds(640, 100, 170, 60);
+        btnHapus.setBounds(650, 120, 170, 60);
 
         btnEdit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/imagebtn/btnformedit1.png"))); // NOI18N
         btnEdit.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -79,7 +79,7 @@ public class Pegawai extends javax.swing.JPanel {
             }
         });
         add(btnEdit);
-        btnEdit.setBounds(500, 100, 135, 60);
+        btnEdit.setBounds(510, 120, 135, 60);
 
         btnTambah.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/imagebtn/btnformtambah1.png"))); // NOI18N
         btnTambah.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -97,7 +97,7 @@ public class Pegawai extends javax.swing.JPanel {
             }
         });
         add(btnTambah);
-        btnTambah.setBounds(300, 100, 195, 60);
+        btnTambah.setBounds(310, 120, 195, 60);
 
         btnSuplier.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/imagebtn/btnpegawai1.png"))); // NOI18N
         add(btnSuplier);

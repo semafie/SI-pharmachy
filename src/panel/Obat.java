@@ -19,6 +19,8 @@ private String pilih;
         initComponents();
         btnsemuastok.setVisible(false);
         btnstokmenipis1.setVisible(false);
+        btnCetak.setVisible(false);
+        load_tabel();
         pilih = "semua stok";
     }
     public void load_tabel(){
@@ -115,6 +117,10 @@ private String pilih;
         jScrollPane1 = new javax.swing.JScrollPane();
         table = new view.swing.Table();
         jLabel1 = new javax.swing.JLabel();
+        btnHapus = new javax.swing.JLabel();
+        btnEdit = new javax.swing.JLabel();
+        btnTambah = new javax.swing.JLabel();
+        btnCetak = new javax.swing.JLabel();
         bg = new javax.swing.JLabel();
 
         setLayout(null);
@@ -291,6 +297,78 @@ private String pilih;
         add(jLabel1);
         jLabel1.setBounds(430, 730, 30, 30);
 
+        btnHapus.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/imagebtn/btnformhapus1.png"))); // NOI18N
+        btnHapus.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnHapusMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnHapusMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnHapusMouseExited(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                btnHapusMousePressed(evt);
+            }
+        });
+        add(btnHapus);
+        btnHapus.setBounds(620, 150, 170, 60);
+
+        btnEdit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/imagebtn/btnformedit1.png"))); // NOI18N
+        btnEdit.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnEditMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnEditMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnEditMouseExited(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                btnEditMousePressed(evt);
+            }
+        });
+        add(btnEdit);
+        btnEdit.setBounds(480, 150, 135, 60);
+
+        btnTambah.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/imagebtn/btnformtambah1.png"))); // NOI18N
+        btnTambah.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnTambahMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnTambahMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnTambahMouseExited(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                btnTambahMousePressed(evt);
+            }
+        });
+        add(btnTambah);
+        btnTambah.setBounds(280, 150, 195, 60);
+
+        btnCetak.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/imagebtn/btncetak1.png"))); // NOI18N
+        btnCetak.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnCetakMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnCetakMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnCetakMouseExited(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                btnCetakMousePressed(evt);
+            }
+        });
+        add(btnCetak);
+        btnCetak.setBounds(280, 150, 195, 60);
+
         bg.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/imagebg/bg Obat Semua Stok.png"))); // NOI18N
         add(bg);
         bg.setBounds(0, 0, 1366, 768);
@@ -409,14 +487,19 @@ private String pilih;
     btnstokmenipis.setVisible(true);
     btnstokmenipis1.setVisible(false);
     pilih = "semua stok";
-    
+    btnTambah.setVisible(true);
+    btnEdit.setVisible(true);
+    btnHapus.setVisible(true);
+    btnCetak.setVisible(false);
     load_tabel();
     
     }//GEN-LAST:event_btnsemuastokMouseClicked
 
     private void btnstokmenipisMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnstokmenipisMouseClicked
-    
-    
+    btnCetak.setVisible(true);
+    btnTambah.setVisible(false);
+    btnEdit.setVisible(false);
+    btnHapus.setVisible(false);
     btnsemuastok.setVisible(true);
     btnsemuastok1.setVisible(false);
     btnstokmenipis.setVisible(false);
@@ -426,22 +509,86 @@ private String pilih;
     }//GEN-LAST:event_btnstokmenipisMouseClicked
 
     private void searchKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_searchKeyReleased
-    if( pilih.equals("semua stok")){
-        
-    } else {
-        
-    }
+        load_tabel(search.getText());
     }//GEN-LAST:event_searchKeyReleased
+
+    private void btnHapusMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnHapusMouseClicked
+        btnHapus.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/imagebtn/btnformhapus1.png")));
+    }//GEN-LAST:event_btnHapusMouseClicked
+
+    private void btnHapusMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnHapusMouseEntered
+        btnHapus.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/imagebtn/btnformhapus2.png")));
+    }//GEN-LAST:event_btnHapusMouseEntered
+
+    private void btnHapusMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnHapusMouseExited
+        btnHapus.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/imagebtn/btnformhapus1.png")));
+    }//GEN-LAST:event_btnHapusMouseExited
+
+    private void btnHapusMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnHapusMousePressed
+        btnHapus.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/imagebtn/btnformhapus3.png")));
+    }//GEN-LAST:event_btnHapusMousePressed
+
+    private void btnEditMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEditMouseClicked
+        btnEdit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/imagebtn/btnformedit1.png")));
+    }//GEN-LAST:event_btnEditMouseClicked
+
+    private void btnEditMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEditMouseEntered
+        btnEdit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/imagebtn/btnformedit2.png")));
+    }//GEN-LAST:event_btnEditMouseEntered
+
+    private void btnEditMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEditMouseExited
+        btnEdit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/imagebtn/btnformedit1.png")));
+    }//GEN-LAST:event_btnEditMouseExited
+
+    private void btnEditMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEditMousePressed
+        btnEdit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/imagebtn/btnformedit3.png")));
+    }//GEN-LAST:event_btnEditMousePressed
+
+    private void btnTambahMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnTambahMouseClicked
+    
+    }//GEN-LAST:event_btnTambahMouseClicked
+
+    private void btnTambahMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnTambahMouseEntered
+        btnTambah.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/imagebtn/btnformtambah2.png")));
+    }//GEN-LAST:event_btnTambahMouseEntered
+
+    private void btnTambahMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnTambahMouseExited
+        btnTambah.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/imagebtn/btnformtambah1.png")));
+    }//GEN-LAST:event_btnTambahMouseExited
+
+    private void btnTambahMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnTambahMousePressed
+        btnTambah.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/imagebtn/btnformtambah3.png")));
+    }//GEN-LAST:event_btnTambahMousePressed
+
+    private void btnCetakMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCetakMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnCetakMouseClicked
+
+    private void btnCetakMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCetakMouseEntered
+    btnCetak.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/imagebtn/btncetak2.png")));
+    }//GEN-LAST:event_btnCetakMouseEntered
+
+    private void btnCetakMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCetakMouseExited
+    btnCetak.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/imagebtn/btncetak1.png")));
+    }//GEN-LAST:event_btnCetakMouseExited
+
+    private void btnCetakMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCetakMousePressed
+    btnCetak.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/imagebtn/btncetak3.png")));
+    }//GEN-LAST:event_btnCetakMousePressed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel bg;
+    private javax.swing.JLabel btnCetak;
     private javax.swing.JLabel btnDasboard;
+    private javax.swing.JLabel btnEdit;
+    private javax.swing.JLabel btnHapus;
     private javax.swing.JLabel btnLaporan;
     private javax.swing.JLabel btnLogout;
     private javax.swing.JLabel btnObat;
     private javax.swing.JLabel btnPegawai;
     private javax.swing.JLabel btnSupplier;
+    private javax.swing.JLabel btnTambah;
     private javax.swing.JLabel btnTransaksi;
     private javax.swing.JLabel btnsemuastok;
     private javax.swing.JLabel btnsemuastok1;
