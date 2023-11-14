@@ -13,7 +13,7 @@ import util.Conn;
  * @author WINDOWS 10
  */
 public class Auth {
-    public static String username ;
+    public static String nik ;
     public static int level;
     public static int id;
     
@@ -28,6 +28,26 @@ public class Auth {
             if(res.next()){
                 level = res.getInt("level");
                 id = res.getInt("id");
+                
+                return true;
+            }else{
+                  return false;
+            }
+        } catch (Exception e) {
+                return false;
+        }
+    }
+  public boolean konfirmasinik(String nik){
+        try {
+            String query = "SELECT * FROM user WHERE nik ='"+ nik+"'";
+            Connection koneksi = (Connection)Conn.configDB();
+            PreparedStatement pst = koneksi.prepareStatement(query);
+            ResultSet res = pst.executeQuery();
+            if(res.next()){
+                level = res.getInt("level");
+                id = res.getInt("id");
+//                nik = res.getString("nik");
+//                this.nik = nik;
                 return true;
             }else{
                   return false;
@@ -87,14 +107,14 @@ public class Auth {
         
         }
   }
-  public boolean changePass(String pass, String confirmPass, String username){
+  public boolean changePass(String pass, String username){
 
-         String sql = "UPDATE user SET password = ? WHERE username = ?";
+         String sql = "UPDATE user SET password = ? WHERE nik = ?";
         try {
                  Connection koneksi = (Connection)Conn.configDB();
             PreparedStatement pst = koneksi.prepareStatement(sql);
              pst.setString(1, pass);
-            pst.setString(2, username);
+            pst.setString(2, nik);
             
             pst.executeUpdate();
             return true;
@@ -105,5 +125,6 @@ public class Auth {
         }
       
   }
+  
  
 }

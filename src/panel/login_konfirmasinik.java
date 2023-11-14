@@ -4,7 +4,9 @@ package panel;
 import java.awt.Color;
 import java.awt.Font;
 import javax.swing.SwingUtilities;
+import main.main;
 import main.mainlogin;
+import service.Auth;
 
 public class login_konfirmasinik extends javax.swing.JPanel {
 
@@ -99,7 +101,16 @@ public class login_konfirmasinik extends javax.swing.JPanel {
     }//GEN-LAST:event_btn_batalMousePressed
 
     private void btn_kirimkodeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_kirimkodeMouseClicked
-        // TODO add your handling code here:
+    Auth apa = new Auth();
+    boolean wow = apa.konfirmasinik(txt_nik.getText());
+    if (wow){
+        mainlogin main =(mainlogin)SwingUtilities.getWindowAncestor(this);
+        this.setVisible(false);
+        main.showlupapassword();
+    } else {
+        System.out.println("NIK TIDAK DITEMUKAN");
+    }
+    
     }//GEN-LAST:event_btn_kirimkodeMouseClicked
 
     private void btn_kirimkodeMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_kirimkodeMouseEntered
