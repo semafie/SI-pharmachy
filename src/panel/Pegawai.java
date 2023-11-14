@@ -213,6 +213,8 @@ public class Pegawai extends javax.swing.JPanel {
         add(btnLogout);
         btnLogout.setBounds(0, 680, 230, 50);
 
+        jScrollPane1.setBorder(null);
+
         table1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
@@ -227,7 +229,7 @@ public class Pegawai extends javax.swing.JPanel {
         jScrollPane1.setViewportView(table1);
 
         add(jScrollPane1);
-        jScrollPane1.setBounds(312, 200, 1020, 510);
+        jScrollPane1.setBounds(322, 210, 1010, 480);
 
         search.setBackground(new Color(0,0,0,0));
         search.setBorder(null);
