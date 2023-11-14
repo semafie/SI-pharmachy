@@ -5,13 +5,26 @@ public class obat implements Entity{
     public static String tableName = "obat";
     private String nama_obat;
     private int id, harga_obat, jumlah_stok;
+    
     public obat(){
         
+    }
+    
+    public obat(int id,String nama_obat,int harga_obat){
+        this.id = id;
+        this.nama_obat = nama_obat;
+        this.harga_obat = harga_obat;
+        this.jumlah_stok = jumlah_stok;
     }
     
     public obat(String nama_obat,int harga_obat, int jumlah_stok){
         this.nama_obat = nama_obat;
         this.harga_obat = harga_obat;
+        this.jumlah_stok = jumlah_stok;
+    }
+    
+    public obat(int id ,int jumlah_stok){
+        this.id = id;
         this.jumlah_stok = jumlah_stok;
     }
 

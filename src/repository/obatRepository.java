@@ -85,14 +85,30 @@ public class obatRepository implements Repository<obat>{
 
     @Override
     public boolean update(obat us) {
-    String sql = "update "+tableName+" set nama_obat = ?, harga_obat = ?, jumlah_stok = ?  where id = ?";
+    String sql = "update "+tableName+" set nama_obat = ?, harga_obat = ?  where id = ?";
         try {
             Connection koneksi =(Connection)Conn.configDB();
             PreparedStatement pst = koneksi.prepareStatement(sql);
             pst.setString(1, us.getNama_obat());
             pst.setInt(2, us.getHarga_obat());
-            pst.setInt(3, us.getJumlah_stok());
-            pst.setInt(4, us.getId());
+            
+            pst.setInt(3, us.getId());
+            pst.execute();
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println(e.getMessage());
+            return false;
+        }
+    }
+    public boolean updatestok(obat us) {
+    String sql = "update "+tableName+" jumlah_stok = ?  where id = ?";
+        try {
+            Connection koneksi =(Connection)Conn.configDB();
+            PreparedStatement pst = koneksi.prepareStatement(sql);
+            
+            pst.setInt(1, us.getJumlah_stok());
+            pst.setInt(2, us.getId());
             pst.execute();
             return true;
         } catch (Exception e) {

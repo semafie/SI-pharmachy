@@ -4,19 +4,23 @@
  */
 package view.dialog;
 
+import entity.obat;
 import javax.swing.JFrame;
+import panel.Obat;
+import repository.obatRepository;
 import repository.userRepository;
 
-/**
- *
- * @author Be Mine
- */
 public class editstokObat extends Dialog {
+    Obat apa= new Obat();
+    obatRepository obat = new obatRepository();
+    private int id = apa.id;
     userRepository pegawai = new userRepository();
     
     public editstokObat(JFrame frame) {
         super(frame);
         initComponents();
+        txt_namaObat.setText(obat.get(id).getNama_obat());
+        txt_jumlahstokawal.setText(String.valueOf(obat.get(id).getJumlah_stok()));
     }
 
     /**
@@ -31,8 +35,9 @@ public class editstokObat extends Dialog {
         jLabel1 = new javax.swing.JLabel();
         btnedit = new javax.swing.JLabel();
         btnbatal = new javax.swing.JLabel();
-        txt_alamat = new javax.swing.JTextField();
-        txt_namaPegawai = new javax.swing.JTextField();
+        txt_jumlahstokbaru = new javax.swing.JTextField();
+        txt_jumlahstokawal = new javax.swing.JTextField();
+        txt_namaObat = new javax.swing.JTextField();
         bg = new javax.swing.JLabel();
 
         jLabel1.setText("jLabel1");
@@ -76,15 +81,21 @@ public class editstokObat extends Dialog {
         getContentPane().add(btnbatal);
         btnbatal.setBounds(160, 380, 190, 60);
 
-        txt_alamat.setBorder(null);
-        getContentPane().add(txt_alamat);
-        txt_alamat.setBounds(70, 270, 480, 40);
+        txt_jumlahstokbaru.setBorder(null);
+        getContentPane().add(txt_jumlahstokbaru);
+        txt_jumlahstokbaru.setBounds(340, 273, 210, 40);
 
-        txt_namaPegawai.setBorder(null);
-        getContentPane().add(txt_namaPegawai);
-        txt_namaPegawai.setBounds(70, 170, 470, 40);
+        txt_jumlahstokawal.setBorder(null);
+        txt_jumlahstokawal.setFocusable(false);
+        getContentPane().add(txt_jumlahstokawal);
+        txt_jumlahstokawal.setBounds(40, 273, 180, 40);
 
-        bg.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/imagebg/formeditobat.png"))); // NOI18N
+        txt_namaObat.setBorder(null);
+        txt_namaObat.setFocusable(false);
+        getContentPane().add(txt_namaObat);
+        txt_namaObat.setBounds(50, 167, 490, 40);
+
+        bg.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/imagebg/formeditstokobat.png"))); // NOI18N
         getContentPane().add(bg);
         bg.setBounds(0, 0, 590, 470);
 
@@ -93,11 +104,23 @@ public class editstokObat extends Dialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btneditMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btneditMouseClicked
-        btnedit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/imagebtn/btnedit1.png")));
+    int stokbaru = Integer.valueOf(txt_jumlahstokbaru.getText());
+    int stoklama = Integer.valueOf(txt_jumlahstokawal.getText());
+//    if(stokbaru <= stoklama ){
+        obat editya = new obat(id,stokbaru);
+    boolean cobak = obat.updatestok(editya);
+    if(cobak){
+        System.out.println("berhasil tambah tok");
+    }else{
+        System.out.println("gagal tambah stok");
+    }
+//    } else{
+//        System.out.println("tidak boleh kurang dari stok lama");
+//    }
     }//GEN-LAST:event_btneditMouseClicked
 
     private void btnbatalMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnbatalMouseClicked
-        btnbatal.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/imagebtn/btnbatal1.png")));
+    
         closeMessage();
     }//GEN-LAST:event_btnbatalMouseClicked
 
@@ -131,7 +154,8 @@ public class editstokObat extends Dialog {
     private javax.swing.JLabel btnbatal;
     private javax.swing.JLabel btnedit;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JTextField txt_alamat;
-    private javax.swing.JTextField txt_namaPegawai;
+    private javax.swing.JTextField txt_jumlahstokawal;
+    private javax.swing.JTextField txt_jumlahstokbaru;
+    private javax.swing.JTextField txt_namaObat;
     // End of variables declaration//GEN-END:variables
 }
