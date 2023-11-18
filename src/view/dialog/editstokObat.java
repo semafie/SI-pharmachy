@@ -111,6 +111,7 @@ public class editstokObat extends Dialog {
     boolean cobak = obat.updatestok(editya);
     if(cobak){
         apa.load_tabel();
+        closeMessage();
         System.out.println("berhasil tambah tok");
     }else{
         System.out.println("gagal tambah stok");

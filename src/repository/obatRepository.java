@@ -102,7 +102,7 @@ public class obatRepository implements Repository<obat>{
         }
     }
     public boolean updatestok(obat us) {
-    String sql = "update "+tableName+" jumlah_stok = ?  where id = ?";
+    String sql = "update "+tableName+" set jumlah_stok = ? where id = ?";
         try {
             Connection koneksi =(Connection)Conn.configDB();
             PreparedStatement pst = koneksi.prepareStatement(sql);
