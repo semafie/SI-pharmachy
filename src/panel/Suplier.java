@@ -415,7 +415,7 @@ public class Suplier extends javax.swing.JPanel {
     }//GEN-LAST:event_btnLogoutMousePressed
 
     private void btnTambahMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnTambahMouseClicked
-    main main = (main)SwingUtilities.getWindowAncestor(this);
+     main main = (main)SwingUtilities.getWindowAncestor(this);
         tambahSupplier apa = new tambahSupplier(main);
         apa.showPopUp();    
     }//GEN-LAST:event_btnTambahMouseClicked

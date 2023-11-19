@@ -350,7 +350,7 @@ private String pilih;
         btnstokmenipis1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/images/pilih stok menipis.png"))); // NOI18N
         btnstokmenipis1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         add(btnstokmenipis1);
-        btnstokmenipis1.setBounds(510, 94, 220, 38);
+        btnstokmenipis1.setBounds(510, 95, 220, 38);
 
         btnstokmenipis.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/images/stok menipis.png"))); // NOI18N
         btnstokmenipis.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
