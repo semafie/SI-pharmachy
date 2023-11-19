@@ -94,7 +94,8 @@ public class editObat extends Dialog {
     obat editya = new obat(id,txt_namaobat.getText(), Integer.valueOf(txt_hargaobat.getText()));
     boolean cobak = obat.update(editya);
     if(cobak){
-        apa.load_tabel();
+//       apa.load_tabel();
+        closeMessage();
         System.out.println("berhasil tambah tok");
     }else{
         System.out.println("gagal tambah stok");

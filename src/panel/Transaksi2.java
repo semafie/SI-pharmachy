@@ -7,18 +7,17 @@ package panel;
 import javax.swing.SwingUtilities;
 import main.main;
 import view.dialog.Validasilogout1;
-import view.dialog.pilihobat;
 
 /**
  *
  * @author RESCOM-1
  */
-public class Transaksi extends javax.swing.JPanel {
+public class Transaksi2 extends javax.swing.JPanel {
 
     /**
      * Creates new form Transaksi
      */
-    public Transaksi() {
+    public Transaksi2() {
         initComponents();
         btnpembelianstok.setVisible(false);
         btnpenjualan1.setVisible(false);
@@ -189,7 +188,7 @@ public class Transaksi extends javax.swing.JPanel {
         jScrollPane1.setViewportView(table1);
 
         add(jScrollPane1);
-        jScrollPane1.setBounds(300, 200, 1000, 240);
+        jScrollPane1.setBounds(280, 200, 1020, 240);
 
         btnpembelianstok1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/imagebtn/pilih pemebelian.png"))); // NOI18N
         btnpembelianstok1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
@@ -328,7 +327,7 @@ public class Transaksi extends javax.swing.JPanel {
         add(btnprosestransaksi);
         btnprosestransaksi.setBounds(650, 690, 280, 60);
 
-        bg.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/imagebg/bg Transaksi Pembelian.png"))); // NOI18N
+        bg.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/imagebg/bg Transaksi Penjualan.png"))); // NOI18N
         add(bg);
         bg.setBounds(0, 0, 1366, 768);
     }// </editor-fold>//GEN-END:initComponents
@@ -460,9 +459,7 @@ public class Transaksi extends javax.swing.JPanel {
     }//GEN-LAST:event_btnpembelianstokMouseClicked
 
     private void btncariobatMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btncariobatMouseClicked
-    main main = (main)SwingUtilities.getWindowAncestor(this);
-        pilihobat obat = new pilihobat(main);
-        obat.showPopUp();
+        // TODO add your handling code here:
     }//GEN-LAST:event_btncariobatMouseClicked
 
     private void btncariobatMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btncariobatMouseEntered
