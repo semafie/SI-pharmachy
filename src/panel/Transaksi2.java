@@ -7,6 +7,7 @@ package panel;
 import javax.swing.SwingUtilities;
 import main.main;
 import view.dialog.Validasilogout1;
+import view.glasspanel.GlassPanePopup;
 
 /**
  *
@@ -19,6 +20,9 @@ public class Transaksi2 extends javax.swing.JPanel {
      */
     public Transaksi2() {
         initComponents();
+        
+        main main = (main)SwingUtilities.getWindowAncestor(this);
+        
         btnpembelianstok.setVisible(false);
         btnpenjualan1.setVisible(false);
     }

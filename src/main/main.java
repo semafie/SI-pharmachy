@@ -8,12 +8,14 @@ import panel.Obat;
 import panel.Pegawai;
 import panel.Suplier;
 import panel.Transaksi;
+import view.glasspanel.GlassPanePopup;
 
 public class main extends javax.swing.JFrame {
 
     public main() {
         initComponents();
         showDasboardOwner();
+        GlassPanePopup.install(this);
     }
     public void showDasboardOwner(){
         DasboardOwner a = new DasboardOwner();
@@ -58,6 +60,13 @@ public class main extends javax.swing.JFrame {
         this.repaint();
     }
     public void showPegawai(){
+        Pegawai a = new Pegawai();
+        a.setSize(1366,768);
+        this.add(a);
+        this.revalidate();
+        this.repaint();
+    }
+    public void pilihpilih(){
         Pegawai a = new Pegawai();
         a.setSize(1366,768);
         this.add(a);

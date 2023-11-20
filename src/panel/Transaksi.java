@@ -4,10 +4,12 @@
  */
 package panel;
 
+import java.awt.Container;
 import javax.swing.SwingUtilities;
 import main.main;
 import view.dialog.Validasilogout1;
 import view.dialog.pilihobat;
+import view.glasspanel.GlassPanePopup;
 
 /**
  *
@@ -20,6 +22,7 @@ public class Transaksi extends javax.swing.JPanel {
      */
     public Transaksi() {
         initComponents();
+        
         btnpembelianstok.setVisible(false);
         btnpenjualan1.setVisible(false);
     }
@@ -33,6 +36,7 @@ public class Transaksi extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jPanel1 = new javax.swing.JPanel();
         btnLogout = new javax.swing.JLabel();
         btnPegawai = new javax.swing.JLabel();
         btnLaporan = new javax.swing.JLabel();
@@ -61,6 +65,8 @@ public class Transaksi extends javax.swing.JPanel {
 
         setLayout(null);
 
+        jPanel1.setLayout(null);
+
         btnLogout.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/imagebtn/btnlogout1.png"))); // NOI18N
         btnLogout.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -76,7 +82,7 @@ public class Transaksi extends javax.swing.JPanel {
                 btnLogoutMousePressed(evt);
             }
         });
-        add(btnLogout);
+        jPanel1.add(btnLogout);
         btnLogout.setBounds(0, 680, 230, 50);
 
         btnPegawai.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/imagebtn/btnpegawai2.png"))); // NOI18N
@@ -94,7 +100,7 @@ public class Transaksi extends javax.swing.JPanel {
                 btnPegawaiMousePressed(evt);
             }
         });
-        add(btnPegawai);
+        jPanel1.add(btnPegawai);
         btnPegawai.setBounds(10, 520, 230, 60);
 
         btnLaporan.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/imagebtn/btnlaporan2.png"))); // NOI18N
@@ -112,11 +118,11 @@ public class Transaksi extends javax.swing.JPanel {
                 btnLaporanMousePressed(evt);
             }
         });
-        add(btnLaporan);
+        jPanel1.add(btnLaporan);
         btnLaporan.setBounds(10, 445, 230, 60);
 
         btnSuplier.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/imagebtn/btntransaksi1.png"))); // NOI18N
-        add(btnSuplier);
+        jPanel1.add(btnSuplier);
         btnSuplier.setBounds(10, 370, 230, 60);
 
         btnObat.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/imagebtn/btnobat2.png"))); // NOI18N
@@ -134,7 +140,7 @@ public class Transaksi extends javax.swing.JPanel {
                 btnObatMousePressed(evt);
             }
         });
-        add(btnObat);
+        jPanel1.add(btnObat);
         btnObat.setBounds(10, 220, 230, 60);
 
         btnDasboard.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/imagebtn/btndashboard2.png"))); // NOI18N
@@ -152,7 +158,7 @@ public class Transaksi extends javax.swing.JPanel {
                 btnDasboardMousePressed(evt);
             }
         });
-        add(btnDasboard);
+        jPanel1.add(btnDasboard);
         btnDasboard.setBounds(10, 140, 230, 60);
 
         btnSupplier.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/imagebtn/btnsupplier2.png"))); // NOI18N
@@ -170,7 +176,7 @@ public class Transaksi extends javax.swing.JPanel {
                 btnSupplierMousePressed(evt);
             }
         });
-        add(btnSupplier);
+        jPanel1.add(btnSupplier);
         btnSupplier.setBounds(10, 295, 230, 60);
 
         jScrollPane1.setBorder(null);
@@ -188,17 +194,17 @@ public class Transaksi extends javax.swing.JPanel {
         ));
         jScrollPane1.setViewportView(table1);
 
-        add(jScrollPane1);
+        jPanel1.add(jScrollPane1);
         jScrollPane1.setBounds(300, 200, 1000, 240);
 
         btnpembelianstok1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/imagebtn/pilih pemebelian.png"))); // NOI18N
         btnpembelianstok1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        add(btnpembelianstok1);
+        jPanel1.add(btnpembelianstok1);
         btnpembelianstok1.setBounds(280, 120, 220, 38);
 
         btnpenjualan1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/imagebtn/Pilih penjualan.png"))); // NOI18N
         btnpenjualan1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        add(btnpenjualan1);
+        jPanel1.add(btnpenjualan1);
         btnpenjualan1.setBounds(510, 120, 220, 38);
 
         btnpenjualan.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/imagebtn/Penjualan.png"))); // NOI18N
@@ -208,7 +214,7 @@ public class Transaksi extends javax.swing.JPanel {
                 btnpenjualanMouseClicked(evt);
             }
         });
-        add(btnpenjualan);
+        jPanel1.add(btnpenjualan);
         btnpenjualan.setBounds(560, 125, 130, 30);
 
         btnpembelianstok.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/imagebtn/Pembelian.png"))); // NOI18N
@@ -218,42 +224,42 @@ public class Transaksi extends javax.swing.JPanel {
                 btnpembelianstokMouseClicked(evt);
             }
         });
-        add(btnpembelianstok);
+        jPanel1.add(btnpembelianstok);
         btnpembelianstok.setBounds(330, 130, 140, 19);
 
         txt_namaobat1.setBackground(new java.awt.Color(245, 241, 241));
         txt_namaobat1.setBorder(null);
-        add(txt_namaobat1);
+        jPanel1.add(txt_namaobat1);
         txt_namaobat1.setBounds(420, 565, 210, 30);
 
         txt_namaobat2.setBackground(new java.awt.Color(245, 241, 241));
         txt_namaobat2.setBorder(null);
-        add(txt_namaobat2);
+        jPanel1.add(txt_namaobat2);
         txt_namaobat2.setBounds(680, 565, 210, 30);
 
         txt_namaobat3.setBackground(new java.awt.Color(245, 241, 241));
         txt_namaobat3.setBorder(null);
-        add(txt_namaobat3);
+        jPanel1.add(txt_namaobat3);
         txt_namaobat3.setBounds(950, 565, 210, 30);
 
         txt_namaobat4.setBackground(new java.awt.Color(245, 241, 241));
         txt_namaobat4.setBorder(null);
-        add(txt_namaobat4);
+        jPanel1.add(txt_namaobat4);
         txt_namaobat4.setBounds(690, 640, 210, 30);
 
         txt_namaobat5.setBackground(new java.awt.Color(245, 241, 241));
         txt_namaobat5.setBorder(null);
-        add(txt_namaobat5);
+        jPanel1.add(txt_namaobat5);
         txt_namaobat5.setBounds(430, 640, 210, 30);
 
         txt_namaobat6.setBackground(new java.awt.Color(245, 241, 241));
         txt_namaobat6.setBorder(null);
-        add(txt_namaobat6);
+        jPanel1.add(txt_namaobat6);
         txt_namaobat6.setBounds(950, 635, 210, 30);
 
         txt_namaobat.setBackground(new java.awt.Color(245, 241, 241));
         txt_namaobat.setBorder(null);
-        add(txt_namaobat);
+        jPanel1.add(txt_namaobat);
         txt_namaobat.setBounds(680, 495, 210, 30);
 
         btncariobat.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/imagebtn/btncariobat1.png"))); // NOI18N
@@ -271,7 +277,7 @@ public class Transaksi extends javax.swing.JPanel {
                 btncariobatMousePressed(evt);
             }
         });
-        add(btncariobat);
+        jPanel1.add(btncariobat);
         btncariobat.setBounds(1140, 120, 210, 47);
 
         btnreset.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/imagebtn/btnreset1.png"))); // NOI18N
@@ -289,7 +295,7 @@ public class Transaksi extends javax.swing.JPanel {
                 btnresetMousePressed(evt);
             }
         });
-        add(btnreset);
+        jPanel1.add(btnreset);
         btnreset.setBounds(1220, 470, 130, 40);
 
         btnhapustable.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/imagebtn/btnhapustabel1.png"))); // NOI18N
@@ -307,7 +313,7 @@ public class Transaksi extends javax.swing.JPanel {
                 btnhapustableMousePressed(evt);
             }
         });
-        add(btnhapustable);
+        jPanel1.add(btnhapustable);
         btnhapustable.setBounds(1090, 470, 130, 40);
 
         btnprosestransaksi.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/imagebtn/btnprosestransaksi1.png"))); // NOI18N
@@ -325,12 +331,15 @@ public class Transaksi extends javax.swing.JPanel {
                 btnprosestransaksiMousePressed(evt);
             }
         });
-        add(btnprosestransaksi);
+        jPanel1.add(btnprosestransaksi);
         btnprosestransaksi.setBounds(650, 690, 280, 60);
 
         bg.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/imagebg/bg Transaksi Pembelian.png"))); // NOI18N
-        add(bg);
+        jPanel1.add(bg);
         bg.setBounds(0, 0, 1366, 768);
+
+        add(jPanel1);
+        jPanel1.setBounds(0, 0, 1370, 770);
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnLogoutMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnLogoutMouseClicked
@@ -460,9 +469,19 @@ public class Transaksi extends javax.swing.JPanel {
     }//GEN-LAST:event_btnpembelianstokMouseClicked
 
     private void btncariobatMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btncariobatMouseClicked
-    main main = (main)SwingUtilities.getWindowAncestor(this);
-        pilihobat obat = new pilihobat(main);
-        obat.showPopUp();
+    
+        Container parent = this.getParent();
+
+// Mendapatkan index saat ini dari panel dalam parent container
+    int currentIndex = parent.getComponentZOrder(this);
+        System.out.println(currentIndex);
+// Memindahkan panel ke index terbawah (indeks 0)
+    parent.setComponentZOrder(this, currentIndex);
+        pilihobatpenjualan apa = new pilihobatpenjualan();
+        GlassPanePopup.showPopup(new pilihobatpenjualan());
+//        main main = (main)SwingUtilities.getWindowAncestor(this);
+//        pilihobat obat = new pilihobat(main);
+//        obat.showPopUp();
     }//GEN-LAST:event_btncariobatMouseClicked
 
     private void btncariobatMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btncariobatMouseEntered
@@ -543,6 +562,7 @@ public class Transaksi extends javax.swing.JPanel {
     private javax.swing.JLabel btnpenjualan1;
     private javax.swing.JLabel btnprosestransaksi;
     private javax.swing.JLabel btnreset;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private view.swing.Table table1;
     private javax.swing.JTextField txt_namaobat;
