@@ -6,15 +6,19 @@ package view.dialog;
 
 import entity.obat;
 import javax.swing.JFrame;
+import javax.swing.SwingUtilities;
+import main.main;
 import panel.Obat;
 import repository.obatRepository;
 import repository.userRepository;
 
 public class editObat extends Dialog {
     userRepository pegawai = new userRepository();
-    Obat apa= new Obat();
+    public static int data = 0;
+    public static String data1 = "sasaa";
+//    Obat apa= new Obat();
     obatRepository obat = new obatRepository();
-    private int id = apa.id;
+    private int id = Obat.id;
     public editObat(JFrame frame) {
         super(frame);
         initComponents();
@@ -95,7 +99,11 @@ public class editObat extends Dialog {
     boolean cobak = obat.update(editya);
     if(cobak){
 //       apa.load_tabel();
+//main main = (main)SwingUtilities.getWindowAncestor(this);
+//main.showObat();
+//    data1 = "gege";
         closeMessage();
+//        refreshPanel();
         System.out.println("berhasil tambah tok");
     }else{
         System.out.println("gagal tambah stok");

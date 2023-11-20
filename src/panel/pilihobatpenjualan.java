@@ -20,7 +20,7 @@ import view.glasspanel.GlassPanePopup;
  */
 public class pilihobatpenjualan extends javax.swing.JPanel {
     private int id = 0;
-    public static int jumlah,subtotal;
+    public static int kode,jumlah,subtotal;
 //    public static String nama,kode, harga,jumlah,subtotal; 
 obatRepository datamaster = new obatRepository();
     public pilihobatpenjualan() {
@@ -97,9 +97,9 @@ public void load_tabel(){
             txt_subtotal.setText("Invalid input");
         }
     }
-    private static void tambahData(DefaultTableModel model, String col1, String col2, int col3, int col4, int col5) {
-        Object[] data = {col1, col2, col3, col4, col5};
-        model.addRow(data);
+    public static void tambahData(DefaultTableModel model) {
+//        Object[] data = {col1, col2, col3, col4, col5};
+//        model.addRow(data);
     }
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -200,7 +200,10 @@ public void load_tabel(){
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnsimpanMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnsimpanMouseClicked
-        tambahData(txt_kodeobat, TOOL_TIP_TEXT_KEY, ABORT, ABORT, ABORT, TOOL_TIP_TEXT_KEY);
+        
+        kode = Integer.valueOf(txt_kodeobat.getText());
+        jumlah = Integer.valueOf(txt_jumlah.getText());
+        subtotal = Integer.valueOf(txt_subtotal.getText());
     }//GEN-LAST:event_btnsimpanMouseClicked
 
     private void btnsimpanMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnsimpanMouseEntered

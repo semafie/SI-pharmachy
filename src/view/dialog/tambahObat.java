@@ -95,10 +95,10 @@ public class tambahObat extends Dialog {
         obat obat = new obat(txt_namaobat.getText(), Integer.valueOf(txt_hargaobat.getText()),Integer.valueOf(txt_jumlahstok.getText()));
         boolean cobanambah = apa.add(obat);
         if(cobanambah){
-            Obat iyu = new Obat();
+//            Obat iyu = new Obat();
             System.out.println("berhasil");
             closeMessage();
-            iyu.load_tabel();
+//            iyu.load_tabel();
         } else {
             System.out.println("gagal");
         }

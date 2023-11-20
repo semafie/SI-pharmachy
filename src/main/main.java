@@ -26,6 +26,7 @@ public class main extends javax.swing.JFrame {
     }
     public void showDasboard(){
         Dasboard a = new Dasboard();
+        
         a.setSize(1366,768);
         this.add(a);
         this.revalidate();
@@ -33,6 +34,7 @@ public class main extends javax.swing.JFrame {
     }
     public void showObat(){
         Obat a = new Obat();
+        a.load_tabel();
         a.setSize(1366,768);
         this.add(a);
         this.revalidate();

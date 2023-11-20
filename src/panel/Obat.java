@@ -12,6 +12,8 @@ import com.lowagie.text.pdf.PdfPTable;
 import com.lowagie.text.pdf.PdfWriter;
 import entity.obat;
 import java.awt.Color;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.sql.Connection;
@@ -23,6 +25,7 @@ import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.SwingUtilities;
+import javax.swing.Timer;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
 import main.main;
@@ -34,16 +37,18 @@ import view.dialog.editstokObat;
 import view.dialog.tambahObat;
 
 public class Obat extends javax.swing.JPanel {
-private String pilih;
+private String pilih = "semua stok";
     obatRepository datamaster = new obatRepository();
     public static int id;
+    
     public Obat() {
         initComponents();
         btnsemuastok.setVisible(false);
         btnstokmenipis1.setVisible(false);
         btnCetak.setVisible(false);
+//        if(pilih.equals("semua stok")){
         load_tabel();
-        pilih = "semua stok";
+//        }
         int rowCount = table.getRowCount();
         total.setText(String.valueOf(rowCount));
     }
@@ -358,6 +363,9 @@ private String pilih;
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btnstokmenipisMouseClicked(evt);
             }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnstokmenipisMouseEntered(evt);
+            }
         });
         add(btnstokmenipis);
         btnstokmenipis.setBounds(540, 95, 150, 30);
@@ -398,6 +406,9 @@ private String pilih;
         table.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 tableMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                tableMouseEntered(evt);
             }
         });
         jScrollPane1.setViewportView(table);
@@ -498,6 +509,11 @@ private String pilih;
         btnCetak.setBounds(280, 150, 150, 60);
 
         bg.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/imagebg/bg Obat Semua Stok.png"))); // NOI18N
+        bg.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                bgMouseEntered(evt);
+            }
+        });
         add(bg);
         bg.setBounds(0, 0, 1366, 768);
     }// </editor-fold>//GEN-END:initComponents
@@ -615,7 +631,8 @@ private String pilih;
     btnsemuastok1.setVisible(true);
     btnstokmenipis.setVisible(true);
     btnstokmenipis1.setVisible(false);
-    pilih = "semua stok";
+    search.setText("");
+//    pilih = "semua stok";
     btnTambah.setVisible(true);
     btnEdit.setVisible(true);
     btnHapus.setVisible(true);
@@ -630,12 +647,13 @@ private String pilih;
     btnTambah.setVisible(false);
     btnEdit.setVisible(false);
     btnHapus.setVisible(false);
+    search.setText("");
     btnsemuastok.setVisible(true);
     btnsemuastok1.setVisible(false);
     btnstokmenipis.setVisible(false);
     btnstokmenipis1.setVisible(true);
     btntambahstok.setVisible(false);
-    pilih = "stok menipis";
+//    pilih = "stok menipis";
     load_tabel1();
     }//GEN-LAST:event_btnstokmenipisMouseClicked
 
@@ -669,6 +687,7 @@ private String pilih;
     main main = (main)SwingUtilities.getWindowAncestor(this);
         editObat apa = new editObat(main);
         apa.showPopUp();
+        load_tabel();
     }//GEN-LAST:event_btnEditMouseClicked
 
     private void btnEditMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEditMouseEntered
@@ -687,6 +706,7 @@ private String pilih;
         main main =(main)SwingUtilities.getWindowAncestor(this);
         tambahObat tambah = new tambahObat(main);
         tambah.showPopUp();
+        load_tabel();
     }//GEN-LAST:event_btnTambahMouseClicked
 
     private void btnTambahMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnTambahMouseEntered
@@ -718,13 +738,14 @@ private String pilih;
     }//GEN-LAST:event_btnCetakMousePressed
 
     private void btntambahstokMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btntambahstokMouseClicked
-    if(id != 0){
+//    if(id != 0){
         main main =(main)SwingUtilities.getWindowAncestor(this);
         editstokObat tambah = new editstokObat(main);
         tambah.showPopUp();
-    } else {
-        System.out.println("pilih tabel dulu");
-    }
+        load_tabel();
+//    } else {
+//        System.out.println("pilih tabel dulu");
+//    }
     }//GEN-LAST:event_btntambahstokMouseClicked
 
     private void btntambahstokMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btntambahstokMouseEntered
@@ -743,8 +764,19 @@ private String pilih;
     int baris = table.rowAtPoint(evt.getPoint());
         String idd = table.getValueAt(baris, 0).toString();
         id = Integer.valueOf(idd);
-        System.out.println(id);
     }//GEN-LAST:event_tableMouseClicked
+
+    private void bgMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bgMouseEntered
+//    load_tabel();
+    }//GEN-LAST:event_bgMouseEntered
+
+    private void tableMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableMouseEntered
+//    load_tabel();
+    }//GEN-LAST:event_tableMouseEntered
+
+    private void btnstokmenipisMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnstokmenipisMouseEntered
+//load_tabel1();
+    }//GEN-LAST:event_btnstokmenipisMouseEntered
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -767,7 +799,7 @@ private String pilih;
     private javax.swing.JLabel btntambahstok;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextField search;
-    private view.swing.Table table;
+    public static view.swing.Table table;
     private javax.swing.JLabel total;
     // End of variables declaration//GEN-END:variables
 }

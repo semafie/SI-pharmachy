@@ -11,9 +11,9 @@ import repository.obatRepository;
 import repository.userRepository;
 
 public class editstokObat extends Dialog {
-    Obat apa= new Obat();
+    
     obatRepository obat = new obatRepository();
-    private int id = apa.id;
+    private int id = Obat.id;
     userRepository pegawai = new userRepository();
     
     public editstokObat(JFrame frame) {
@@ -110,7 +110,7 @@ public class editstokObat extends Dialog {
         obat editya = new obat(id,stokbaru);
     boolean cobak = obat.updatestok(editya);
     if(cobak){
-        apa.load_tabel();
+//        apa.load_tabel();
         closeMessage();
         System.out.println("berhasil tambah tok");
     }else{
