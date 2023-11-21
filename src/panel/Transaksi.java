@@ -3,7 +3,9 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
  */
 package panel;
+
 import entity.obat;
+import entity.supplier;
 import java.awt.Color;
 import java.awt.Container;
 import javax.swing.SwingUtilities;
@@ -11,10 +13,15 @@ import javax.swing.table.DefaultTableModel;
 import main.main;
 import repository.obatRepository;
 import util.Conn;
+import java.text.SimpleDateFormat;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.PreparedStatement;
 import java.sql.Connection;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import repository.pembelianRepository;
+import repository.supplierRepository;
 import view.dialog.Validasilogout1;
 import view.dialog.pilihobat;
 import view.glasspanel.GlassPanePopup;
@@ -28,26 +35,41 @@ public class Transaksi extends javax.swing.JPanel {
     /**
      * Creates new form Transaksi
      */
+    supplierRepository supp = new supplierRepository();
     obatRepository obat = new obatRepository();
+    pembelianRepository pembelian = new pembelianRepository();
     private int id;
-    private int kode = pilihobatpembelian.kode,subtotal = pilihobatpembelian.subtotal;
-    private int kode1 = pilihobatpenjualan.kode,jumlah1= pilihobatpenjualan.jumlah, subtotal1 = pilihobatpenjualan.subtotal;
+    private int kode = pilihobatpembelian.kode, subtotal = pilihobatpembelian.subtotal;
+    private int kode1 = pilihobatpenjualan.kode, jumlah1 = pilihobatpenjualan.jumlah, subtotal1 = pilihobatpenjualan.subtotal;
+    private String kodeterakhir = pembelian.getlastkode().getKodepembelian();
+    
     public Transaksi() {
         initComponents();
+        if(kodeterakhir == null){
+            txt_idtransaksi.setText("TRP1");
+        } else {
+            
+        }
+//        System.out.println(kodeterakhir);
+        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+        Date hayo = new Date();
+        txt_tanggalbeli.setText(sdf.format(hayo));
         jPanel2.setVisible(false);
+        jPanel3.setVisible(false);
         load_tabel();
+        load_tabelsup();
         DefaultTableModel model = new DefaultTableModel();
         model.addColumn("Kode Obat");
         model.addColumn("Nama Obat");
-        model.addColumn("Harga");
+        
         model.addColumn("Jumlah Beli");
         model.addColumn("Sub Total");
         table23.setModel(model);
         btnpembelianstok.setVisible(false);
         btnpenjualan1.setVisible(false);
     }
-    
-    public static void tambahData( int col1, String col2, int col3, int col4, int col5) {
+
+    public static void tambahData(int col1, String col2, int col4, int col5) {
 //        Object[] data = {col1, col2, col3, col4, col5};
 //        DefaultTableModel model = (DefaultTableModel) table.getModel();
 ////        model = (DefaultTableModel)table.getModel();
@@ -71,58 +93,57 @@ public class Transaksi extends javax.swing.JPanel {
 //                model.addRow(data);
 //            }
 //        }
-DefaultTableModel model = (DefaultTableModel) table23.getModel();
-    boolean kodeExists = false;
+        DefaultTableModel model = (DefaultTableModel) table23.getModel();
+        boolean kodeExists = false;
 
-    // Iterasi untuk memeriksa apakah nilai kolom kode sudah ada dalam tabel
-    for (int row = 0; row < model.getRowCount(); row++) {
-        int kode = (int) model.getValueAt(row, 0);
-        if (kode == col1) {
-            // Jika sudah ada, ubah nilai kolom ke-4
-            int nilaiSebelumnya = (int) model.getValueAt(row, 3);
-            int nilaiSebelumnya1 = (int) model.getValueAt(row, 4);
-            int nilaiBaru = nilaiSebelumnya + col4;
-            int nilaiBaru1 = nilaiSebelumnya1 + col5;
-            model.setValueAt(nilaiBaru, row, 3);
-            model.setValueAt(nilaiBaru1, row, 4);
-            kodeExists = true;
-            break;  // Keluar dari loop karena nilai kode sudah ditemukan
+        // Iterasi untuk memeriksa apakah nilai kolom kode sudah ada dalam tabel
+        for (int row = 0; row < model.getRowCount(); row++) {
+            int kode = (int) model.getValueAt(row, 0);
+            if (kode == col1) {
+                // Jika sudah ada, ubah nilai kolom ke-4
+                int nilaiSebelumnya = (int) model.getValueAt(row, 2);
+                int nilaiSebelumnya1 = (int) model.getValueAt(row, 3);
+                int nilaiBaru = nilaiSebelumnya + col4;
+                int nilaiBaru1 = nilaiSebelumnya1 + col5;
+                model.setValueAt(col4, row, 2);
+                model.setValueAt(col5, row, 3);
+                kodeExists = true;
+                break;  // Keluar dari loop karena nilai kode sudah ditemukan
+            }
+        }
+
+        // Jika nilai kode belum ada dalam tabel, tambahkan baris baru
+        if (!kodeExists) {
+            Object[] data = {col1, col2, col4, col5};
+            model.addRow(data);
         }
     }
 
-    // Jika nilai kode belum ada dalam tabel, tambahkan baris baru
-    if (!kodeExists) {
-        Object[] data = {col1, col2, col3, col4, col5};
-        model.addRow(data);
-    }
-    }
-
-    private void updateTextField2(String apa) {
-        try {
-            // Get the value from textField1
-            int value = Integer.parseInt(apa);
-            int value2 = Integer.parseInt(txt_hargasatuan.getText());
-            
-            
-            // Multiply by 10000
-            int result = value * value2;
-
-            // Set the result in textField2
-            txt_subtotal.setText(String.valueOf(result));
-        } catch (NumberFormatException e) {
-            txt_subtotal.setText("Invalid input");
-        }
-    }
-    
-    public void load_tabel(){
+//    private void updateTextField2(String apa) {
+//        try {
+//            // Get the value from textField1
+//            int value = Integer.parseInt(apa);
+//            int value2 = Integer.parseInt(txt_hargasatuan.getText());
+//            
+//            
+//            // Multiply by 10000
+//            int result = value * value2;
+//
+//            // Set the result in textField2
+//            txt_subtotal.setText(String.valueOf(result));
+//        } catch (NumberFormatException e) {
+//            txt_subtotal.setText("Invalid input");
+//        }
+//    }
+    public void load_tabel() {
         DefaultTableModel model = new DefaultTableModel();
         model.addColumn("ID");
         model.addColumn("NAMA_OBAT");
         model.addColumn("HARGA_OBAT");
         model.addColumn("JUMLAH_STOK");
-    
+
         try {
-            for(obat apa:obat.get()){
+            for (obat apa : obat.get()) {
                 model.addRow(new Object[]{
                     apa.getId(),
                     apa.getNama_obat(),
@@ -135,61 +156,115 @@ DefaultTableModel model = (DefaultTableModel) table23.getModel();
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
-        
-        
+
     }
+
     public void load_tabel(String search) {
-    DefaultTableModel model = new DefaultTableModel();
-    model.addColumn("ID");
-    model.addColumn("NAMA_OBAT");
-    model.addColumn("HARGA_OBAT");
-    model.addColumn("JUMLAH_STOK");
+        DefaultTableModel model = new DefaultTableModel();
+        model.addColumn("ID");
+        model.addColumn("NAMA_OBAT");
+        model.addColumn("HARGA_OBAT");
+        model.addColumn("JUMLAH_STOK");
 
-    try {
-        String sql = "SELECT * FROM obat WHERE id LIKE ? OR nama_obat LIKE ?";
-        Connection koneksi = (Connection) Conn.configDB();
-        PreparedStatement pst = koneksi.prepareStatement(sql);
-        pst.setString(1, "%" + search + "%");
-        pst.setString(2, "%" + search + "%");
+        try {
+            String sql = "SELECT * FROM obat WHERE id LIKE ? OR nama_obat LIKE ?";
+            Connection koneksi = (Connection) Conn.configDB();
+            PreparedStatement pst = koneksi.prepareStatement(sql);
+            pst.setString(1, "%" + search + "%");
+            pst.setString(2, "%" + search + "%");
 
-        ResultSet res = pst.executeQuery();
+            ResultSet res = pst.executeQuery();
+            while (res.next()) {
+                model.addRow(new Object[]{
+                    res.getString("id"),
+                    res.getString("nama_obat"),
+                    res.getString("harga_obat"),
+                    res.getString("jumlah_stok")
+                });
+            }
 
-        while (res.next()) {
-            model.addRow(new Object[]{
-                res.getString("id"),
-                res.getString("nama_obat"),
-                res.getString("harga_obat"),
-                res.getString("jumlah_stok")
-            });
+            table.setModel(model);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-
-        table.setModel(model);
-    } catch (Exception e) {
-        e.printStackTrace();
     }
-}
-    
+
+    public void load_tabelsup() {
+        DefaultTableModel model = new DefaultTableModel();
+        model.addColumn("ID");
+        model.addColumn("NAMA_OBAT");
+        model.addColumn("NO TELP");
+        model.addColumn("ALAMAT");
+
+        try {
+            for (supplier apa : supp.get()) {
+                model.addRow(new Object[]{
+                    apa.getId(),
+                    apa.getNama_supplier(),
+                    apa.getNo_tlp(),
+                    apa.getAlamat()
+
+                });
+            }
+            table3.setModel(model);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    public void load_tabelsup(String search) {
+        DefaultTableModel model = new DefaultTableModel();
+        model.addColumn("ID");
+        model.addColumn("NAMA_SUPPLIER");
+        model.addColumn("NO_TELP");
+        model.addColumn("ALAMAT");
+
+        try {
+            String sql = "SELECT * FROM supplier WHERE id LIKE ? OR nama_supplier LIKE ?";
+            Connection koneksi = (Connection) Conn.configDB();
+            PreparedStatement pst = koneksi.prepareStatement(sql);
+            pst.setString(1, "%" + search + "%");
+            pst.setString(2, "%" + search + "%");
+
+            ResultSet res = pst.executeQuery();
+
+            while (res.next()) {
+                model.addRow(new Object[]{
+                    res.getString("id"),
+                    res.getString("nama_supplier"),
+                    res.getString("no_tlp"),
+                    res.getString("alamat")
+                });
+            }
+
+            table3.setModel(model);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel3 = new javax.swing.JPanel();
-        jScrollPane3 = new javax.swing.JScrollPane();
-        table3 = new view.swing.Table();
-        btnsimpan1 = new javax.swing.JLabel();
-        btnbatal1 = new javax.swing.JLabel();
-        bg2 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         btnsimpan = new javax.swing.JLabel();
         btnbatal = new javax.swing.JLabel();
         txt_subtotal = new javax.swing.JTextField();
         txt_jumlah = new javax.swing.JTextField();
-        txt_hargasatuan = new javax.swing.JTextField();
         txt_namaobat7 = new javax.swing.JTextField();
         txt_kodeobat = new javax.swing.JTextField();
         jScrollPane2 = new javax.swing.JScrollPane();
         table = new view.swing.Table();
         bg1 = new javax.swing.JLabel();
+        jPanel3 = new javax.swing.JPanel();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        table3 = new view.swing.Table();
+        btnsimpan1 = new javax.swing.JLabel();
+        btnbatal1 = new javax.swing.JLabel();
+        txt_namasuplier1 = new javax.swing.JTextField();
+        kodesuplier1 = new javax.swing.JTextField();
+        bg2 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         btnLogout = new javax.swing.JLabel();
         btnPegawai = new javax.swing.JLabel();
@@ -219,74 +294,6 @@ DefaultTableModel model = (DefaultTableModel) table23.getModel();
         bg = new javax.swing.JLabel();
 
         setLayout(null);
-
-        jPanel3.setLayout(null);
-
-        jScrollPane3.setBorder(null);
-
-        table3.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
-        ));
-        table3.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                table3MouseClicked(evt);
-            }
-        });
-        jScrollPane3.setViewportView(table3);
-
-        jPanel3.add(jScrollPane3);
-        jScrollPane3.setBounds(300, 220, 780, 200);
-
-        btnsimpan1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/imagebtn/btnsimpan1.png"))); // NOI18N
-        btnsimpan1.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnsimpan1MouseClicked(evt);
-            }
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                btnsimpan1MouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                btnsimpan1MouseExited(evt);
-            }
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                btnsimpan1MousePressed(evt);
-            }
-        });
-        jPanel3.add(btnsimpan1);
-        btnsimpan1.setBounds(730, 620, 190, 51);
-
-        btnbatal1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/imagebtn/btnbatal1.png"))); // NOI18N
-        btnbatal1.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnbatal1MouseClicked(evt);
-            }
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                btnbatal1MouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                btnbatal1MouseExited(evt);
-            }
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                btnbatal1MousePressed(evt);
-            }
-        });
-        jPanel3.add(btnbatal1);
-        btnbatal1.setBounds(500, 620, 190, 51);
-
-        bg2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/imagebg/form pilih supplier.png"))); // NOI18N
-        jPanel3.add(bg2);
-        bg2.setBounds(230, 70, 891, 630);
-
-        add(jPanel3);
-        jPanel3.setBounds(0, 0, 1370, 770);
 
         jPanel2.setBackground(new Color(0,0,0,70));
         jPanel2.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -345,17 +352,13 @@ DefaultTableModel model = (DefaultTableModel) table23.getModel();
         jPanel2.add(txt_jumlah);
         txt_jumlah.setBounds(450, 560, 220, 30);
 
-        txt_hargasatuan.setBorder(null);
-        jPanel2.add(txt_hargasatuan);
-        txt_hargasatuan.setBounds(860, 480, 220, 30);
-
         txt_namaobat7.setBorder(null);
         jPanel2.add(txt_namaobat7);
-        txt_namaobat7.setBounds(580, 480, 230, 30);
+        txt_namaobat7.setBounds(750, 480, 220, 30);
 
         txt_kodeobat.setBorder(null);
         jPanel2.add(txt_kodeobat);
-        txt_kodeobat.setBounds(310, 480, 220, 30);
+        txt_kodeobat.setBounds(450, 480, 220, 30);
 
         jScrollPane2.setBorder(null);
 
@@ -380,12 +383,94 @@ DefaultTableModel model = (DefaultTableModel) table23.getModel();
         jPanel2.add(jScrollPane2);
         jScrollPane2.setBounds(300, 220, 780, 200);
 
-        bg1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/imagebg/form pilih obat.png"))); // NOI18N
+        bg1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/imagebg/formpilihobatpembelian (1).png"))); // NOI18N
         jPanel2.add(bg1);
         bg1.setBounds(230, 70, 891, 620);
 
         add(jPanel2);
         jPanel2.setBounds(0, 0, 1370, 770);
+
+        jPanel3.setBackground(new Color(0,0,0,80));
+        jPanel3.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jPanel3MouseEntered(evt);
+            }
+        });
+        jPanel3.setLayout(null);
+
+        jScrollPane3.setBorder(null);
+
+        table3.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        table3.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                table3MouseClicked(evt);
+            }
+        });
+        jScrollPane3.setViewportView(table3);
+
+        jPanel3.add(jScrollPane3);
+        jScrollPane3.setBounds(300, 230, 780, 190);
+
+        btnsimpan1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/imagebtn/btnsimpan1.png"))); // NOI18N
+        btnsimpan1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnsimpan1MouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnsimpan1MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnsimpan1MouseExited(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                btnsimpan1MousePressed(evt);
+            }
+        });
+        jPanel3.add(btnsimpan1);
+        btnsimpan1.setBounds(730, 620, 190, 51);
+
+        btnbatal1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/imagebtn/btnbatal1.png"))); // NOI18N
+        btnbatal1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnbatal1MouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnbatal1MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnbatal1MouseExited(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                btnbatal1MousePressed(evt);
+            }
+        });
+        jPanel3.add(btnbatal1);
+        btnbatal1.setBounds(500, 620, 190, 51);
+
+        txt_namasuplier1.setBorder(null);
+        jPanel3.add(txt_namasuplier1);
+        txt_namasuplier1.setBounds(740, 516, 230, 30);
+
+        kodesuplier1.setBorder(null);
+        jPanel3.add(kodesuplier1);
+        kodesuplier1.setBounds(440, 516, 230, 30);
+
+        bg2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/imagebg/form pilih supplier.png"))); // NOI18N
+        jPanel3.add(bg2);
+        bg2.setBounds(230, 70, 891, 630);
+
+        add(jPanel3);
+        jPanel3.setBounds(0, 0, 1370, 770);
 
         jPanel1.setLayout(null);
 
@@ -551,16 +636,19 @@ DefaultTableModel model = (DefaultTableModel) table23.getModel();
 
         txt_idtransaksi.setBackground(new java.awt.Color(245, 241, 241));
         txt_idtransaksi.setBorder(null);
+        txt_idtransaksi.setFocusable(false);
         jPanel1.add(txt_idtransaksi);
         txt_idtransaksi.setBounds(420, 565, 210, 30);
 
         txt_kodesuplier.setBackground(new java.awt.Color(245, 241, 241));
         txt_kodesuplier.setBorder(null);
+        txt_kodesuplier.setFocusable(false);
         jPanel1.add(txt_kodesuplier);
         txt_kodesuplier.setBounds(680, 565, 210, 30);
 
         txt_namasuplier.setBackground(new java.awt.Color(245, 241, 241));
         txt_namasuplier.setBorder(null);
+        txt_namasuplier.setFocusable(false);
         jPanel1.add(txt_namasuplier);
         txt_namasuplier.setBounds(950, 565, 210, 30);
 
@@ -580,7 +668,9 @@ DefaultTableModel model = (DefaultTableModel) table23.getModel();
         txt_kembali.setBounds(950, 635, 210, 30);
 
         txt_tanggalbeli.setBackground(new java.awt.Color(245, 241, 241));
+        txt_tanggalbeli.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         txt_tanggalbeli.setBorder(null);
+        txt_tanggalbeli.setFocusable(false);
         jPanel1.add(txt_tanggalbeli);
         txt_tanggalbeli.setBounds(680, 495, 210, 30);
 
@@ -683,7 +773,7 @@ DefaultTableModel model = (DefaultTableModel) table23.getModel();
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnLogoutMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnLogoutMouseClicked
-        main main = (main)SwingUtilities.getWindowAncestor(this);
+        main main = (main) SwingUtilities.getWindowAncestor(this);
         Validasilogout1 apa = new Validasilogout1(main);
         apa.showPopUp();
     }//GEN-LAST:event_btnLogoutMouseClicked
@@ -701,7 +791,7 @@ DefaultTableModel model = (DefaultTableModel) table23.getModel();
     }//GEN-LAST:event_btnLogoutMousePressed
 
     private void btnPegawaiMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnPegawaiMouseClicked
-    main main = (main)SwingUtilities.getWindowAncestor(this);
+        main main = (main) SwingUtilities.getWindowAncestor(this);
         this.setVisible(false);
         main.showPegawai();
     }//GEN-LAST:event_btnPegawaiMouseClicked
@@ -719,7 +809,7 @@ DefaultTableModel model = (DefaultTableModel) table23.getModel();
     }//GEN-LAST:event_btnPegawaiMousePressed
 
     private void btnLaporanMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnLaporanMouseClicked
-    main main = (main)SwingUtilities.getWindowAncestor(this);
+        main main = (main) SwingUtilities.getWindowAncestor(this);
         this.setVisible(false);
         main.showLaporan();
     }//GEN-LAST:event_btnLaporanMouseClicked
@@ -737,7 +827,7 @@ DefaultTableModel model = (DefaultTableModel) table23.getModel();
     }//GEN-LAST:event_btnLaporanMousePressed
 
     private void btnObatMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnObatMouseClicked
-        main main = (main)SwingUtilities.getWindowAncestor(this);
+        main main = (main) SwingUtilities.getWindowAncestor(this);
         this.setVisible(false);
         main.showObat();
     }//GEN-LAST:event_btnObatMouseClicked
@@ -755,7 +845,7 @@ DefaultTableModel model = (DefaultTableModel) table23.getModel();
     }//GEN-LAST:event_btnObatMousePressed
 
     private void btnDasboardMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnDasboardMouseClicked
-        main main =(main)SwingUtilities.getWindowAncestor(this);
+        main main = (main) SwingUtilities.getWindowAncestor(this);
         this.setVisible(false);
         main.showDasboardOwner();
     }//GEN-LAST:event_btnDasboardMouseClicked
@@ -773,7 +863,7 @@ DefaultTableModel model = (DefaultTableModel) table23.getModel();
     }//GEN-LAST:event_btnDasboardMousePressed
 
     private void btnSupplierMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSupplierMouseClicked
-        main main = (main)SwingUtilities.getWindowAncestor(this);
+        main main = (main) SwingUtilities.getWindowAncestor(this);
         this.setVisible(false);
         main.showSuplier();
     }//GEN-LAST:event_btnSupplierMouseClicked
@@ -791,12 +881,12 @@ DefaultTableModel model = (DefaultTableModel) table23.getModel();
     }//GEN-LAST:event_btnSupplierMousePressed
 
     private void btnpenjualanMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnpenjualanMouseClicked
-   
+
         btnpembelianstok.setVisible(true);
         btnpembelianstok1.setVisible(false);
         btnpenjualan.setVisible(false);
         btnpenjualan1.setVisible(true);
-        
+
     }//GEN-LAST:event_btnpenjualanMouseClicked
 
     private void btnpembelianstokMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnpembelianstokMouseClicked
@@ -804,7 +894,7 @@ DefaultTableModel model = (DefaultTableModel) table23.getModel();
         btnpembelianstok1.setVisible(true);
         btnpenjualan.setVisible(true);
         btnpenjualan1.setVisible(false);
-        
+
 
     }//GEN-LAST:event_btnpembelianstokMouseClicked
 
@@ -813,15 +903,15 @@ DefaultTableModel model = (DefaultTableModel) table23.getModel();
     }//GEN-LAST:event_btncariobatMouseClicked
 
     private void btncariobatMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btncariobatMouseEntered
-    btncariobat.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/imagebtn/btncariobat2.png")));
+        btncariobat.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/imagebtn/btncariobat2.png")));
     }//GEN-LAST:event_btncariobatMouseEntered
 
     private void btncariobatMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btncariobatMouseExited
-    btncariobat.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/imagebtn/btncariobat1.png")));
+        btncariobat.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/imagebtn/btncariobat1.png")));
     }//GEN-LAST:event_btncariobatMouseExited
 
     private void btncariobatMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btncariobatMousePressed
-    btncariobat.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/imagebtn/btncariobat3.png")));
+        btncariobat.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/imagebtn/btncariobat3.png")));
     }//GEN-LAST:event_btncariobatMousePressed
 
     private void btnprosestransaksiMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnprosestransaksiMouseClicked
@@ -837,39 +927,39 @@ DefaultTableModel model = (DefaultTableModel) table23.getModel();
     }//GEN-LAST:event_btnresetMouseClicked
 
     private void btnprosestransaksiMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnprosestransaksiMouseEntered
-    btnprosestransaksi.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/imagebtn/btnprosestransaksi2.png")));
+        btnprosestransaksi.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/imagebtn/btnprosestransaksi2.png")));
     }//GEN-LAST:event_btnprosestransaksiMouseEntered
 
     private void btnresetMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnresetMouseEntered
-    btnhapustable.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/imagebtn/btnhapustabel2.png")));
+        btnreset.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/imagebtn/btnreset2.png")));
     }//GEN-LAST:event_btnresetMouseEntered
 
     private void btnresetMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnresetMouseExited
-    btnhapustable.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/imagebtn/btnhapustabel1.png")));
+        btnreset.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/imagebtn/btnreset1.png")));
     }//GEN-LAST:event_btnresetMouseExited
 
     private void btnresetMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnresetMousePressed
-    btnhapustable.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/imagebtn/btnhapustabel3.png")));
+        btnreset.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/imagebtn/btnreset3.png")));
     }//GEN-LAST:event_btnresetMousePressed
 
     private void btnhapustableMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnhapustableMouseEntered
-    btnhapustable.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/imagebtn/btnhapustabel2.png")));
+        btnhapustable.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/imagebtn/btnhapustabel2.png")));
     }//GEN-LAST:event_btnhapustableMouseEntered
 
     private void btnhapustableMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnhapustableMouseExited
-    btnhapustable.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/imagebtn/btnhapustabel1.png")));
+        btnhapustable.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/imagebtn/btnhapustabel1.png")));
     }//GEN-LAST:event_btnhapustableMouseExited
 
     private void btnhapustableMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnhapustableMousePressed
-    btnhapustable.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/imagebtn/btnhapustabel3.png")));
+        btnhapustable.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/imagebtn/btnhapustabel3.png")));
     }//GEN-LAST:event_btnhapustableMousePressed
 
     private void btnprosestransaksiMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnprosestransaksiMouseExited
-    btnprosestransaksi.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/imagebtn/btnprosestransaksi1.png")));
+        btnprosestransaksi.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/imagebtn/btnprosestransaksi1.png")));
     }//GEN-LAST:event_btnprosestransaksiMouseExited
 
     private void btnprosestransaksiMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnprosestransaksiMousePressed
-    btnprosestransaksi.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/imagebtn/btnprosestransaksi3.png")));
+        btnprosestransaksi.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/imagebtn/btnprosestransaksi3.png")));
     }//GEN-LAST:event_btnprosestransaksiMousePressed
 
     private void btnsimpanMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnsimpanMouseClicked
@@ -877,8 +967,7 @@ DefaultTableModel model = (DefaultTableModel) table23.getModel();
         //        kode = Integer.valueOf(txt_kodeobat.getText());
         //        jumlah = Integer.valueOf(txt_jumlah.getText());
         //        subtotal = Integer.valueOf(txt_subtotal.getText());
-
-        tambahData(Integer.valueOf(txt_kodeobat.getText()),txt_tanggalbeli.getText(),Integer.valueOf(txt_hargasatuan.getText()),Integer.valueOf(txt_jumlah.getText()),Integer.valueOf(txt_subtotal.getText()));
+        tambahData(Integer.valueOf(txt_kodeobat.getText()), txt_tanggalbeli.getText(), Integer.valueOf(txt_jumlah.getText()), Integer.valueOf(txt_subtotal.getText()));
         //Transaksi.tambahData(Integer.valueOf(txt_kodeobat.getText()),txt_namaobat.getText(),Integer.valueOf(txt_hargasatuan.getText()),Integer.valueOf(txt_jumlah.getText().getText()));
         jPanel2.setVisible(false);
     }//GEN-LAST:event_btnsimpanMouseClicked
@@ -896,7 +985,7 @@ DefaultTableModel model = (DefaultTableModel) table23.getModel();
     }//GEN-LAST:event_btnsimpanMousePressed
 
     private void btnbatalMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnbatalMouseClicked
-jPanel2.setVisible(false);
+        jPanel2.setVisible(false);
     }//GEN-LAST:event_btnbatalMouseClicked
 
     private void btnbatalMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnbatalMouseEntered
@@ -914,11 +1003,11 @@ jPanel2.setVisible(false);
     private void tableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableMouseClicked
         int baris = table.rowAtPoint(evt.getPoint());
         String idd = table.getValueAt(baris, 0).toString();
-        id= Integer.valueOf(idd);
+        id = Integer.valueOf(idd);
         System.out.println(id);
-        if(id != 0){
+        if (id != 0) {
             txt_namaobat7.setText(obat.get(id).getNama_obat());
-            txt_hargasatuan.setText(String.valueOf(obat.get(id).getHarga_obat()));
+//            txt_hargasatuan.setText(String.valueOf(obat.get(id).getHarga_obat()));
             txt_kodeobat.setText(String.valueOf(obat.get(id).getId()));
         } else {
             System.out.println("haloo");
@@ -927,64 +1016,80 @@ jPanel2.setVisible(false);
     }//GEN-LAST:event_tableMouseClicked
 
     private void txt_jumlahKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_jumlahKeyReleased
-        updateTextField2(txt_jumlah.getText());
+//        updateTextField2(txt_jumlah.getText());
     }//GEN-LAST:event_txt_jumlahKeyReleased
 
     private void jPanel2MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel2MouseEntered
-    jPanel2.setVisible(true);
+        jPanel2.setVisible(true);
     }//GEN-LAST:event_jPanel2MouseEntered
 
     private void btncarisuplierMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btncarisuplierMouseClicked
-        // TODO add your handling code here:
+        jPanel3.setVisible(true);
     }//GEN-LAST:event_btncarisuplierMouseClicked
 
     private void btncarisuplierMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btncarisuplierMouseEntered
-    btnhapustable.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/imagebtn/btnhapustabel2.png")));
+        btncarisuplier.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/imagebtn/btncarisupplier2.png")));
     }//GEN-LAST:event_btncarisuplierMouseEntered
 
     private void btncarisuplierMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btncarisuplierMouseExited
-    btnhapustable.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/imagebtn/btnhapustabel1.png")));
+        btncarisuplier.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/imagebtn/btncarisupplier1.png")));
     }//GEN-LAST:event_btncarisuplierMouseExited
 
     private void btncarisuplierMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btncarisuplierMousePressed
-    btnhapustable.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/imagebtn/btnhapustabel3.png")));
+        btncarisuplier.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/imagebtn/btncarisupplier3.png")));
     }//GEN-LAST:event_btncarisuplierMousePressed
 
     private void btnsimpan1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnsimpan1MouseClicked
-        // TODO add your handling code here:
+        txt_kodesuplier.setText(kodesuplier1.getText());
+        txt_namasuplier.setText(txt_namasuplier1.getText());
+        jPanel3.setVisible(false);
     }//GEN-LAST:event_btnsimpan1MouseClicked
 
     private void btnsimpan1MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnsimpan1MouseEntered
-        // TODO add your handling code here:
+        btnsimpan1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/imagebtn/btnsimpan2.png")));
     }//GEN-LAST:event_btnsimpan1MouseEntered
 
     private void btnsimpan1MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnsimpan1MouseExited
-        // TODO add your handling code here:
+        btnsimpan1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/imagebtn/btnsimpan1.png")));
     }//GEN-LAST:event_btnsimpan1MouseExited
 
     private void btnsimpan1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnsimpan1MousePressed
-        // TODO add your handling code here:
+        btnsimpan1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/imagebtn/btnsimpan3.png")));
     }//GEN-LAST:event_btnsimpan1MousePressed
 
     private void btnbatal1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnbatal1MouseClicked
-        // TODO add your handling code here:
+        jPanel3.setVisible(false);
     }//GEN-LAST:event_btnbatal1MouseClicked
 
     private void btnbatal1MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnbatal1MouseEntered
-        // TODO add your handling code here:
+        btnbatal1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/imagebtn/btnbatal2.png")));
     }//GEN-LAST:event_btnbatal1MouseEntered
 
     private void btnbatal1MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnbatal1MouseExited
-        // TODO add your handling code here:
+        btnbatal1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/imagebtn/btnbatal1.png")));
     }//GEN-LAST:event_btnbatal1MouseExited
 
     private void btnbatal1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnbatal1MousePressed
-        // TODO add your handling code here:
+        btnbatal1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/imagebtn/btnbatal3.png")));
     }//GEN-LAST:event_btnbatal1MousePressed
 
     private void table3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_table3MouseClicked
-        // TODO add your handling code here:
+        int baris = table.rowAtPoint(evt.getPoint());
+        String idd = table.getValueAt(baris, 0).toString();
+        id = Integer.valueOf(idd);
+        System.out.println(id);
+        if (id != 0) {
+            kodesuplier1.setText(String.valueOf(supp.get(id).getId()));
+//            txt_hargasatuan.setText(String.valueOf(obat.get(id).getHarga_obat()));
+            txt_namasuplier1.setText(supp.get(id).getNama_supplier());
+        } else {
+            System.out.println("haloo");
+        }
     }//GEN-LAST:event_table3MouseClicked
+
+    private void jPanel3MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel3MouseEntered
+        jPanel3.setVisible(true);
+    }//GEN-LAST:event_jPanel3MouseEntered
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -1017,11 +1122,11 @@ jPanel2.setVisible(false);
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JTextField kodesuplier1;
     private view.swing.Table table;
     public static view.swing.Table table23;
     private view.swing.Table table3;
     private javax.swing.JTextField txt_bayartunai;
-    private javax.swing.JTextField txt_hargasatuan;
     private javax.swing.JTextField txt_idtransaksi;
     private javax.swing.JTextField txt_jumlah;
     private javax.swing.JTextField txt_kembali;
@@ -1029,6 +1134,7 @@ jPanel2.setVisible(false);
     private javax.swing.JTextField txt_kodesuplier;
     private javax.swing.JTextField txt_namaobat7;
     private javax.swing.JTextField txt_namasuplier;
+    private javax.swing.JTextField txt_namasuplier1;
     private javax.swing.JTextField txt_subtotal;
     private javax.swing.JTextField txt_tanggalbeli;
     private javax.swing.JTextField txt_totalharga;

@@ -205,7 +205,7 @@ public void load_tabel(){
 //        jumlah = Integer.valueOf(txt_jumlah.getText());
 //        subtotal = Integer.valueOf(txt_subtotal.getText());
 
-Transaksi.tambahData(Integer.valueOf(txt_kodeobat.getText()),txt_namaobat.getText(),Integer.valueOf(txt_hargasatuan.getText()),Integer.valueOf(txt_jumlah.getText()),Integer.valueOf(txt_subtotal.getText()));
+//Transaksi.tambahData(Integer.valueOf(txt_kodeobat.getText()),txt_namaobat.getText(),Integer.valueOf(txt_hargasatuan.getText()),Integer.valueOf(txt_jumlah.getText()),Integer.valueOf(txt_subtotal.getText()));
 //Transaksi.tambahData(Integer.valueOf(txt_kodeobat.getText()),txt_namaobat.getText(),Integer.valueOf(txt_hargasatuan.getText()),Integer.valueOf(txt_jumlah.getText().getText()));
         GlassPanePopup.closePopupLast();
     }//GEN-LAST:event_btnsimpanMouseClicked

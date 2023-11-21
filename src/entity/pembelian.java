@@ -6,6 +6,7 @@ import java.util.Date;
 
 public class pembelian implements Entity{
     public  static String tableName = "pembelian";
+    private String kodepembelian;
     private supplier supplier;
     private int total_harga, id;
     private Date tanggal;
@@ -17,6 +18,13 @@ public class pembelian implements Entity{
     public pembelian(supplier supplier, Date tanggal, Timestamp jam, int total_harga ) {
     this. supplier = supplier;
 
+    this.tanggal = tanggal;
+    this.jam = jam;
+    this. total_harga = total_harga;
+    }
+    public pembelian(String kode,supplier supplier, Date tanggal, Timestamp jam, int total_harga ) {
+    this. supplier = supplier;
+    this.kodepembelian =kode;
     this.tanggal = tanggal;
     this.jam = jam;
     this. total_harga = total_harga;
@@ -60,6 +68,14 @@ public class pembelian implements Entity{
 
     public int getId() {
         return id;
+    }
+
+    public void setKodepembelian(String kodepembelian) {
+        this.kodepembelian = kodepembelian;
+    }
+
+    public String getKodepembelian() {
+        return kodepembelian;
     }
     
     

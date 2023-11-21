@@ -6,6 +6,7 @@ import java.util.Date;
 
 public class penjualan implements Entity{
     public static String tableName = "penjualan";
+    private String kodepenjulan;
     private Date tanggal;
     private Timestamp jam;
     private int total_harga, id;
@@ -14,7 +15,15 @@ public class penjualan implements Entity{
         
     }
     
+    public penjualan(String kode,Date tanggal, Timestamp jam, int total_harga){
+        this.kodepenjulan = kode;
+        this.tanggal = tanggal; 
+        this.jam =jam;
+        this.total_harga = total_harga;
+    }
+    
     public penjualan(Date tanggal, Timestamp jam, int total_harga){
+        
         this.tanggal = tanggal; 
         this.jam =jam;
         this.total_harga = total_harga;
@@ -50,6 +59,14 @@ public class penjualan implements Entity{
 
     public int getId() {
         return id;
+    }
+
+    public void setKodepenjulan(String kodepenjulan) {
+        this.kodepenjulan = kodepenjulan;
+    }
+
+    public String getKodepenjulan() {
+        return kodepenjulan;
     }
      
    

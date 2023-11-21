@@ -32,6 +32,8 @@ public class pembelianRepository implements Repository<pembelian>{
         }
         return user;
     }
+    
+    
 
     @Override
     public pembelian get(Integer id) {
@@ -51,18 +53,36 @@ public class pembelianRepository implements Repository<pembelian>{
         }
         return us;
     }
-
-    @Override
-    public boolean add(pembelian us) {
-    String sql = "INSERT INTO "+tableName+"( `id_supllier`, `tanggal`, `jam`, `total_harga`) VALUES(?,?,?,?)";
+    
+    public pembelian getlastkode() {
+    String sql = "select * from "+tableName+" ORDER BY id DESC LIMIT 1";
+        pembelian us = new pembelian();
+        
         try {
             Connection koneksi = (Connection)Conn.configDB();
             PreparedStatement pst = koneksi.prepareStatement(sql);
             
-            pst.setInt(1, us.getSupplier().getId());
-            pst.setDate(2,new Date(us.getTanggal().getTime()));
-            pst.setTime(3, new Time(us.getJam().getTime()));
-            pst.setInt(4, us.getTotal_harga());
+            ResultSet res = pst.executeQuery();
+            while (res.next()) {
+                return mapToEntity(res);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return us;
+    }
+
+    @Override
+    public boolean add(pembelian us) {
+    String sql = "INSERT INTO "+tableName+"( `kode`,`id_supllier`, `tanggal`, `jam`, `total_harga`) VALUES(?,?,?,?,?)";
+        try {
+            Connection koneksi = (Connection)Conn.configDB();
+            PreparedStatement pst = koneksi.prepareStatement(sql);
+            pst.setString(1, us.getKodepembelian());
+            pst.setInt(2, us.getSupplier().getId());
+            pst.setDate(3,new Date(us.getTanggal().getTime()));
+            pst.setTime(4, new Time(us.getJam().getTime()));
+            pst.setInt(5, us.getTotal_harga());
             pst.execute();
             return  true;
         } catch (Exception e) {
@@ -108,6 +128,7 @@ public class pembelianRepository implements Repository<pembelian>{
     
     private pembelian mapToEntity(ResultSet res) throws SQLException {
         pembelian us = new pembelian(
+                res.getString("kode"),
                 new supplierRepository().get(res.getInt("id_supplier")),
                 res.getDate("tanggal"),
                 res.getTimestamp("jam"),
