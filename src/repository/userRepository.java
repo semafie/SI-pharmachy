@@ -51,7 +51,7 @@ public class userRepository implements Repository<user>{
 
     @Override
     public boolean add(user us) {
-        String sql = "INSERT INTO "+tableName+"( `nama`, `username`, `password`, `email`, `jenis_kelamin`, `alamat`, `no_tlp`, `level`, `token`) VALUES(?,?,?,?,?,?,?,?,?)";
+        String sql = "INSERT INTO "+tableName+"( `nama`, `username`, `password`, `nik`, `jenis_kelamin`, `alamat`, `no_tlp`, `level`) VALUES(?,?,?,?,?,?,?,?)";
         try {
             Connection koneksi = (Connection)Conn.configDB();
             PreparedStatement pst = koneksi.prepareStatement(sql);
@@ -74,17 +74,18 @@ public class userRepository implements Repository<user>{
 
     @Override
     public boolean update(user us) {
-     String sql = "update "+tableName+" set nama, ? username = ?, password = ?, email = ?, jenis_kelamin = ?, alamat = ?, no_telp = ? ,level = ? where id = ?";
+     String sql = "update "+tableName+" set nama = ?, username = ?, password = ?, nik = ?, jenis_kelamin = ?, alamat = ?, no_tlp = ? where id = ?";
         try {
             Connection koneksi =(Connection)Conn.configDB();
             PreparedStatement pst = koneksi.prepareStatement(sql);
             pst.setString(1, us.getNama());
             pst.setString(2, us.getUsername());
             pst.setString(3, us.getPassword());
-            pst.setString(4, us.getJenis_kelamin());
-            pst.setString(5, us.getNo_tlp());
-            pst.setInt(6, us.getLevel());
-            pst.setInt(7, us.getId());
+            pst.setString(4, us.getEmail());
+            pst.setString(5, us.getJenis_kelamin());
+            pst.setString(6, us.getAlamat());
+            pst.setString(7, us.getNo_tlp());
+            pst.setInt(8, us.getId());
             pst.execute();
             return true;
         } catch (Exception e) {

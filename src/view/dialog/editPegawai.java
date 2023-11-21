@@ -4,7 +4,9 @@
  */
 package view.dialog;
 
+import entity.user;
 import javax.swing.JFrame;
+import panel.Pegawai;
 import repository.userRepository;
 
 /**
@@ -13,10 +15,17 @@ import repository.userRepository;
  */
 public class editPegawai extends Dialog {
     userRepository pegawai = new userRepository();
-    
+    user user = new user();
+    private int id = Pegawai.id;
     public editPegawai(JFrame frame) {
         super(frame);
         initComponents();
+        txt_namaPegawai.setText(pegawai.get(id).getNama());
+        txt_alamat.setText(pegawai.get(id).getAlamat());
+        txt_nik.setText(pegawai.get(id).getEmail());
+        txt_notelp.setText(pegawai.get(id).getNo_tlp());
+        txt_password.setText(pegawai.get(id).getPassword());
+        txt_username.setText(pegawai.get(id).getUsername());
     }
 
     /**
@@ -124,11 +133,21 @@ public class editPegawai extends Dialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btneditMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btneditMouseClicked
-        btnedit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/imagebtn/btnedit1.png")));
+    Object ses = cmb_jeniskelamin.getSelectedItem();
+        String jnk = ses.toString();
+        user dede = new user(id,txt_namaPegawai.getText(), txt_username.getText(), txt_password.getText(), txt_nik.getText(), jnk, txt_alamat.getText(),
+                txt_notelp.getText());
+        boolean cobak = pegawai.update(dede);
+        if(cobak){
+            closeMessage();
+            System.out.println("berhasil");
+        }else{
+            System.out.println("gagal");
+        }
     }//GEN-LAST:event_btneditMouseClicked
 
     private void btnbatalMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnbatalMouseClicked
-        btnbatal.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/imagebtn/btnbatal1.png")));
+        
         closeMessage();
     }//GEN-LAST:event_btnbatalMouseClicked
 

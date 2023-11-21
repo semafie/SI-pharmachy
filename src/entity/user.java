@@ -21,6 +21,17 @@ public class user implements Entity{
         this.token = token;
         this.level = level;
     }
+    public  user(int id, String nama, String username,String password, String email, String jenis_kelamin,String alamat, String no_tlp){
+        this.id = id;
+        this.nama = nama;
+        this.username = username;
+        this.password = password;
+        this.email = email;
+        this.jenis_kelamin = jenis_kelamin;
+        this.alamat = alamat;
+        this.no_tlp = no_tlp;
+        
+    }
 
     public String getAlamat() {
         return alamat;

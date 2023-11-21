@@ -418,6 +418,7 @@ public class Suplier extends javax.swing.JPanel {
      main main = (main)SwingUtilities.getWindowAncestor(this);
         tambahSupplier apa = new tambahSupplier(main);
         apa.showPopUp();    
+        load_tabel();
     }//GEN-LAST:event_btnTambahMouseClicked
 
     private void btnTambahMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnTambahMouseEntered
@@ -436,6 +437,7 @@ public class Suplier extends javax.swing.JPanel {
     main main = (main)SwingUtilities.getWindowAncestor(this);
         editSupplier apa = new editSupplier(main);
         apa.showPopUp();  
+        load_tabel();
     }//GEN-LAST:event_btnEditMouseClicked
 
     private void btnEditMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEditMouseEntered

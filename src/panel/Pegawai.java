@@ -8,8 +8,12 @@ import java.awt.Color;
 import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableModel;
 import main.main;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import net.sf.jasperreports.components.headertoolbar.actions.EditTextElementData;
 import repository.userRepository;
+import util.Conn;
 import view.dialog.Validasilogout1;
 import view.dialog.editPegawai;
 import view.dialog.tambahPegawai;
@@ -53,6 +57,44 @@ public class Pegawai extends javax.swing.JPanel {
             System.out.println(e.getMessage());
         }
     }
+    public void load_tabel(String search) {
+    DefaultTableModel model = new DefaultTableModel();
+    model.addColumn("ID");
+    model.addColumn("NAMA_PEGAWAI");
+    model.addColumn("USERNAME");
+    model.addColumn("PASSWORD");
+    model.addColumn("NIK");
+    model.addColumn("JENIS_KELAMIN");
+    model.addColumn("ALAMAT");
+    model.addColumn("NO_TELP");
+
+    try {
+        String sql = "SELECT * FROM your_table_name WHERE id LIKE ? OR nama_pegawai LIKE ?";
+        Connection koneksi = (Connection) Conn.configDB();
+        PreparedStatement pst = koneksi.prepareStatement(sql);
+        pst.setString(1, "%" + search + "%");
+        pst.setString(2, "%" + search + "%");
+
+        ResultSet res = pst.executeQuery();
+
+        while (res.next()) {
+            model.addRow(new Object[]{
+                res.getString("id"),
+                res.getString("nama_pegawai"),
+                res.getString("username"),
+                res.getString("password"),
+                res.getString("nik"),
+                res.getString("jenis_kelamin"),
+                res.getString("alamat"),
+                res.getString("no_telp")
+            });
+        }
+
+        table.setModel(model);
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
+}
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -390,12 +432,14 @@ public class Pegawai extends javax.swing.JPanel {
         main main = (main)SwingUtilities.getWindowAncestor(this);
         tambahPegawai apa = new tambahPegawai(main);
         apa.showPopUp();
+        load_tabel();
     }//GEN-LAST:event_btnTambahMouseClicked
 
     private void btnEditMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEditMouseClicked
     main main = (main)SwingUtilities.getWindowAncestor(this);
         editPegawai apa = new editPegawai(main);
         apa.showPopUp();
+        load_tabel();
     }//GEN-LAST:event_btnEditMouseClicked
 
     private void btnHapusMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnHapusMouseClicked
@@ -445,7 +489,7 @@ public class Pegawai extends javax.swing.JPanel {
     }//GEN-LAST:event_btnHapusMousePressed
 
     private void searchKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_searchKeyReleased
-        //        load_tabel(search.getText());
+                load_tabel(search.getText());
     }//GEN-LAST:event_searchKeyReleased
 
     private void tableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableMouseClicked

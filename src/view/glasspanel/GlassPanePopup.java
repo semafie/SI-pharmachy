@@ -84,9 +84,22 @@ public class GlassPanePopup {
     public static void showPopup(Component component, String name) {
         showPopup(component, new DefaultOption(), name);
     }
-
+    
+    public static boolean apaya(Component component) {
+        try {
+            showPopup(component);
+            return true;
+        } catch (Exception e) {
+            closePopupLast();
+            return false;
+        }
+        
+    }
     public static void showPopup(Component component) {
-        showPopup(component, new DefaultOption(), null);
+        
+            showPopup(component, new DefaultOption(), null);
+            
+        
     }
 
     public static void closePopup(int index) {

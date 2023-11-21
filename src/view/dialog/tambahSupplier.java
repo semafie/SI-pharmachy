@@ -6,7 +6,7 @@ package view.dialog;
 
 import entity.supplier;
 import javax.swing.JFrame;
-import panel.Suplier;
+
 import repository.supplierRepository;
 import repository.userRepository;
 
@@ -17,7 +17,7 @@ import repository.userRepository;
 public class tambahSupplier extends Dialog {
     userRepository pegawai = new userRepository();
     supplierRepository supplier = new supplierRepository();
-    Suplier des = new Suplier();
+
     public tambahSupplier(JFrame frame) {
         super(frame);
         initComponents();
@@ -111,7 +111,7 @@ public class tambahSupplier extends Dialog {
     boolean yes = supplier.add(gas);
     if(yes){
         System.out.println("Berhasil tambah suppler");
-        des.load_tabel();
+        
         closeMessage();
     }else {
         System.out.println("gagal menambahkan supplier");

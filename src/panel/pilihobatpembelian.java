@@ -4,6 +4,9 @@
  */
 package panel;
 
+import repository.obatRepository;
+import view.glasspanel.GlassPanePopup;
+
 /**
  *
  * @author RESCOM-1
@@ -13,9 +16,13 @@ public class pilihobatpembelian extends javax.swing.JPanel {
     /**
      * Creates new form pilihobat
      */
+    private int id = 0;
+    public static int kode,jumlah,subtotal;
+    obatRepository datamaster = new obatRepository();
     public pilihobatpembelian() {
         initComponents();
     }
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -26,19 +33,160 @@ public class pilihobatpembelian extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-        this.setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
-        );
+        btnsimpan = new javax.swing.JLabel();
+        btnbatal = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        table = new view.swing.Table();
+        txt_subtotal = new javax.swing.JTextField();
+        txt_jumlah = new javax.swing.JTextField();
+        txt_namaobat = new javax.swing.JTextField();
+        txt_kodeobat = new javax.swing.JTextField();
+        bg = new javax.swing.JLabel();
+
+        setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        btnsimpan.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/imagebtn/btnsimpan1.png"))); // NOI18N
+        btnsimpan.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnsimpanMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnsimpanMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnsimpanMouseExited(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                btnsimpanMousePressed(evt);
+            }
+        });
+        add(btnsimpan, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 550, -1, 60));
+
+        btnbatal.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/imagebtn/btnbatal1.png"))); // NOI18N
+        btnbatal.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnbatalMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnbatalMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnbatalMouseExited(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                btnbatalMousePressed(evt);
+            }
+        });
+        add(btnbatal, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 550, -1, 60));
+
+        jScrollPane1.setBorder(null);
+
+        table.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        table.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tableMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(table);
+
+        add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 160, 780, 200));
+
+        txt_subtotal.setBorder(null);
+        add(txt_subtotal, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 490, 220, 30));
+
+        txt_jumlah.setBorder(null);
+        txt_jumlah.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txt_jumlahKeyReleased(evt);
+            }
+        });
+        add(txt_jumlah, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 490, 220, 30));
+
+        txt_namaobat.setBorder(null);
+        add(txt_namaobat, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 410, 220, 30));
+
+        txt_kodeobat.setBorder(null);
+        add(txt_kodeobat, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 410, 220, 30));
+
+        bg.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/imagebg/formpilihobatpembelian (1).png"))); // NOI18N
+        add(bg, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 900, -1));
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnsimpanMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnsimpanMouseClicked
+
+        kode = Integer.valueOf(txt_kodeobat.getText());
+        jumlah = Integer.valueOf(txt_jumlah.getText());
+        subtotal = Integer.valueOf(txt_subtotal.getText());
+    }//GEN-LAST:event_btnsimpanMouseClicked
+
+    private void btnsimpanMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnsimpanMouseEntered
+        btnsimpan.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/imagebtn/btnsimpan2.png")));
+    }//GEN-LAST:event_btnsimpanMouseEntered
+
+    private void btnsimpanMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnsimpanMouseExited
+        btnsimpan.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/imagebtn/btnsimpan1.png")));
+    }//GEN-LAST:event_btnsimpanMouseExited
+
+    private void btnsimpanMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnsimpanMousePressed
+        btnsimpan.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/imagebtn/btnsimpan3.png")));
+    }//GEN-LAST:event_btnsimpanMousePressed
+
+    private void btnbatalMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnbatalMouseClicked
+
+        GlassPanePopup.closePopupLast();
+    }//GEN-LAST:event_btnbatalMouseClicked
+
+    private void btnbatalMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnbatalMouseEntered
+        btnbatal.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/imagebtn/btnbatal2.png")));
+    }//GEN-LAST:event_btnbatalMouseEntered
+
+    private void btnbatalMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnbatalMouseExited
+        btnbatal.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/imagebtn/btnbatal1.png")));
+    }//GEN-LAST:event_btnbatalMouseExited
+
+    private void btnbatalMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnbatalMousePressed
+        btnbatal.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/imagebtn/btnbatal3.png")));
+    }//GEN-LAST:event_btnbatalMousePressed
+
+    private void tableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableMouseClicked
+        int baris = table.rowAtPoint(evt.getPoint());
+        String idd = table.getValueAt(baris, 0).toString();
+        id = Integer.valueOf(idd);
+        System.out.println(id);
+        if(id != 0){
+            txt_namaobat.setText(datamaster.get(id).getNama_obat());
+            
+            txt_kodeobat.setText(String.valueOf(datamaster.get(id).getId()));
+        } else {
+            System.out.println("haloo");
+        }
+
+    }//GEN-LAST:event_tableMouseClicked
+
+    private void txt_jumlahKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_jumlahKeyReleased
+    
+    }//GEN-LAST:event_txt_jumlahKeyReleased
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel bg;
+    private javax.swing.JLabel btnbatal;
+    private javax.swing.JLabel btnsimpan;
+    private javax.swing.JScrollPane jScrollPane1;
+    private view.swing.Table table;
+    private javax.swing.JTextField txt_jumlah;
+    private javax.swing.JTextField txt_kodeobat;
+    private javax.swing.JTextField txt_namaobat;
+    private javax.swing.JTextField txt_subtotal;
     // End of variables declaration//GEN-END:variables
 }
