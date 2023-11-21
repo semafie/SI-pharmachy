@@ -173,6 +173,23 @@ DefaultTableModel model = (DefaultTableModel) table23.getModel();
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jPanel3 = new javax.swing.JPanel();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        table3 = new view.swing.Table();
+        btnsimpan1 = new javax.swing.JLabel();
+        btnbatal1 = new javax.swing.JLabel();
+        bg2 = new javax.swing.JLabel();
+        jPanel2 = new javax.swing.JPanel();
+        btnsimpan = new javax.swing.JLabel();
+        btnbatal = new javax.swing.JLabel();
+        txt_subtotal = new javax.swing.JTextField();
+        txt_jumlah = new javax.swing.JTextField();
+        txt_hargasatuan = new javax.swing.JTextField();
+        txt_namaobat7 = new javax.swing.JTextField();
+        txt_kodeobat = new javax.swing.JTextField();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        table = new view.swing.Table();
+        bg1 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         btnLogout = new javax.swing.JLabel();
         btnPegawai = new javax.swing.JLabel();
@@ -200,19 +217,175 @@ DefaultTableModel model = (DefaultTableModel) table23.getModel();
         btnhapustable = new javax.swing.JLabel();
         btnprosestransaksi = new javax.swing.JLabel();
         bg = new javax.swing.JLabel();
-        jPanel2 = new javax.swing.JPanel();
-        btnsimpan = new javax.swing.JLabel();
-        btnbatal = new javax.swing.JLabel();
-        txt_subtotal = new javax.swing.JTextField();
-        txt_jumlah = new javax.swing.JTextField();
-        txt_hargasatuan = new javax.swing.JTextField();
-        txt_namaobat7 = new javax.swing.JTextField();
-        txt_kodeobat = new javax.swing.JTextField();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        table = new view.swing.Table();
-        bg1 = new javax.swing.JLabel();
 
         setLayout(null);
+
+        jPanel3.setLayout(null);
+
+        jScrollPane3.setBorder(null);
+
+        table3.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        table3.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                table3MouseClicked(evt);
+            }
+        });
+        jScrollPane3.setViewportView(table3);
+
+        jPanel3.add(jScrollPane3);
+        jScrollPane3.setBounds(300, 220, 780, 200);
+
+        btnsimpan1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/imagebtn/btnsimpan1.png"))); // NOI18N
+        btnsimpan1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnsimpan1MouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnsimpan1MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnsimpan1MouseExited(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                btnsimpan1MousePressed(evt);
+            }
+        });
+        jPanel3.add(btnsimpan1);
+        btnsimpan1.setBounds(730, 620, 190, 51);
+
+        btnbatal1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/imagebtn/btnbatal1.png"))); // NOI18N
+        btnbatal1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnbatal1MouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnbatal1MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnbatal1MouseExited(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                btnbatal1MousePressed(evt);
+            }
+        });
+        jPanel3.add(btnbatal1);
+        btnbatal1.setBounds(500, 620, 190, 51);
+
+        bg2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/imagebg/form pilih supplier.png"))); // NOI18N
+        jPanel3.add(bg2);
+        bg2.setBounds(230, 70, 891, 630);
+
+        add(jPanel3);
+        jPanel3.setBounds(0, 0, 1370, 770);
+
+        jPanel2.setBackground(new Color(0,0,0,70));
+        jPanel2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jPanel2MouseEntered(evt);
+            }
+        });
+        jPanel2.setLayout(null);
+
+        btnsimpan.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/imagebtn/btnsimpan1.png"))); // NOI18N
+        btnsimpan.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnsimpanMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnsimpanMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnsimpanMouseExited(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                btnsimpanMousePressed(evt);
+            }
+        });
+        jPanel2.add(btnsimpan);
+        btnsimpan.setBounds(730, 620, 190, 51);
+
+        btnbatal.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/imagebtn/btnbatal1.png"))); // NOI18N
+        btnbatal.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnbatalMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnbatalMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnbatalMouseExited(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                btnbatalMousePressed(evt);
+            }
+        });
+        jPanel2.add(btnbatal);
+        btnbatal.setBounds(500, 620, 190, 51);
+
+        txt_subtotal.setBorder(null);
+        jPanel2.add(txt_subtotal);
+        txt_subtotal.setBounds(750, 560, 220, 30);
+
+        txt_jumlah.setBorder(null);
+        txt_jumlah.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txt_jumlahKeyReleased(evt);
+            }
+        });
+        jPanel2.add(txt_jumlah);
+        txt_jumlah.setBounds(450, 560, 220, 30);
+
+        txt_hargasatuan.setBorder(null);
+        jPanel2.add(txt_hargasatuan);
+        txt_hargasatuan.setBounds(860, 480, 220, 30);
+
+        txt_namaobat7.setBorder(null);
+        jPanel2.add(txt_namaobat7);
+        txt_namaobat7.setBounds(580, 480, 230, 30);
+
+        txt_kodeobat.setBorder(null);
+        jPanel2.add(txt_kodeobat);
+        txt_kodeobat.setBounds(310, 480, 220, 30);
+
+        jScrollPane2.setBorder(null);
+
+        table.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        table.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tableMouseClicked(evt);
+            }
+        });
+        jScrollPane2.setViewportView(table);
+
+        jPanel2.add(jScrollPane2);
+        jScrollPane2.setBounds(300, 220, 780, 200);
+
+        bg1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/imagebg/form pilih obat.png"))); // NOI18N
+        jPanel2.add(bg1);
+        bg1.setBounds(230, 70, 891, 620);
+
+        add(jPanel2);
+        jPanel2.setBounds(0, 0, 1370, 770);
 
         jPanel1.setLayout(null);
 
@@ -507,105 +680,6 @@ DefaultTableModel model = (DefaultTableModel) table23.getModel();
 
         add(jPanel1);
         jPanel1.setBounds(0, 0, 1370, 770);
-
-        jPanel2.setBackground(new Color(0,0,0,70));
-        jPanel2.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                jPanel2MouseEntered(evt);
-            }
-        });
-        jPanel2.setLayout(null);
-
-        btnsimpan.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/imagebtn/btnsimpan1.png"))); // NOI18N
-        btnsimpan.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnsimpanMouseClicked(evt);
-            }
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                btnsimpanMouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                btnsimpanMouseExited(evt);
-            }
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                btnsimpanMousePressed(evt);
-            }
-        });
-        jPanel2.add(btnsimpan);
-        btnsimpan.setBounds(730, 620, 190, 51);
-
-        btnbatal.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/imagebtn/btnbatal1.png"))); // NOI18N
-        btnbatal.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnbatalMouseClicked(evt);
-            }
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                btnbatalMouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                btnbatalMouseExited(evt);
-            }
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                btnbatalMousePressed(evt);
-            }
-        });
-        jPanel2.add(btnbatal);
-        btnbatal.setBounds(500, 620, 190, 51);
-
-        txt_subtotal.setBorder(null);
-        jPanel2.add(txt_subtotal);
-        txt_subtotal.setBounds(750, 560, 220, 30);
-
-        txt_jumlah.setBorder(null);
-        txt_jumlah.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                txt_jumlahKeyReleased(evt);
-            }
-        });
-        jPanel2.add(txt_jumlah);
-        txt_jumlah.setBounds(450, 560, 220, 30);
-
-        txt_hargasatuan.setBorder(null);
-        jPanel2.add(txt_hargasatuan);
-        txt_hargasatuan.setBounds(860, 480, 220, 30);
-
-        txt_namaobat7.setBorder(null);
-        jPanel2.add(txt_namaobat7);
-        txt_namaobat7.setBounds(580, 480, 230, 30);
-
-        txt_kodeobat.setBorder(null);
-        jPanel2.add(txt_kodeobat);
-        txt_kodeobat.setBounds(310, 480, 220, 30);
-
-        jScrollPane2.setBorder(null);
-
-        table.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
-        ));
-        table.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                tableMouseClicked(evt);
-            }
-        });
-        jScrollPane2.setViewportView(table);
-
-        jPanel2.add(jScrollPane2);
-        jScrollPane2.setBounds(300, 220, 780, 200);
-
-        bg1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/imagebg/form pilih obat.png"))); // NOI18N
-        jPanel2.add(bg1);
-        bg1.setBounds(230, 70, 891, 620);
-
-        add(jPanel2);
-        jPanel2.setBounds(0, 0, 1370, 770);
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnLogoutMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnLogoutMouseClicked
@@ -876,10 +950,47 @@ jPanel2.setVisible(false);
     btnhapustable.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/imagebtn/btnhapustabel3.png")));
     }//GEN-LAST:event_btncarisuplierMousePressed
 
+    private void btnsimpan1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnsimpan1MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnsimpan1MouseClicked
+
+    private void btnsimpan1MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnsimpan1MouseEntered
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnsimpan1MouseEntered
+
+    private void btnsimpan1MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnsimpan1MouseExited
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnsimpan1MouseExited
+
+    private void btnsimpan1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnsimpan1MousePressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnsimpan1MousePressed
+
+    private void btnbatal1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnbatal1MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnbatal1MouseClicked
+
+    private void btnbatal1MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnbatal1MouseEntered
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnbatal1MouseEntered
+
+    private void btnbatal1MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnbatal1MouseExited
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnbatal1MouseExited
+
+    private void btnbatal1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnbatal1MousePressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnbatal1MousePressed
+
+    private void table3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_table3MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_table3MouseClicked
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel bg;
     private javax.swing.JLabel bg1;
+    private javax.swing.JLabel bg2;
     private javax.swing.JLabel btnDasboard;
     private javax.swing.JLabel btnLaporan;
     private javax.swing.JLabel btnLogout;
@@ -888,6 +999,7 @@ jPanel2.setVisible(false);
     private javax.swing.JLabel btnSuplier;
     private javax.swing.JLabel btnSupplier;
     private javax.swing.JLabel btnbatal;
+    private javax.swing.JLabel btnbatal1;
     private javax.swing.JLabel btncariobat;
     private javax.swing.JLabel btncarisuplier;
     private javax.swing.JLabel btnhapustable;
@@ -898,12 +1010,16 @@ jPanel2.setVisible(false);
     private javax.swing.JLabel btnprosestransaksi;
     private javax.swing.JLabel btnreset;
     private javax.swing.JLabel btnsimpan;
+    private javax.swing.JLabel btnsimpan1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
     private view.swing.Table table;
     public static view.swing.Table table23;
+    private view.swing.Table table3;
     private javax.swing.JTextField txt_bayartunai;
     private javax.swing.JTextField txt_hargasatuan;
     private javax.swing.JTextField txt_idtransaksi;
