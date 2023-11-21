@@ -9,6 +9,9 @@ public class obat implements Entity{
     public obat(){
         
     }
+    public obat(int id){
+        this.id = id;
+    }
     
     public obat(int id,String nama_obat,int harga_obat){
         this.id = id;

@@ -9,17 +9,23 @@ public class penjualan implements Entity{
     private String kodepenjulan;
     private Date tanggal;
     private Timestamp jam;
-    private int total_harga, id;
+    private int total_harga, id, kembalian, jumlahbayar;
     
     public penjualan(){
         
     }
     
-    public penjualan(String kode,Date tanggal, Timestamp jam, int total_harga){
+    public penjualan(int id){
+        this.id =  id;
+    }
+    
+    public penjualan(String kode,Date tanggal, Timestamp jam, int total_harga, int jumlahbayar, int kembali){
         this.kodepenjulan = kode;
         this.tanggal = tanggal; 
         this.jam =jam;
         this.total_harga = total_harga;
+        this.jumlahbayar = jumlahbayar;
+        this.kembalian = kembali;
     }
     
     public penjualan(Date tanggal, Timestamp jam, int total_harga){
@@ -67,6 +73,22 @@ public class penjualan implements Entity{
 
     public String getKodepenjulan() {
         return kodepenjulan;
+    }
+
+    public void setJumlahbayar(int jumlahbayar) {
+        this.jumlahbayar = jumlahbayar;
+    }
+
+    public int getJumlahbayar() {
+        return jumlahbayar;
+    }
+
+    public void setKembalian(int kembalian) {
+        this.kembalian = kembalian;
+    }
+
+    public int getKembalian() {
+        return kembalian;
     }
      
    

@@ -4,13 +4,15 @@ public class detail_penjualan implements Entity{
     public static String tableName = "detail_penjualan";
     private penjualan penjualan;
     private String nama_obat;
+    private obat id_obat;
     private int harga, jumlah_beli, sub_total, id;
     public detail_penjualan(){
         
     }
     
-    public detail_penjualan(penjualan penjualan, String nama_obat,int harga, int jumlah_beli,int sub_total){
+    public detail_penjualan(penjualan penjualan,obat id_obat, String nama_obat,int harga, int jumlah_beli,int sub_total){
         this.penjualan = penjualan;
+        this.id_obat = id_obat;
         this.nama_obat = nama_obat;
         this.harga = harga;
         this.jumlah_beli = jumlah_beli;
@@ -63,6 +65,14 @@ public class detail_penjualan implements Entity{
 
     public int getId() {
         return id;
+    }
+
+    public void setId_obat(obat id_obat) {
+        this.id_obat = id_obat;
+    }
+
+    public obat getId_obat() {
+        return id_obat;
     }
     
     

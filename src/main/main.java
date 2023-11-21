@@ -8,6 +8,7 @@ import panel.Obat;
 import panel.Pegawai;
 import panel.Suplier;
 import panel.Transaksi;
+import panel.Transaksi2;
 import view.glasspanel.GlassPanePopup;
 
 public class main extends javax.swing.JFrame {
@@ -49,6 +50,13 @@ public class main extends javax.swing.JFrame {
     }
     public void showTransaksi(){
         Transaksi a = new Transaksi();
+        a.setSize(1366,768);
+        this.add(a);
+        this.revalidate();
+        this.repaint();
+    }
+    public void showTransaksi2(){
+        Transaksi2 a = new Transaksi2();
         a.setSize(1366,768);
         this.add(a);
         this.revalidate();

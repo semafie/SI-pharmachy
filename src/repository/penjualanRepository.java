@@ -67,10 +67,27 @@ public class penjualanRepository implements Repository<penjualan>{
         }
         return us;
     }
+    public penjualan getlastid() {
+   String sql = "select * from "+tableName+" ORDER BY id DESC LIMIT 1";
+        penjualan us = new penjualan();
+        
+        try {
+            Connection koneksi = (Connection)Conn.configDB();
+            PreparedStatement pst = koneksi.prepareStatement(sql);
+            
+            ResultSet res = pst.executeQuery();
+            while (res.next()) {
+                return mapToEntity(res);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return us;
+    }
 
     @Override
     public boolean add(penjualan us) {
-     String sql = "INSERT INTO "+tableName+"(`kode`, `tanggal`, `jam`, `total_harga`) VALUES(?,?,?,?)";
+     String sql = "INSERT INTO "+tableName+"(`kode`, `tanggal`, `jam`, `total_harga`,`jumlah_bayar`,`kembalian`) VALUES(?,?,?,?,?,?)";
         try {
             Connection koneksi = (Connection)Conn.configDB();
             PreparedStatement pst = koneksi.prepareStatement(sql);
@@ -79,6 +96,8 @@ public class penjualanRepository implements Repository<penjualan>{
             pst.setDate(2,new Date(us.getTanggal().getTime()));
             pst.setTime(3, new Time(us.getJam().getTime()));
             pst.setInt(4, us.getTotal_harga());
+            pst.setInt(5, us.getJumlahbayar());
+            pst.setInt(6, us.getKembalian());
             pst.execute();
             return  true;
         } catch (Exception e) {
@@ -127,7 +146,9 @@ public class penjualanRepository implements Repository<penjualan>{
                 res.getString("kode"),
                 res.getDate("tanggal"),
                 res.getTimestamp("jam"),
-                res.getInt("total_harga")
+                res.getInt("total_harga"),
+                res.getInt("jumlah_bayar"),
+                res.getInt("kembalian")
         );
         us.setId(res.getInt("id")
         );

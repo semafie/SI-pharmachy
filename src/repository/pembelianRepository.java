@@ -74,7 +74,7 @@ public class pembelianRepository implements Repository<pembelian>{
 
     @Override
     public boolean add(pembelian us) {
-    String sql = "INSERT INTO "+tableName+"( `kode`,`id_supllier`, `tanggal`, `jam`, `total_harga`) VALUES(?,?,?,?,?)";
+    String sql = "INSERT INTO "+tableName+"( `kode`,`id_supplier`, `tanggal`, `jam`, `total_harga`,`jumlah_bayar`,`kembalian` ) VALUES (?,?,?,?,?,?,?)";
         try {
             Connection koneksi = (Connection)Conn.configDB();
             PreparedStatement pst = koneksi.prepareStatement(sql);
@@ -83,6 +83,8 @@ public class pembelianRepository implements Repository<pembelian>{
             pst.setDate(3,new Date(us.getTanggal().getTime()));
             pst.setTime(4, new Time(us.getJam().getTime()));
             pst.setInt(5, us.getTotal_harga());
+            pst.setInt(6, us.getBayartunai());
+            pst.setInt(7, us.getKembalian());
             pst.execute();
             return  true;
         } catch (Exception e) {
@@ -93,7 +95,7 @@ public class pembelianRepository implements Repository<pembelian>{
 
     @Override
     public boolean update(pembelian us) {
-    String sql = "update "+tableName+" set id_supllier = ?, tanggal = ?, jam = ?, total_harga = ?  where id = ?";
+    String sql = "update "+tableName+" set id_supplier = ?, tanggal = ?, jam = ?, total_harga = ?  where id = ?";
         try {
             Connection koneksi =(Connection)Conn.configDB();
             PreparedStatement pst = koneksi.prepareStatement(sql);
@@ -132,7 +134,9 @@ public class pembelianRepository implements Repository<pembelian>{
                 new supplierRepository().get(res.getInt("id_supplier")),
                 res.getDate("tanggal"),
                 res.getTimestamp("jam"),
-                res.getInt("total_harga")
+                res.getInt("total_harga"),
+                res.getInt("jumlah_bayar"),
+                res.getInt("kembalian")
         );
         us.setId(res.getInt("id")
         );

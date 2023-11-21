@@ -3,8 +3,10 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
  */
 package panel;
-
+import java.sql.Timestamp;
+import entity.detail_pembelian;
 import entity.obat;
+import entity.pembelian;
 import entity.supplier;
 import java.awt.Color;
 import java.awt.Container;
@@ -20,6 +22,7 @@ import java.sql.PreparedStatement;
 import java.sql.Connection;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import repository.detail_pembelianRepository;
 import repository.pembelianRepository;
 import repository.supplierRepository;
 import view.dialog.Validasilogout1;
@@ -38,6 +41,7 @@ public class Transaksi extends javax.swing.JPanel {
     supplierRepository supp = new supplierRepository();
     obatRepository obat = new obatRepository();
     pembelianRepository pembelian = new pembelianRepository();
+    detail_pembelianRepository detailpembelian = new detail_pembelianRepository();
     private int id;
     private int kode = pilihobatpembelian.kode, subtotal = pilihobatpembelian.subtotal;
     private int kode1 = pilihobatpenjualan.kode, jumlah1 = pilihobatpenjualan.jumlah, subtotal1 = pilihobatpenjualan.subtotal;
@@ -46,9 +50,13 @@ public class Transaksi extends javax.swing.JPanel {
     public Transaksi() {
         initComponents();
         if(kodeterakhir == null){
-            txt_idtransaksi.setText("TRP1");
+            txt_idtransaksi.setText("TRB1");
         } else {
             
+            String angkaString = kodeterakhir.replaceAll("[^0-9]", "");
+            int jadiangka = Integer.valueOf(angkaString);
+            jadiangka++;
+            txt_idtransaksi.setText("TRB" + Integer.toString(jadiangka));
         }
 //        System.out.println(kodeterakhir);
         SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
@@ -65,8 +73,7 @@ public class Transaksi extends javax.swing.JPanel {
         model.addColumn("Jumlah Beli");
         model.addColumn("Sub Total");
         table23.setModel(model);
-        btnpembelianstok.setVisible(false);
-        btnpenjualan1.setVisible(false);
+        
     }
 
     public static void tambahData(int col1, String col2, int col4, int col5) {
@@ -276,9 +283,7 @@ public class Transaksi extends javax.swing.JPanel {
         jScrollPane1 = new javax.swing.JScrollPane();
         table23 = new view.swing.Table();
         btnpembelianstok1 = new javax.swing.JLabel();
-        btnpenjualan1 = new javax.swing.JLabel();
         btnpenjualan = new javax.swing.JLabel();
-        btnpembelianstok = new javax.swing.JLabel();
         txt_idtransaksi = new javax.swing.JTextField();
         txt_kodesuplier = new javax.swing.JTextField();
         txt_namasuplier = new javax.swing.JTextField();
@@ -599,6 +604,11 @@ public class Transaksi extends javax.swing.JPanel {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        table23.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                table23KeyReleased(evt);
+            }
+        });
         jScrollPane1.setViewportView(table23);
 
         jPanel1.add(jScrollPane1);
@@ -609,11 +619,6 @@ public class Transaksi extends javax.swing.JPanel {
         jPanel1.add(btnpembelianstok1);
         btnpembelianstok1.setBounds(280, 120, 220, 38);
 
-        btnpenjualan1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/imagebtn/Pilih penjualan.png"))); // NOI18N
-        btnpenjualan1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jPanel1.add(btnpenjualan1);
-        btnpenjualan1.setBounds(510, 120, 220, 38);
-
         btnpenjualan.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/imagebtn/Penjualan.png"))); // NOI18N
         btnpenjualan.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnpenjualan.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -623,16 +628,6 @@ public class Transaksi extends javax.swing.JPanel {
         });
         jPanel1.add(btnpenjualan);
         btnpenjualan.setBounds(560, 125, 130, 30);
-
-        btnpembelianstok.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/imagebtn/Pembelian.png"))); // NOI18N
-        btnpembelianstok.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btnpembelianstok.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnpembelianstokMouseClicked(evt);
-            }
-        });
-        jPanel1.add(btnpembelianstok);
-        btnpembelianstok.setBounds(330, 130, 140, 19);
 
         txt_idtransaksi.setBackground(new java.awt.Color(245, 241, 241));
         txt_idtransaksi.setBorder(null);
@@ -654,6 +649,11 @@ public class Transaksi extends javax.swing.JPanel {
 
         txt_bayartunai.setBackground(new java.awt.Color(245, 241, 241));
         txt_bayartunai.setBorder(null);
+        txt_bayartunai.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txt_bayartunaiKeyReleased(evt);
+            }
+        });
         jPanel1.add(txt_bayartunai);
         txt_bayartunai.setBounds(690, 640, 210, 30);
 
@@ -882,21 +882,11 @@ public class Transaksi extends javax.swing.JPanel {
 
     private void btnpenjualanMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnpenjualanMouseClicked
 
-        btnpembelianstok.setVisible(true);
-        btnpembelianstok1.setVisible(false);
-        btnpenjualan.setVisible(false);
-        btnpenjualan1.setVisible(true);
+        main main = (main)SwingUtilities.getWindowAncestor(this);
+        this.setVisible(false);
+        main.showTransaksi2();
 
     }//GEN-LAST:event_btnpenjualanMouseClicked
-
-    private void btnpembelianstokMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnpembelianstokMouseClicked
-        btnpembelianstok.setVisible(false);
-        btnpembelianstok1.setVisible(true);
-        btnpenjualan.setVisible(true);
-        btnpenjualan1.setVisible(false);
-
-
-    }//GEN-LAST:event_btnpembelianstokMouseClicked
 
     private void btncariobatMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btncariobatMouseClicked
         jPanel2.setVisible(true);
@@ -915,7 +905,47 @@ public class Transaksi extends javax.swing.JPanel {
     }//GEN-LAST:event_btncariobatMousePressed
 
     private void btnprosestransaksiMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnprosestransaksiMouseClicked
-        // TODO add your handling code here:
+        supplier apa = new supplier(Integer.valueOf(txt_kodesuplier.getText()));
+        Date harii = new Date();
+        Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+        pembelian beli = new pembelian(txt_idtransaksi.getText(),
+                apa, harii, timestamp, Integer.valueOf(txt_totalharga.getText()),
+                Integer.valueOf(txt_bayartunai.getText()),Integer.valueOf(txt_kembali.getText()));
+        boolean cobak1 = pembelian.add(beli);
+        if(cobak1){
+            System.out.println("Berhasil Disimpan");
+        } else {
+            System.out.println("gagal di simpan");
+        }
+        DefaultTableModel model = (DefaultTableModel) table23.getModel();    
+        for (int row = 0; row < model.getRowCount(); row++) {
+            int kode = pembelian.getlastkode().getId();
+            int idobat =Integer.valueOf(model.getValueAt(row, 0).toString());
+            int jumlahawal = obat.get(idobat).getJumlah_stok();
+            int jumlahakhir = jumlahawal + Integer.valueOf(model.getValueAt(row, 2).toString());
+            obat obat1 = new obat(idobat,jumlahakhir);
+            boolean cobak3 = obat.updatestok(obat1);
+            if (cobak3) {
+               System.out.println("berhasil update stok" + row);
+            } else {
+                System.out.println("gagal" + row);
+            }
+            pembelian beli1 = new pembelian(kode);           
+            obat obat = new obat(idobat);
+            detail_pembelian apa11 = new detail_pembelian(beli1,
+                    obat,
+                    model.getValueAt(row, 1).toString(),
+                    
+                    Integer.valueOf(model.getValueAt(row, 2).toString()),
+                     Integer.valueOf(model.getValueAt(row, 3).toString()));
+            boolean cobak2 = detailpembelian.add(apa11);
+            if(cobak2){
+                System.out.println("berhasil" + row);
+            } else {
+                System.out.println("gagal" + row);
+            }
+            
+    }
     }//GEN-LAST:event_btnprosestransaksiMouseClicked
 
     private void btnhapustableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnhapustableMouseClicked
@@ -923,7 +953,13 @@ public class Transaksi extends javax.swing.JPanel {
     }//GEN-LAST:event_btnhapustableMouseClicked
 
     private void btnresetMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnresetMouseClicked
-        // TODO add your handling code here:
+    DefaultTableModel model = (DefaultTableModel) table23.getModel();
+    model.setRowCount(0);
+    int sum = 0;
+         for(int i = 0; i<table23.getRowCount(); i++){
+             sum = sum + Integer.parseInt(table23.getValueAt(i, 4).toString());;
+         }
+         txt_totalharga.setText(Integer.toString(sum));
     }//GEN-LAST:event_btnresetMouseClicked
 
     private void btnprosestransaksiMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnprosestransaksiMouseEntered
@@ -963,13 +999,22 @@ public class Transaksi extends javax.swing.JPanel {
     }//GEN-LAST:event_btnprosestransaksiMousePressed
 
     private void btnsimpanMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnsimpanMouseClicked
-
+        tambahData(Integer.valueOf(txt_kodeobat.getText()), txt_namaobat7.getText(), Integer.valueOf(txt_jumlah.getText()), Integer.valueOf(txt_subtotal.getText()));
+        int sum = 0;
+         for(int i = 0; i<table23.getRowCount(); i++){
+             sum = sum + Integer.parseInt(table23.getValueAt(i, 3).toString());;
+         }
+         txt_totalharga.setText(Integer.toString(sum));
+         txt_jumlah.setText("");
+         txt_subtotal.setText("");
         //        kode = Integer.valueOf(txt_kodeobat.getText());
         //        jumlah = Integer.valueOf(txt_jumlah.getText());
         //        subtotal = Integer.valueOf(txt_subtotal.getText());
-        tambahData(Integer.valueOf(txt_kodeobat.getText()), txt_tanggalbeli.getText(), Integer.valueOf(txt_jumlah.getText()), Integer.valueOf(txt_subtotal.getText()));
+        
         //Transaksi.tambahData(Integer.valueOf(txt_kodeobat.getText()),txt_namaobat.getText(),Integer.valueOf(txt_hargasatuan.getText()),Integer.valueOf(txt_jumlah.getText().getText()));
         jPanel2.setVisible(false);
+        txt_bayartunai.setText("");
+        txt_kembali.setText("");
     }//GEN-LAST:event_btnsimpanMouseClicked
 
     private void btnsimpanMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnsimpanMouseEntered
@@ -1042,6 +1087,8 @@ public class Transaksi extends javax.swing.JPanel {
     private void btnsimpan1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnsimpan1MouseClicked
         txt_kodesuplier.setText(kodesuplier1.getText());
         txt_namasuplier.setText(txt_namasuplier1.getText());
+        txt_namasuplier1.setText("");
+        kodesuplier1.setText("");
         jPanel3.setVisible(false);
     }//GEN-LAST:event_btnsimpan1MouseClicked
 
@@ -1091,6 +1138,15 @@ public class Transaksi extends javax.swing.JPanel {
         jPanel3.setVisible(true);
     }//GEN-LAST:event_jPanel3MouseEntered
 
+    private void table23KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_table23KeyReleased
+    
+    }//GEN-LAST:event_table23KeyReleased
+
+    private void txt_bayartunaiKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_bayartunaiKeyReleased
+    int hasilkembalian = Integer.valueOf(txt_bayartunai.getText()) - Integer.valueOf(txt_totalharga.getText());
+    txt_kembali.setText(Integer.toString(hasilkembalian));
+    }//GEN-LAST:event_txt_bayartunaiKeyReleased
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel bg;
@@ -1108,10 +1164,8 @@ public class Transaksi extends javax.swing.JPanel {
     private javax.swing.JLabel btncariobat;
     private javax.swing.JLabel btncarisuplier;
     private javax.swing.JLabel btnhapustable;
-    private javax.swing.JLabel btnpembelianstok;
     private javax.swing.JLabel btnpembelianstok1;
     private javax.swing.JLabel btnpenjualan;
-    private javax.swing.JLabel btnpenjualan1;
     private javax.swing.JLabel btnprosestransaksi;
     private javax.swing.JLabel btnreset;
     private javax.swing.JLabel btnsimpan;

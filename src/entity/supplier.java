@@ -8,6 +8,9 @@ public class supplier implements Entity{
     public supplier(){
         
     }
+    public supplier(int id){
+        this.id = id;
+    }
     
     public supplier(String nama_supplier, String no_tlp,String alamat){
         this.nama_supplier = nama_supplier;

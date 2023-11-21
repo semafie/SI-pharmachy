@@ -52,14 +52,15 @@ public class detail_pembelianRepository implements Repository<detail_pembelian>{
 
     @Override
     public boolean add(detail_pembelian us) {
-    String sql = "INSERT INTO "+tableName+"( `id_pembelian`, `nama_obat`, `harga`, `jumlah_beli`, `sub_total`) VALUES(?,?,?,?,?)";
+    String sql = "INSERT INTO "+tableName+" ( `id_pembelian`,`id_obat` , `nama_obat`, `jumlah_beli`, `sub_total`) VALUES (?,?,?,?,?)";
         try {
             Connection koneksi = (Connection)Conn.configDB();
             PreparedStatement pst = koneksi.prepareStatement(sql);
             
             pst.setInt(1, us.getPembelian().getId());
-            pst.setString(2, us.getNama_obat());
-            pst.setInt(3, us.getHarga());
+            pst.setInt(2, us.getObat().getId());
+            pst.setString(3, us.getNama_obat());
+            
             pst.setInt(4, us.getJumlah_beli());
             pst.setInt(5, us.getSub_total());
             pst.execute();
@@ -72,16 +73,16 @@ public class detail_pembelianRepository implements Repository<detail_pembelian>{
 
     @Override
     public boolean update(detail_pembelian us) {
-   String sql = "update "+tableName+" set id_pembelian = ?, nama_obat = ?, harga = ?, jumlah_beli = ?, sub_total = ? where id = ?";
+   String sql = "update "+tableName+" set id_pembelian = ?, nama_obat = ?, jumlah_beli = ?, sub_total = ? where id = ?";
         try {
             Connection koneksi =(Connection)Conn.configDB();
             PreparedStatement pst = koneksi.prepareStatement(sql);
             pst.setInt(1, us.getPembelian().getId());
             pst.setString(2, us.getNama_obat());
-            pst.setInt(3, us.getHarga());
-            pst.setInt(4, us.getJumlah_beli());
-            pst.setInt(5, us.getSub_total());
-            pst.setInt(6, us.getId());
+            
+            pst.setInt(3, us.getJumlah_beli());
+            pst.setInt(4, us.getSub_total());
+            pst.setInt(5, us.getId());
             pst.execute();
             return true;
         } catch (Exception e) {
@@ -109,8 +110,9 @@ public class detail_pembelianRepository implements Repository<detail_pembelian>{
     private detail_pembelian mapToEntity(ResultSet res) throws SQLException {
         detail_pembelian us = new detail_pembelian(
                 new pembelianRepository().get(res.getInt("id_pembelian")),
+                new obatRepository().get(res.getInt("id_obat")),
                 res.getString("nama_obat"),
-                res.getInt("harga"),
+                
                 res.getInt("jumlah_beli"),
                 res.getInt("sub_total"));
         us.setId(res.getInt("id"));

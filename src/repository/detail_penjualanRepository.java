@@ -52,16 +52,17 @@ public class detail_penjualanRepository implements Repository<detail_penjualan>{
 
     @Override
     public boolean add(detail_penjualan us) {
-    String sql = "INSERT INTO "+tableName+"(  `id_penjualan`, `nama_obat`, `harga`, `jumlah_beli`, `sub_total`) VALUES(?,?,?,?,?)";
+    String sql = "INSERT INTO "+tableName+" (`id_penjualan`,`id_obat`, `nama_obat`, `harga`, `jumlah_beli`, `sub_total`) VALUES(?,?,?,?,?,?)";
         try {
             Connection koneksi = (Connection)Conn.configDB();
             PreparedStatement pst = koneksi.prepareStatement(sql);
             
             pst.setInt(1, us.getPenjualan().getId());
-            pst.setString(2, us.getNama_obat());
-            pst.setInt(3, us.getHarga());
-            pst.setInt(4, us.getJumlah_beli());
-            pst.setInt(5, us.getSub_total());
+            pst.setInt(2, us.getId_obat().getId());
+            pst.setString(3, us.getNama_obat());
+            pst.setInt(4, us.getHarga());
+            pst.setInt(5, us.getJumlah_beli());
+            pst.setInt(6, us.getSub_total());
             pst.execute();
             return  true;
         } catch (Exception e) {
@@ -108,6 +109,7 @@ public class detail_penjualanRepository implements Repository<detail_penjualan>{
     private detail_penjualan mapToEntity(ResultSet res) throws SQLException {
         detail_penjualan us = new detail_penjualan(
                 new penjualanRepository().get(res.getInt("id_pembelian")),
+                new obatRepository().get(res.getInt("id_obat")),
                 res.getString("nama_obat"),
                 res.getInt("harga"),
                 res.getInt("jumlah_beli"),

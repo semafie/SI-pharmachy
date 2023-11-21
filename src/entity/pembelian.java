@@ -8,12 +8,15 @@ public class pembelian implements Entity{
     public  static String tableName = "pembelian";
     private String kodepembelian;
     private supplier supplier;
-    private int total_harga, id;
+    private int total_harga, id, bayartunai, kembalian;
     private Date tanggal;
     private Timestamp jam;
     
     public pembelian(){
         
+    }
+    public pembelian(int id){
+        this.id = id;
     }
     public pembelian(supplier supplier, Date tanggal, Timestamp jam, int total_harga ) {
     this. supplier = supplier;
@@ -22,12 +25,14 @@ public class pembelian implements Entity{
     this.jam = jam;
     this. total_harga = total_harga;
     }
-    public pembelian(String kode,supplier supplier, Date tanggal, Timestamp jam, int total_harga ) {
+    public pembelian(String kode, supplier supplier, Date tanggal, Timestamp jam, int total_harga, int bayartunai, int kembalian) {
     this. supplier = supplier;
-    this.kodepembelian =kode;
+    this.kodepembelian = kode;
     this.tanggal = tanggal;
     this.jam = jam;
     this. total_harga = total_harga;
+    this.bayartunai = bayartunai;
+    this.kembalian= kembalian;
     }
 
     public void setJam(Timestamp jam) {
@@ -76,6 +81,22 @@ public class pembelian implements Entity{
 
     public String getKodepembelian() {
         return kodepembelian;
+    }
+
+    public void setBayartunai(int bayartunai) {
+        this.bayartunai = bayartunai;
+    }
+
+    public int getBayartunai() {
+        return bayartunai;
+    }
+
+    public void setKembalian(int kembalian) {
+        this.kembalian = kembalian;
+    }
+
+    public int getKembalian() {
+        return kembalian;
     }
     
     
