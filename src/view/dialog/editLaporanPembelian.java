@@ -4,8 +4,20 @@
  */
 package view.dialog;
 
+import entity.pembelian;
+import entity.supplier;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import javax.swing.JFrame;
+import javax.swing.SwingUtilities;
+import javax.swing.table.DefaultTableModel;
+import main.main;
+import panel.Laporan;
+import repository.pembelianRepository;
+import repository.supplierRepository;
 import repository.userRepository;
+import util.Conn;
 
 /**
  *
@@ -13,12 +25,75 @@ import repository.userRepository;
  */
 public class editLaporanPembelian extends Dialog {
     userRepository pegawai = new userRepository();
+    supplierRepository supp = new supplierRepository();
+    pembelianRepository beli =new pembelianRepository();
+    private int id;
+    private int idd = Laporan.id;
+    int iddsupplier = beli.get(idd).getSupplier().getId();
     
     public editLaporanPembelian(JFrame frame) {
         super(frame);
         initComponents();
+        load_tabelsup();
+        jPanel2.setVisible(false);
+        txt_supplier.setText(String.valueOf(iddsupplier));
+        txt_jumlahbayar.setText(String.valueOf(beli.get(idd).getBayartunai()));
+        txt_totalharga.setText(String.valueOf(beli.get(idd).getTotal_harga()));
+        txt_kembalian.setText(String.valueOf(beli.get(idd).getKembalian()));
+    }
+    public void load_tabelsup() {
+        DefaultTableModel model = new DefaultTableModel();
+        model.addColumn("ID");
+        model.addColumn("NAMA_OBAT");
+        model.addColumn("NO TELP");
+        model.addColumn("ALAMAT");
+
+        try {
+            for (supplier apa : supp.get()) {
+                model.addRow(new Object[]{
+                    apa.getId(),
+                    apa.getNama_supplier(),
+                    apa.getNo_tlp(),
+                    apa.getAlamat()
+
+                });
+            }
+            table.setModel(model);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
     }
 
+    public void load_tabelsup(String search) {
+        DefaultTableModel model = new DefaultTableModel();
+        model.addColumn("ID");
+        model.addColumn("NAMA_SUPPLIER");
+        model.addColumn("NO_TELP");
+        model.addColumn("ALAMAT");
+
+        try {
+            String sql = "SELECT * FROM supplier WHERE id LIKE ? OR nama_supplier LIKE ?";
+            Connection koneksi = (Connection) Conn.configDB();
+            PreparedStatement pst = koneksi.prepareStatement(sql);
+            pst.setString(1, "%" + search + "%");
+            pst.setString(2, "%" + search + "%");
+
+            ResultSet res = pst.executeQuery();
+
+            while (res.next()) {
+                model.addRow(new Object[]{
+                    res.getString("id"),
+                    res.getString("nama_supplier"),
+                    res.getString("no_tlp"),
+                    res.getString("alamat")
+                });
+            }
+
+            table.setModel(model);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -29,18 +104,27 @@ public class editLaporanPembelian extends Dialog {
     private void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
+        jDesktopPane1 = new javax.swing.JDesktopPane();
+        jPanel1 = new javax.swing.JPanel();
         btnedit = new javax.swing.JLabel();
         btnbatal = new javax.swing.JLabel();
-        txt_total = new javax.swing.JTextField();
-        txt_jumlah = new javax.swing.JTextField();
-        txt_namaobat = new javax.swing.JTextField();
+        txt_kembalian = new javax.swing.JTextField();
+        txt_jumlahbayar = new javax.swing.JTextField();
+        txt_totalharga = new javax.swing.JTextField();
         txt_supplier = new javax.swing.JTextField();
+        btncarisuplier = new javax.swing.JLabel();
         bg = new javax.swing.JLabel();
+        jPanel2 = new javax.swing.JPanel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        table = new view.swing.Table();
+        bg1 = new javax.swing.JLabel();
 
         jLabel1.setText("jLabel1");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         getContentPane().setLayout(null);
+
+        jPanel1.setLayout(null);
 
         btnedit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/imagebtn/btnedit1.png"))); // NOI18N
         btnedit.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -57,7 +141,7 @@ public class editLaporanPembelian extends Dialog {
                 btneditMousePressed(evt);
             }
         });
-        getContentPane().add(btnedit);
+        jPanel1.add(btnedit);
         btnedit.setBounds(310, 540, 190, 60);
 
         btnbatal.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/imagebtn/btnbatal1.png"))); // NOI18N
@@ -75,39 +159,119 @@ public class editLaporanPembelian extends Dialog {
                 btnbatalMousePressed(evt);
             }
         });
-        getContentPane().add(btnbatal);
+        jPanel1.add(btnbatal);
         btnbatal.setBounds(100, 540, 190, 60);
 
-        txt_total.setBorder(null);
-        getContentPane().add(txt_total);
-        txt_total.setBounds(50, 450, 520, 40);
+        txt_kembalian.setBorder(null);
+        txt_kembalian.setVerifyInputWhenFocusTarget(false);
+        jPanel1.add(txt_kembalian);
+        txt_kembalian.setBounds(50, 463, 520, 40);
 
-        txt_jumlah.setBorder(null);
-        getContentPane().add(txt_jumlah);
-        txt_jumlah.setBounds(50, 360, 520, 40);
+        txt_jumlahbayar.setBorder(null);
+        txt_jumlahbayar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txt_jumlahbayarActionPerformed(evt);
+            }
+        });
+        txt_jumlahbayar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txt_jumlahbayarKeyReleased(evt);
+            }
+        });
+        jPanel1.add(txt_jumlahbayar);
+        txt_jumlahbayar.setBounds(50, 373, 520, 40);
 
-        txt_namaobat.setBorder(null);
-        getContentPane().add(txt_namaobat);
-        txt_namaobat.setBounds(50, 270, 520, 40);
+        txt_totalharga.setBorder(null);
+        txt_totalharga.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txt_totalhargaActionPerformed(evt);
+            }
+        });
+        jPanel1.add(txt_totalharga);
+        txt_totalharga.setBounds(50, 283, 520, 40);
 
         txt_supplier.setBorder(null);
-        getContentPane().add(txt_supplier);
-        txt_supplier.setBounds(50, 180, 520, 40);
+        jPanel1.add(txt_supplier);
+        txt_supplier.setBounds(50, 193, 390, 40);
 
-        bg.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/imagebg/formeditlaporanpenjualan.png"))); // NOI18N
-        getContentPane().add(bg);
-        bg.setBounds(0, 0, 620, 690);
+        btncarisuplier.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/imagebtn/btncarisupplier1.png"))); // NOI18N
+        btncarisuplier.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btncarisuplierMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btncarisuplierMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btncarisuplierMouseExited(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                btncarisuplierMousePressed(evt);
+            }
+        });
+        jPanel1.add(btncarisuplier);
+        btncarisuplier.setBounds(450, 190, 140, 40);
 
-        setSize(new java.awt.Dimension(632, 699));
+        bg.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/imagebg/formeditlaporan pembelian.png"))); // NOI18N
+        jPanel1.add(bg);
+        bg.setBounds(0, -30, 620, 720);
+
+        getContentPane().add(jPanel1);
+        jPanel1.setBounds(100, 0, 620, 640);
+
+        jPanel2.setLayout(null);
+
+        jScrollPane1.setBorder(null);
+
+        table.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        table.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tableMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(table);
+
+        jPanel2.add(jScrollPane1);
+        jScrollPane1.setBounds(50, 200, 700, 260);
+
+        bg1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/imagebg/pilihsuppilerkosong.png"))); // NOI18N
+        jPanel2.add(bg1);
+        bg1.setBounds(0, 100, 802, 420);
+
+        getContentPane().add(jPanel2);
+        jPanel2.setBounds(0, 10, 800, 640);
+
+        setSize(new java.awt.Dimension(819, 654));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void btneditMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btneditMouseClicked
-        btnedit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/imagebtn/btnedit1.png")));
+        supplier sas = new supplier(supp.get(id).getId());
+        pembelian gas = new pembelian(sas, Integer.valueOf(txt_totalharga.getText()),
+                 Integer.valueOf(txt_jumlahbayar.getText()),
+                 Integer.valueOf(txt_totalharga.getText()));
+        boolean cobak = beli.update(gas);
+        if(cobak){
+            
+            System.out.println("berhasil");
+            closeMessage();
+        }else{
+            System.out.println("gagal");
+        }
     }//GEN-LAST:event_btneditMouseClicked
 
     private void btnbatalMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnbatalMouseClicked
-        btnbatal.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/imagebtn/btnbatal1.png")));
+    
         closeMessage();
     }//GEN-LAST:event_btnbatalMouseClicked
 
@@ -135,15 +299,60 @@ public class editLaporanPembelian extends Dialog {
         btnedit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/imagebtn/btnedit3.png")));
     }//GEN-LAST:event_btneditMousePressed
 
+    private void txt_jumlahbayarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_jumlahbayarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txt_jumlahbayarActionPerformed
+
+    private void txt_totalhargaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_totalhargaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txt_totalhargaActionPerformed
+
+    private void tableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableMouseClicked
+    int baris = table.rowAtPoint(evt.getPoint());
+        String idd = table.getValueAt(baris, 0).toString();
+        id = Integer.valueOf(idd);
+        System.out.println(id);
+        txt_supplier.setText(supp.get(id).getNama_supplier());
+        jPanel2.setVisible(false);
+        
+    }//GEN-LAST:event_tableMouseClicked
+
+    private void txt_jumlahbayarKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_jumlahbayarKeyReleased
+    txt_kembalian.setText(String.valueOf(Integer.valueOf(txt_jumlahbayar.getText()) - Integer.valueOf(txt_totalharga.getText())));
+    }//GEN-LAST:event_txt_jumlahbayarKeyReleased
+
+    private void btncarisuplierMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btncarisuplierMouseClicked
+        jPanel2.setVisible(true);
+    }//GEN-LAST:event_btncarisuplierMouseClicked
+
+    private void btncarisuplierMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btncarisuplierMouseEntered
+        btncarisuplier.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/imagebtn/btncarisupplier2.png")));
+    }//GEN-LAST:event_btncarisuplierMouseEntered
+
+    private void btncarisuplierMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btncarisuplierMouseExited
+        btncarisuplier.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/imagebtn/btncarisupplier1.png")));
+    }//GEN-LAST:event_btncarisuplierMouseExited
+
+    private void btncarisuplierMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btncarisuplierMousePressed
+        btncarisuplier.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/imagebtn/btncarisupplier3.png")));
+    }//GEN-LAST:event_btncarisuplierMousePressed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel bg;
+    private javax.swing.JLabel bg1;
     private javax.swing.JLabel btnbatal;
+    private javax.swing.JLabel btncarisuplier;
     private javax.swing.JLabel btnedit;
+    private javax.swing.JDesktopPane jDesktopPane1;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JTextField txt_jumlah;
-    private javax.swing.JTextField txt_namaobat;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JScrollPane jScrollPane1;
+    private view.swing.Table table;
+    private javax.swing.JTextField txt_jumlahbayar;
+    private javax.swing.JTextField txt_kembalian;
     private javax.swing.JTextField txt_supplier;
-    private javax.swing.JTextField txt_total;
+    private javax.swing.JTextField txt_totalharga;
     // End of variables declaration//GEN-END:variables
 }

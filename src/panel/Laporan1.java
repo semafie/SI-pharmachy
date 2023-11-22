@@ -5,54 +5,27 @@
 package panel;
 import entity.pembelian;
 import java.awt.Color;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableModel;
 import main.main;
 import repository.pembelianRepository;
 import view.dialog.Validasilogout1;
-import view.dialog.editLaporanPembelian;
-import view.dialog.validasiberhasil1;
 
 /**
  *
  * @author RESCOM-1
  */
-public class Laporan extends javax.swing.JPanel {
+public class Laporan1 extends javax.swing.JPanel {
 
     /**
      * Creates new form Laporan
      */
     pembelianRepository beli = new pembelianRepository();
-    public static int id;
-    SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm:ss");
-    public Laporan() {
+    public Laporan1() {
         initComponents();
         btnpenjualan1.setVisible(false);
         btnpembelianstok.setVisible(false);
         load_tabel();
-        load_tabel1();
-    }
-    public void load_tabel1() {
-        DefaultTableModel model = new DefaultTableModel();
-        
-        model.addColumn("ID TRANSAKSI");
-        
-        
-
-        try {
-            for (pembelian apa : beli.get()) {
-                model.addRow(new Object[]{
-                    apa.getId()
-                        
-                });
-            }
-            table1.setModel(model);
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
-
     }
     public void load_tabel() {
         DefaultTableModel model = new DefaultTableModel();
@@ -72,7 +45,7 @@ public class Laporan extends javax.swing.JPanel {
                     apa.getKodepembelian(),
                     apa.getSupplier().getNama_supplier(),
                     apa.getTanggal(),
-                    timeFormat.format(new Date(apa.getJam().getTime())),
+                    apa.getJam(),
                     apa.getTotal_harga(),
                     apa.getBayartunai(),
                     apa.getKembalian()
@@ -95,6 +68,7 @@ public class Laporan extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jPanel1 = new javax.swing.JPanel();
         btnSupplier = new javax.swing.JLabel();
         btnObat = new javax.swing.JLabel();
         btnDasboard = new javax.swing.JLabel();
@@ -113,10 +87,10 @@ public class Laporan extends javax.swing.JPanel {
         btnpenjualan = new javax.swing.JLabel();
         btnpembelianstok = new javax.swing.JLabel();
         bg = new javax.swing.JLabel();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        table1 = new javax.swing.JTable();
 
         setLayout(null);
+
+        jPanel1.setLayout(null);
 
         btnSupplier.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/imagebtn/btnsupplier2.png"))); // NOI18N
         btnSupplier.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -133,7 +107,7 @@ public class Laporan extends javax.swing.JPanel {
                 btnSupplierMousePressed(evt);
             }
         });
-        add(btnSupplier);
+        jPanel1.add(btnSupplier);
         btnSupplier.setBounds(10, 295, 230, 60);
 
         btnObat.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/imagebtn/btnobat2.png"))); // NOI18N
@@ -151,7 +125,7 @@ public class Laporan extends javax.swing.JPanel {
                 btnObatMousePressed(evt);
             }
         });
-        add(btnObat);
+        jPanel1.add(btnObat);
         btnObat.setBounds(10, 220, 230, 60);
 
         btnDasboard.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/imagebtn/btndashboard2.png"))); // NOI18N
@@ -169,11 +143,11 @@ public class Laporan extends javax.swing.JPanel {
                 btnDasboardMousePressed(evt);
             }
         });
-        add(btnDasboard);
+        jPanel1.add(btnDasboard);
         btnDasboard.setBounds(10, 140, 230, 60);
 
         btnSuplier.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/imagebtn/btnlaporan1.png"))); // NOI18N
-        add(btnSuplier);
+        jPanel1.add(btnSuplier);
         btnSuplier.setBounds(10, 445, 230, 60);
 
         btnPegawai.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/imagebtn/btnpegawai2.png"))); // NOI18N
@@ -191,7 +165,7 @@ public class Laporan extends javax.swing.JPanel {
                 btnPegawaiMousePressed(evt);
             }
         });
-        add(btnPegawai);
+        jPanel1.add(btnPegawai);
         btnPegawai.setBounds(10, 520, 230, 60);
 
         btnTransaksi.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/imagebtn/btntransaksi2.png"))); // NOI18N
@@ -209,7 +183,7 @@ public class Laporan extends javax.swing.JPanel {
                 btnTransaksiMousePressed(evt);
             }
         });
-        add(btnTransaksi);
+        jPanel1.add(btnTransaksi);
         btnTransaksi.setBounds(10, 370, 230, 60);
 
         btnLogout.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/imagebtn/btnlogout1.png"))); // NOI18N
@@ -227,7 +201,7 @@ public class Laporan extends javax.swing.JPanel {
                 btnLogoutMousePressed(evt);
             }
         });
-        add(btnLogout);
+        jPanel1.add(btnLogout);
         btnLogout.setBounds(0, 680, 230, 50);
 
         jScrollPane1.setBorder(null);
@@ -243,14 +217,9 @@ public class Laporan extends javax.swing.JPanel {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        table.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                tableMouseClicked(evt);
-            }
-        });
         jScrollPane1.setViewportView(table);
 
-        add(jScrollPane1);
+        jPanel1.add(jScrollPane1);
         jScrollPane1.setBounds(300, 230, 990, 470);
 
         btnEdit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/imagebtn/btnformedit1.png"))); // NOI18N
@@ -268,7 +237,7 @@ public class Laporan extends javax.swing.JPanel {
                 btnEditMousePressed(evt);
             }
         });
-        add(btnEdit);
+        jPanel1.add(btnEdit);
         btnEdit.setBounds(280, 140, 135, 60);
 
         btnHapus.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/imagebtn/btnformhapus1.png"))); // NOI18N
@@ -286,7 +255,7 @@ public class Laporan extends javax.swing.JPanel {
                 btnHapusMousePressed(evt);
             }
         });
-        add(btnHapus);
+        jPanel1.add(btnHapus);
         btnHapus.setBounds(420, 140, 170, 60);
 
         search.setBackground(new Color(0,0,0,0));
@@ -296,7 +265,7 @@ public class Laporan extends javax.swing.JPanel {
                 searchKeyReleased(evt);
             }
         });
-        add(search);
+        jPanel1.add(search);
         search.setBounds(1010, 150, 300, 30);
 
         btnCetak.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/imagebtn/btncetak1.png"))); // NOI18N
@@ -314,17 +283,17 @@ public class Laporan extends javax.swing.JPanel {
                 btnCetakMousePressed(evt);
             }
         });
-        add(btnCetak);
+        jPanel1.add(btnCetak);
         btnCetak.setBounds(780, 140, 156, 60);
 
         btnpembelianstok1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/imagebtn/pilih pemebelian.png"))); // NOI18N
         btnpembelianstok1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        add(btnpembelianstok1);
+        jPanel1.add(btnpembelianstok1);
         btnpembelianstok1.setBounds(290, 86, 220, 38);
 
         btnpenjualan1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/imagebtn/Pilih penjualan.png"))); // NOI18N
         btnpenjualan1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        add(btnpenjualan1);
+        jPanel1.add(btnpenjualan1);
         btnpenjualan1.setBounds(520, 86, 220, 38);
 
         btnpenjualan.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/imagebtn/Penjualan.png"))); // NOI18N
@@ -334,7 +303,7 @@ public class Laporan extends javax.swing.JPanel {
                 btnpenjualanMouseClicked(evt);
             }
         });
-        add(btnpenjualan);
+        jPanel1.add(btnpenjualan);
         btnpenjualan.setBounds(570, 90, 130, 30);
 
         btnpembelianstok.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/imagebtn/Pembelian.png"))); // NOI18N
@@ -344,28 +313,15 @@ public class Laporan extends javax.swing.JPanel {
                 btnpembelianstokMouseClicked(evt);
             }
         });
-        add(btnpembelianstok);
+        jPanel1.add(btnpembelianstok);
         btnpembelianstok.setBounds(340, 89, 140, 30);
 
         bg.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/imagebg/bg Laporan Pembelian.png"))); // NOI18N
-        add(bg);
+        jPanel1.add(bg);
         bg.setBounds(0, 0, 1366, 768);
 
-        table1.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
-        ));
-        jScrollPane2.setViewportView(table1);
-
-        add(jScrollPane2);
-        jScrollPane2.setBounds(50, 642, 100, 20);
+        add(jPanel1);
+        jPanel1.setBounds(0, 0, 1370, 770);
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnSupplierMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSupplierMouseClicked
@@ -477,13 +433,7 @@ public class Laporan extends javax.swing.JPanel {
     }//GEN-LAST:event_btnLogoutMousePressed
 
     private void btnEditMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEditMouseClicked
-   if(id != 0){
-        main main = (main)SwingUtilities.getWindowAncestor(this);
-        editLaporanPembelian apa = new editLaporanPembelian(main);
-        apa.showPopUp();
-   } else {
-       System.out.println("pilih tabel dulu");
-   }
+        btnEdit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/imagebtn/btnformedit1.png")));
     }//GEN-LAST:event_btnEditMouseClicked
 
     private void btnEditMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEditMouseEntered
@@ -499,18 +449,7 @@ public class Laporan extends javax.swing.JPanel {
     }//GEN-LAST:event_btnEditMousePressed
 
     private void btnHapusMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnHapusMouseClicked
-    if(id != 0){
-        boolean cobak = beli.delete(id);
-        if(cobak){
-            main main =(main)SwingUtilities.getWindowAncestor(this);
-            validasiberhasil1 apa = new validasiberhasil1(main, "berhasil di delete");
-            apa.showPopUp();
-        }else{
-            System.out.println("gagal");
-        }
-    }else{
-        System.out.println("pilih tabel dulu");   
-    }
+        btnHapus.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/imagebtn/btnformhapus1.png")));
     }//GEN-LAST:event_btnHapusMouseClicked
 
     private void btnHapusMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnHapusMouseEntered
@@ -561,13 +500,6 @@ public class Laporan extends javax.swing.JPanel {
 
     }//GEN-LAST:event_btnpembelianstokMouseClicked
 
-    private void tableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableMouseClicked
-   int baris = table.rowAtPoint(evt.getPoint());
-        String idd = table.getValueAt(baris, 0).toString();
-        id = Integer.valueOf(idd);
-        System.out.println(id);
-    }//GEN-LAST:event_tableMouseClicked
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel bg;
@@ -585,10 +517,9 @@ public class Laporan extends javax.swing.JPanel {
     private javax.swing.JLabel btnpembelianstok1;
     private javax.swing.JLabel btnpenjualan;
     private javax.swing.JLabel btnpenjualan1;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTextField search;
     private view.swing.Table table;
-    private javax.swing.JTable table1;
     // End of variables declaration//GEN-END:variables
 }

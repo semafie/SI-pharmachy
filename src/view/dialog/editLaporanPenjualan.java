@@ -34,7 +34,7 @@ public class editLaporanPenjualan extends Dialog {
         txt_total = new javax.swing.JTextField();
         txt_jumlah = new javax.swing.JTextField();
         txt_namaobat = new javax.swing.JTextField();
-        txt_supplier = new javax.swing.JTextField();
+        jPanel1 = new javax.swing.JPanel();
         bg = new javax.swing.JLabel();
 
         jLabel1.setText("jLabel1");
@@ -90,11 +90,11 @@ public class editLaporanPenjualan extends Dialog {
         getContentPane().add(txt_namaobat);
         txt_namaobat.setBounds(50, 268, 520, 40);
 
-        txt_supplier.setBorder(null);
-        getContentPane().add(txt_supplier);
-        txt_supplier.setBounds(50, 177, 520, 40);
+        jPanel1.setBackground(new java.awt.Color(241, 255, 237));
+        getContentPane().add(jPanel1);
+        jPanel1.setBounds(10, 130, 600, 100);
 
-        bg.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/imagebg/formeditlaporanpenjualan_1.png"))); // NOI18N
+        bg.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/imagebg/formeditlaporanpenjualan.png"))); // NOI18N
         getContentPane().add(bg);
         bg.setBounds(0, 0, 620, 690);
 
@@ -141,9 +141,9 @@ public class editLaporanPenjualan extends Dialog {
     private javax.swing.JLabel btnbatal;
     private javax.swing.JLabel btnedit;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JTextField txt_jumlah;
     private javax.swing.JTextField txt_namaobat;
-    private javax.swing.JTextField txt_supplier;
     private javax.swing.JTextField txt_total;
     // End of variables declaration//GEN-END:variables
 }

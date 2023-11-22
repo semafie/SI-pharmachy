@@ -95,13 +95,13 @@ public class pembelianRepository implements Repository<pembelian>{
 
     @Override
     public boolean update(pembelian us) {
-    String sql = "update "+tableName+" set id_supplier = ?, tanggal = ?, jam = ?, total_harga = ?  where id = ?";
+    String sql = "update "+tableName+" set id_supplier = ?, total_harga = ?, jumlah_bayar = ?, kembalian = ?  where id = ?";
         try {
             Connection koneksi =(Connection)Conn.configDB();
             PreparedStatement pst = koneksi.prepareStatement(sql);
             pst.setInt(1, us.getSupplier().getId());
-            pst.setDate(2, new Date(us.getTanggal().getTime()));
-            pst.setTime(3, new Time(us.getJam().getTime()));
+            pst.setInt(2, us.getTotal_harga());
+            pst.setInt(3, us.getBayartunai());
             pst.setInt(4, us.getTotal_harga());
             pst.setInt(5, us.getId());
             pst.execute();

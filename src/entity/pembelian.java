@@ -25,6 +25,15 @@ public class pembelian implements Entity{
     this.jam = jam;
     this. total_harga = total_harga;
     }
+    
+    public pembelian(supplier supplier, int totalharga, int bayartunai, int kembalian ) {
+    this. supplier = supplier;
+
+    this.total_harga = totalharga; 
+    this.bayartunai = bayartunai; 
+    this.kembalian = kembalian;
+    }
+    
     public pembelian(String kode, supplier supplier, Date tanggal, Timestamp jam, int total_harga, int bayartunai, int kembalian) {
     this. supplier = supplier;
     this.kodepembelian = kode;
