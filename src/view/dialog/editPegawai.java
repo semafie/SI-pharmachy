@@ -90,7 +90,7 @@ public class editPegawai extends Dialog {
         getContentPane().add(btnbatal);
         btnbatal.setBounds(300, 520, 190, 60);
 
-        cmb_jeniskelamin.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cmb_jeniskelamin.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Laki - Laki", "Perempuan" }));
         cmb_jeniskelamin.setBorder(null);
         getContentPane().add(cmb_jeniskelamin);
         cmb_jeniskelamin.setBounds(90, 345, 380, 40);
