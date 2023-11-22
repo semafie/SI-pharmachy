@@ -782,6 +782,7 @@ public void load_tabel(){
     this.setVisible(false);
     validasiberhasil ac = new validasiberhasil(main, "Data Berhasil Ditambahkan");
             ac.showPopUp();
+            main.showDasboardOwner();
             
             txt_hargasatuan.setText("");
             txt_totalharga.setText("");

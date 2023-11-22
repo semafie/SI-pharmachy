@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 14, 2023 at 07:22 AM
+-- Generation Time: Nov 22, 2023 at 12:55 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -30,8 +30,8 @@ SET time_zone = "+00:00";
 CREATE TABLE `detail_pembelian` (
   `id` int(11) NOT NULL,
   `id_pembelian` int(11) NOT NULL,
+  `id_obat` int(11) NOT NULL,
   `nama_obat` varchar(50) NOT NULL,
-  `harga` int(35) NOT NULL,
   `jumlah_beli` int(35) NOT NULL,
   `sub_total` int(35) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -45,6 +45,7 @@ CREATE TABLE `detail_pembelian` (
 CREATE TABLE `detail_penjualan` (
   `id` int(11) NOT NULL,
   `id_penjualan` int(11) NOT NULL,
+  `id_obat` int(11) NOT NULL,
   `nama_obat` varchar(50) NOT NULL,
   `harga` int(35) NOT NULL,
   `jumlah_beli` int(35) NOT NULL,
@@ -91,10 +92,13 @@ CREATE TABLE `obat` (
 
 CREATE TABLE `pembelian` (
   `id` int(11) NOT NULL,
-  `id_supllier` int(8) NOT NULL,
+  `kode` varchar(11) NOT NULL,
+  `id_supplier` int(8) NOT NULL,
   `tanggal` date NOT NULL,
   `jam` time NOT NULL,
-  `total_harga` int(35) NOT NULL
+  `total_harga` int(35) NOT NULL,
+  `jumlah_bayar` int(11) NOT NULL,
+  `kembalian` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -105,9 +109,12 @@ CREATE TABLE `pembelian` (
 
 CREATE TABLE `penjualan` (
   `id` int(11) NOT NULL,
+  `kode` varchar(11) NOT NULL,
   `tanggal` date NOT NULL,
   `jam` time NOT NULL,
-  `total_harga` int(35) NOT NULL
+  `total_harga` int(35) NOT NULL,
+  `jumlah_bayar` int(11) NOT NULL,
+  `kembalian` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -183,7 +190,7 @@ ALTER TABLE `obat`
 --
 ALTER TABLE `pembelian`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `id_supllier` (`id_supllier`);
+  ADD KEY `id_supllier` (`id_supplier`);
 
 --
 -- Indexes for table `penjualan`
@@ -270,7 +277,7 @@ ALTER TABLE `detail_penjualan`
 -- Constraints for table `pembelian`
 --
 ALTER TABLE `pembelian`
-  ADD CONSTRAINT `pembelian_ibfk_1` FOREIGN KEY (`id_supllier`) REFERENCES `supplier` (`id`);
+  ADD CONSTRAINT `pembelian_ibfk_1` FOREIGN KEY (`id_supplier`) REFERENCES `supplier` (`id`);
 
 --
 -- Constraints for table `user`
