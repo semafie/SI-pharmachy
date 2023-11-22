@@ -53,6 +53,23 @@ public class pembelianRepository implements Repository<pembelian>{
         }
         return us;
     }
+    public pembelian getidbykode(String kode) {
+    String sql = "select * from "+tableName+" where kode = ?";
+        pembelian us = new pembelian();
+        
+        try {
+            Connection koneksi = (Connection)Conn.configDB();
+            PreparedStatement pst = koneksi.prepareStatement(sql);
+            pst.setString(1, kode);
+            ResultSet res = pst.executeQuery();
+            while (res.next()) {
+                return mapToEntity(res);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return us;
+    }
     
     public pembelian getlastkode() {
     String sql = "select * from "+tableName+" ORDER BY id DESC LIMIT 1";

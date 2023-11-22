@@ -4,6 +4,7 @@ package main;
 import panel.Dasboard;
 import panel.DasboardOwner;
 import panel.Laporan;
+import panel.Laporan1;
 import panel.Obat;
 import panel.Pegawai;
 import panel.Suplier;
@@ -64,6 +65,13 @@ public class main extends javax.swing.JFrame {
     }
     public void showLaporan(){
         Laporan a = new Laporan();
+        a.setSize(1366,768);
+        this.add(a);
+        this.revalidate();
+        this.repaint();
+    }
+    public void showLaporan1(){
+        Laporan1 a = new Laporan1();
         a.setSize(1366,768);
         this.add(a);
         this.revalidate();

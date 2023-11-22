@@ -86,6 +86,7 @@ public class Validasilogout1 extends Dialog {
     private void btnyaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnyaMouseClicked
     main apa =(main)SwingUtilities.getWindowAncestor(this);
     apa.dispose();
+    new mainlogin().setVisible(true);
     }//GEN-LAST:event_btnyaMouseClicked
 
     private void btntidakMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btntidakMouseClicked

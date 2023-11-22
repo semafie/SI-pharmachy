@@ -34,7 +34,7 @@ public class penjualanRepository implements Repository<penjualan>{
 
     
     public List<penjualan> getdataterakhir() {
-    String sql = "Select * from "+ tableName +"DORDER BY id DESC LIMIT 1";
+    String sql = "Select * from "+ tableName +" ORDER BY id DESC LIMIT 1";
         List<penjualan> user = new ArrayList<>();
         try {
             Connection koneksi = (Connection)Conn.configDB();
@@ -67,6 +67,7 @@ public class penjualanRepository implements Repository<penjualan>{
         }
         return us;
     }
+    
     public penjualan getlastid() {
    String sql = "select * from "+tableName+" ORDER BY id DESC LIMIT 1";
         penjualan us = new penjualan();

@@ -94,7 +94,7 @@ public class detail_pembelianRepository implements Repository<detail_pembelian>{
 
     @Override
     public boolean delete(int id) {
-    String sql = "delete from "+tableName+" where id = ?";
+    String sql = "delete from "+tableName+" where id_pembelian = ?";
         try {
             Connection koneksi = (Connection)Conn.configDB();
             PreparedStatement pst = koneksi.prepareStatement(sql);

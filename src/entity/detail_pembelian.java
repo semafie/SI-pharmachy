@@ -11,6 +11,10 @@ public class detail_pembelian implements Entity{
     public detail_pembelian(){
         
     }
+    
+    public detail_pembelian(int id){
+        this.id = id;
+    }
     public detail_pembelian(pembelian pembelian,obat id_obat, String nama_obat, int jumlah_beli, int sub_total){
     this.pembelian = pembelian;
     this.obat = id_obat;

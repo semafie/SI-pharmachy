@@ -940,7 +940,14 @@ public class Transaksi extends javax.swing.JPanel {
                      Integer.valueOf(model.getValueAt(row, 3).toString()));
             boolean cobak2 = detailpembelian.add(apa11);
             if(cobak2){
+                txt_kodesuplier.setText("");
+                txt_namasuplier.setText("");
+                txt_bayartunai.setText("");
+                txt_totalharga.setText("");
+                txt_kembali.setText("");
                 System.out.println("berhasil" + row);
+                DefaultTableModel model1 = (DefaultTableModel) table23.getModel();
+    model1.setRowCount(0);
             } else {
                 System.out.println("gagal" + row);
             }

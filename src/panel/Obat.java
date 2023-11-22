@@ -127,13 +127,15 @@ private String pilih = "semua stok";
     }
 }
     
-    public static void convertJTableToPDF(JTable jTable) {
+    public static boolean convertJTableToPDF(JTable jTable) {
     JFileChooser fileChooser = new JFileChooser();
     fileChooser.setDialogTitle("Simpan sebagai PDF");
     fileChooser.setFileFilter(new FileNameExtensionFilter("File PDF", "pdf"));
 
     int userSelection = fileChooser.showSaveDialog(null);
-
+        try {
+            
+        
     if (userSelection == JFileChooser.APPROVE_OPTION) {
         String filePath = fileChooser.getSelectedFile().getAbsolutePath() + ".pdf";
         Document document = new Document(PageSize.A4.rotate());
@@ -197,13 +199,17 @@ private String pilih = "semua stok";
             document.add(pdfTable);
             document.close();
             JOptionPane.showMessageDialog(null, "Berhasil menyimpan PDF", "Sukses", JOptionPane.INFORMATION_MESSAGE);
-            
+            return true;
         } catch (DocumentException | FileNotFoundException e) {
             e.printStackTrace();
             JOptionPane.showMessageDialog(null, "Gagal menyimpan PDF", "Error", JOptionPane.ERROR_MESSAGE);
-
+            return false;
         }   
     }
+    return true;
+    } catch (Exception e) {
+        return false;
+        }
 }
     
 

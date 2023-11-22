@@ -3,16 +3,21 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
  */
 package panel;
+import entity.detail_pembelian;
 import entity.pembelian;
+import entity.penjualan;
 import java.awt.Color;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableModel;
 import main.main;
+import repository.detail_pembelianRepository;
 import repository.pembelianRepository;
+import repository.penjualanRepository;
 import view.dialog.Validasilogout1;
 import view.dialog.editLaporanPembelian;
+import view.dialog.editLaporanPenjualan;
 import view.dialog.validasiberhasil1;
 
 /**
@@ -24,7 +29,10 @@ public class Laporan extends javax.swing.JPanel {
     /**
      * Creates new form Laporan
      */
+    private String pilih = "pembelian";
+    detail_pembelianRepository detailbeli = new detail_pembelianRepository();
     pembelianRepository beli = new pembelianRepository();
+    penjualanRepository jual = new penjualanRepository();
     public static int id;
     SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm:ss");
     public Laporan() {
@@ -32,38 +40,19 @@ public class Laporan extends javax.swing.JPanel {
         btnpenjualan1.setVisible(false);
         btnpembelianstok.setVisible(false);
         load_tabel();
-        load_tabel1();
+        
     }
-    public void load_tabel1() {
-        DefaultTableModel model = new DefaultTableModel();
-        
-        model.addColumn("ID TRANSAKSI");
-        
-        
-
-        try {
-            for (pembelian apa : beli.get()) {
-                model.addRow(new Object[]{
-                    apa.getId()
-                        
-                });
-            }
-            table1.setModel(model);
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
-
-    }
+    
     public void load_tabel() {
         DefaultTableModel model = new DefaultTableModel();
         
-        model.addColumn("ID TRANSAKSI");
-        model.addColumn("NAMA SUPPLIER");
-        model.addColumn("TGL TRANSAKSI");
-        model.addColumn("JAM");
-        model.addColumn("TOTAL HARGA");
-        model.addColumn("JUMLAH_BAYAR");
-        model.addColumn("KEMBALIAN");
+        model.addColumn("Id Transaksi");
+        model.addColumn("Nama Supplier");
+        model.addColumn("Tgl Transaksi");
+        model.addColumn("Jam");
+        model.addColumn("Total Harga");
+        model.addColumn("Jumlah Bayar");
+        model.addColumn("Kembalian");
         
 
         try {
@@ -75,6 +64,36 @@ public class Laporan extends javax.swing.JPanel {
                     timeFormat.format(new Date(apa.getJam().getTime())),
                     apa.getTotal_harga(),
                     apa.getBayartunai(),
+                    apa.getKembalian()
+                        
+                });
+            }
+            table.setModel(model);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+
+    }
+    public void load_tabel1() {
+        DefaultTableModel model = new DefaultTableModel();
+        
+        model.addColumn("Id Transaksi");
+        model.addColumn("Tgl Transaksi");
+        model.addColumn("Jam");
+        model.addColumn("Total Harga");
+        model.addColumn("Jumlah Bayar");
+        model.addColumn("Kembalian");
+        
+
+        try {
+            for (penjualan apa : jual.get()) {
+                model.addRow(new Object[]{
+                    apa.getKodepenjulan(),
+                     
+                    apa.getTanggal(),
+                    timeFormat.format(new Date(apa.getJam().getTime())),
+                    apa.getTotal_harga(),
+                    apa.getJumlahbayar(),
                     apa.getKembalian()
                         
                 });
@@ -113,8 +132,6 @@ public class Laporan extends javax.swing.JPanel {
         btnpenjualan = new javax.swing.JLabel();
         btnpembelianstok = new javax.swing.JLabel();
         bg = new javax.swing.JLabel();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        table1 = new javax.swing.JTable();
 
         setLayout(null);
 
@@ -350,22 +367,6 @@ public class Laporan extends javax.swing.JPanel {
         bg.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/imagebg/bg Laporan Pembelian.png"))); // NOI18N
         add(bg);
         bg.setBounds(0, 0, 1366, 768);
-
-        table1.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
-        ));
-        jScrollPane2.setViewportView(table1);
-
-        add(jScrollPane2);
-        jScrollPane2.setBounds(50, 642, 100, 20);
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnSupplierMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSupplierMouseClicked
@@ -477,12 +478,19 @@ public class Laporan extends javax.swing.JPanel {
     }//GEN-LAST:event_btnLogoutMousePressed
 
     private void btnEditMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEditMouseClicked
-   if(id != 0){
+   if(pilih.equals("pembelian")){
+        if(id != 0){
         main main = (main)SwingUtilities.getWindowAncestor(this);
         editLaporanPembelian apa = new editLaporanPembelian(main);
         apa.showPopUp();
+        load_tabel();
    } else {
        System.out.println("pilih tabel dulu");
+   }
+   } else{
+       main main = (main)SwingUtilities.getWindowAncestor(this);
+        editLaporanPenjualan apa = new editLaporanPenjualan(main);
+        apa.showPopUp();
    }
     }//GEN-LAST:event_btnEditMouseClicked
 
@@ -499,18 +507,41 @@ public class Laporan extends javax.swing.JPanel {
     }//GEN-LAST:event_btnEditMousePressed
 
     private void btnHapusMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnHapusMouseClicked
-    if(id != 0){
-        boolean cobak = beli.delete(id);
+    if (pilih.equals("pembelian")){
+        if(id != 0){
+            
+            detail_pembelian gasken = new detail_pembelian();
+            boolean cobakdeletedetail = detailbeli.delete(id);
+            if(cobakdeletedetail){
+                
+            }else{
+//                main main =(main)SwingUtilities.getWindowAncestor(this);
+//            validasiberhasil1 apa = new validasiberhasil1(main, "gagal di delete");
+//            apa.showPopUp();
+System.out.println("gagal");
+            }
+            boolean cobak = beli.delete(id);
         if(cobak){
             main main =(main)SwingUtilities.getWindowAncestor(this);
             validasiberhasil1 apa = new validasiberhasil1(main, "berhasil di delete");
             apa.showPopUp();
+            load_tabel();
         }else{
             System.out.println("gagal");
         }
+        
     }else{
         System.out.println("pilih tabel dulu");   
     }
+    }else{
+        if(id != 0){
+            
+            
+            }else{
+        System.out.println("pilih tabel dulu");   
+            }
+    }
+    
     }//GEN-LAST:event_btnHapusMouseClicked
 
     private void btnHapusMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnHapusMouseEntered
@@ -551,22 +582,26 @@ public class Laporan extends javax.swing.JPanel {
         btnpembelianstok1.setVisible(false);
         btnpenjualan.setVisible(false);
         btnpenjualan1.setVisible(true);
+        pilih = "penjualan";
+        load_tabel1();
     }//GEN-LAST:event_btnpenjualanMouseClicked
+
+    private void tableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableMouseClicked
+   int baris = table.rowAtPoint(evt.getPoint());
+        String idd = table.getValueAt(baris, 0).toString();
+        int wow = beli.getidbykode(idd).getId();
+        id = wow;
+        System.out.println(id);
+    }//GEN-LAST:event_tableMouseClicked
 
     private void btnpembelianstokMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnpembelianstokMouseClicked
         btnpembelianstok.setVisible(false);
         btnpembelianstok1.setVisible(true);
         btnpenjualan.setVisible(true);
         btnpenjualan1.setVisible(false);
-
+        pilih = "pembelian";
+        load_tabel();
     }//GEN-LAST:event_btnpembelianstokMouseClicked
-
-    private void tableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableMouseClicked
-   int baris = table.rowAtPoint(evt.getPoint());
-        String idd = table.getValueAt(baris, 0).toString();
-        id = Integer.valueOf(idd);
-        System.out.println(id);
-    }//GEN-LAST:event_tableMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -586,9 +621,7 @@ public class Laporan extends javax.swing.JPanel {
     private javax.swing.JLabel btnpenjualan;
     private javax.swing.JLabel btnpenjualan1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTextField search;
     private view.swing.Table table;
-    private javax.swing.JTable table1;
     // End of variables declaration//GEN-END:variables
 }

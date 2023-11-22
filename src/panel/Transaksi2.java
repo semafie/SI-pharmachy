@@ -7,15 +7,26 @@ import entity.detail_penjualan;
 import entity.obat;
 import entity.penjualan;
 import java.awt.Color;
+import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.Statement;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableModel;
 import main.main;
+import net.sf.jasperreports.engine.JRResultSetDataSource;
+import net.sf.jasperreports.engine.JasperCompileManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.design.JasperDesign;
+import net.sf.jasperreports.engine.xml.JRXmlLoader;
+import net.sf.jasperreports.view.JasperViewer;
 import repository.detail_penjualanRepository;
 import repository.obatRepository;
 import repository.penjualanRepository;
@@ -749,7 +760,35 @@ public void load_tabel(){
             } else {
                 System.out.println("gagal" + row);
             }
+            
         }
+        int idfinalrekap = penjualan.getlastid().getId();
+            InputStream struk = getClass().getResourceAsStream("/jasper_report/reportpenjualan.jrxml");
+            String query = "SELECT * FROM detail_penjualan JOIN penjualan ON detail_penjualan.id_penjualan = penjualan.id WHERE penjualan.id = "+idfinalrekap;
+//        String path = "E:/SEMUA FOLDER/imam/kuliah/semester 3/joki/SIsiloam/SIsiloam/SISILOAM/src/jasper_report/no_antrian.jrxml";
+
+        try {
+               Connection koneksi = (Connection) Conn.configDB();
+            Statement pstCek = koneksi.createStatement();
+            ResultSet res = pstCek.executeQuery(query);
+            JasperDesign design = JRXmlLoader.load(struk);
+            JasperReport jr = JasperCompileManager.compileReport(design);
+            JRResultSetDataSource rsDataSource = new JRResultSetDataSource(res);
+            JasperPrint jp = JasperFillManager.fillReport(jr, new HashMap<>(), rsDataSource);
+
+            JasperViewer viewer = new JasperViewer(jp, false); // argumen 'false' mencegah aplikasi keluar
+            viewer.setVisible(true);
+            main main =(main)SwingUtilities.getWindowAncestor(this);
+    this.setVisible(false);
+    validasiberhasil ac = new validasiberhasil(main, "Data Berhasil Ditambahkan");
+            ac.showPopUp();
+            
+            txt_hargasatuan.setText("");
+            txt_totalharga.setText("");
+            txt_kembalian.setText("");
+        } catch(Exception e) { 
+            System.out.println(e.getMessage());
+            e.printStackTrace(); }
     }//GEN-LAST:event_btnprosestransaksiMouseClicked
 
     private void btnhapustableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnhapustableMouseClicked

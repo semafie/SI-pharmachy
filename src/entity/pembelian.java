@@ -26,9 +26,9 @@ public class pembelian implements Entity{
     this. total_harga = total_harga;
     }
     
-    public pembelian(supplier supplier, int totalharga, int bayartunai, int kembalian ) {
+    public pembelian(int id,supplier supplier, int totalharga, int bayartunai, int kembalian ) {
     this. supplier = supplier;
-
+this.id =id;
     this.total_harga = totalharga; 
     this.bayartunai = bayartunai; 
     this.kembalian = kembalian;

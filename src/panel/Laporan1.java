@@ -82,9 +82,7 @@ public class Laporan1 extends javax.swing.JPanel {
         btnHapus = new javax.swing.JLabel();
         search = new javax.swing.JTextField();
         btnCetak = new javax.swing.JLabel();
-        btnpembelianstok1 = new javax.swing.JLabel();
         btnpenjualan1 = new javax.swing.JLabel();
-        btnpenjualan = new javax.swing.JLabel();
         btnpembelianstok = new javax.swing.JLabel();
         bg = new javax.swing.JLabel();
 
@@ -286,25 +284,10 @@ public class Laporan1 extends javax.swing.JPanel {
         jPanel1.add(btnCetak);
         btnCetak.setBounds(780, 140, 156, 60);
 
-        btnpembelianstok1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/imagebtn/pilih pemebelian.png"))); // NOI18N
-        btnpembelianstok1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        jPanel1.add(btnpembelianstok1);
-        btnpembelianstok1.setBounds(290, 86, 220, 38);
-
         btnpenjualan1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/imagebtn/Pilih penjualan.png"))); // NOI18N
         btnpenjualan1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jPanel1.add(btnpenjualan1);
         btnpenjualan1.setBounds(520, 86, 220, 38);
-
-        btnpenjualan.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/imagebtn/Penjualan.png"))); // NOI18N
-        btnpenjualan.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btnpenjualan.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnpenjualanMouseClicked(evt);
-            }
-        });
-        jPanel1.add(btnpenjualan);
-        btnpenjualan.setBounds(570, 90, 130, 30);
 
         btnpembelianstok.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/imagebtn/Pembelian.png"))); // NOI18N
         btnpembelianstok.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -484,20 +467,10 @@ public class Laporan1 extends javax.swing.JPanel {
         btnCetak.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/imagebtn/btncetak3.png")));
     }//GEN-LAST:event_btnCetakMousePressed
 
-    private void btnpenjualanMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnpenjualanMouseClicked
-
-        btnpembelianstok.setVisible(true);
-        btnpembelianstok1.setVisible(false);
-        btnpenjualan.setVisible(false);
-        btnpenjualan1.setVisible(true);
-    }//GEN-LAST:event_btnpenjualanMouseClicked
-
     private void btnpembelianstokMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnpembelianstokMouseClicked
-        btnpembelianstok.setVisible(false);
-        btnpembelianstok1.setVisible(true);
-        btnpenjualan.setVisible(true);
-        btnpenjualan1.setVisible(false);
-
+    main main = (main)SwingUtilities.getWindowAncestor(this);
+        this.setVisible(false);
+        main.showLaporan();
     }//GEN-LAST:event_btnpembelianstokMouseClicked
 
 
@@ -514,8 +487,6 @@ public class Laporan1 extends javax.swing.JPanel {
     private javax.swing.JLabel btnSupplier;
     private javax.swing.JLabel btnTransaksi;
     private javax.swing.JLabel btnpembelianstok;
-    private javax.swing.JLabel btnpembelianstok1;
-    private javax.swing.JLabel btnpenjualan;
     private javax.swing.JLabel btnpenjualan1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;

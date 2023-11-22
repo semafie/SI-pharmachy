@@ -4,6 +4,7 @@
  */
 package view.dialog;
 
+import java.awt.Color;
 import entity.pembelian;
 import entity.supplier;
 import java.sql.Connection;
@@ -27,16 +28,17 @@ public class editLaporanPembelian extends Dialog {
     userRepository pegawai = new userRepository();
     supplierRepository supp = new supplierRepository();
     pembelianRepository beli =new pembelianRepository();
-    private int id;
+    private int id ;
     private int idd = Laporan.id;
     int iddsupplier = beli.get(idd).getSupplier().getId();
+    String iddsupplier1 = beli.get(idd).getSupplier().getNama_supplier();
     
     public editLaporanPembelian(JFrame frame) {
         super(frame);
         initComponents();
         load_tabelsup();
         jPanel2.setVisible(false);
-        txt_supplier.setText(String.valueOf(iddsupplier));
+        txt_supplier.setText(iddsupplier1);
         txt_jumlahbayar.setText(String.valueOf(beli.get(idd).getBayartunai()));
         txt_totalharga.setText(String.valueOf(beli.get(idd).getTotal_harga()));
         txt_kembalian.setText(String.valueOf(beli.get(idd).getKembalian()));
@@ -124,6 +126,8 @@ public class editLaporanPembelian extends Dialog {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         getContentPane().setLayout(null);
 
+        jPanel1.setBackground(new Color(0,0,0,0)
+        );
         jPanel1.setLayout(null);
 
         btnedit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/imagebtn/btnedit1.png"))); // NOI18N
@@ -163,6 +167,7 @@ public class editLaporanPembelian extends Dialog {
         btnbatal.setBounds(100, 540, 190, 60);
 
         txt_kembalian.setBorder(null);
+        txt_kembalian.setFocusable(false);
         txt_kembalian.setVerifyInputWhenFocusTarget(false);
         jPanel1.add(txt_kembalian);
         txt_kembalian.setBounds(50, 463, 520, 40);
@@ -182,6 +187,7 @@ public class editLaporanPembelian extends Dialog {
         txt_jumlahbayar.setBounds(50, 373, 520, 40);
 
         txt_totalharga.setBorder(null);
+        txt_totalharga.setFocusable(false);
         txt_totalharga.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txt_totalhargaActionPerformed(evt);
@@ -191,6 +197,7 @@ public class editLaporanPembelian extends Dialog {
         txt_totalharga.setBounds(50, 283, 520, 40);
 
         txt_supplier.setBorder(null);
+        txt_supplier.setFocusable(false);
         jPanel1.add(txt_supplier);
         txt_supplier.setBounds(50, 193, 390, 40);
 
@@ -219,6 +226,8 @@ public class editLaporanPembelian extends Dialog {
         getContentPane().add(jPanel1);
         jPanel1.setBounds(100, 0, 620, 640);
 
+        jPanel2.setBackground(new Color(0,0,0,0)
+        );
         jPanel2.setLayout(null);
 
         jScrollPane1.setBorder(null);
@@ -257,9 +266,10 @@ public class editLaporanPembelian extends Dialog {
 
     private void btneditMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btneditMouseClicked
         supplier sas = new supplier(supp.get(id).getId());
-        pembelian gas = new pembelian(sas, Integer.valueOf(txt_totalharga.getText()),
+        System.out.println(sas);
+        pembelian gas = new pembelian(idd,sas, Integer.valueOf(txt_totalharga.getText()),
                  Integer.valueOf(txt_jumlahbayar.getText()),
-                 Integer.valueOf(txt_totalharga.getText()));
+                 Integer.valueOf(txt_kembalian.getText()));
         boolean cobak = beli.update(gas);
         if(cobak){
             
@@ -314,7 +324,7 @@ public class editLaporanPembelian extends Dialog {
         System.out.println(id);
         txt_supplier.setText(supp.get(id).getNama_supplier());
         jPanel2.setVisible(false);
-        
+        jPanel1.setVisible(true);
     }//GEN-LAST:event_tableMouseClicked
 
     private void txt_jumlahbayarKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_jumlahbayarKeyReleased
@@ -323,6 +333,7 @@ public class editLaporanPembelian extends Dialog {
 
     private void btncarisuplierMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btncarisuplierMouseClicked
         jPanel2.setVisible(true);
+        jPanel1.setVisible(false);
     }//GEN-LAST:event_btncarisuplierMouseClicked
 
     private void btncarisuplierMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btncarisuplierMouseEntered
