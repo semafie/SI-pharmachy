@@ -31,7 +31,7 @@ public class Suplier extends javax.swing.JPanel {
     public void load_tabel(){
         DefaultTableModel model = new DefaultTableModel();
         model.addColumn("ID");
-        model.addColumn("NAMA_OBAT");
+        model.addColumn("NAMA_SUPPLIER");
         model.addColumn("NO TELP");
         model.addColumn("ALAMAT");
     
