@@ -3,13 +3,34 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
  */
 package panel;
+import com.lowagie.text.Document;
+import com.lowagie.text.DocumentException;
+import com.lowagie.text.Element;
+import com.lowagie.text.Font;
+import com.lowagie.text.PageSize;
+import com.lowagie.text.Paragraph;
+import com.lowagie.text.Phrase;
+import com.lowagie.text.pdf.PdfPCell;
+import com.lowagie.text.pdf.PdfPTable;
+import com.lowagie.text.pdf.PdfWriter;
 import entity.pembelian;
+import entity.penjualan;
 import java.awt.Color;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
+import javax.swing.JTable;
 import javax.swing.SwingUtilities;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
 import main.main;
 import repository.pembelianRepository;
+import repository.penjualanRepository;
 import view.dialog.Validasilogout1;
+import view.dialog.editLaporanPenjualan;
 
 /**
  *
@@ -20,7 +41,8 @@ public class Laporan1 extends javax.swing.JPanel {
     /**
      * Creates new form Laporan
      */
-    pembelianRepository beli = new pembelianRepository();
+    public static int id;
+    penjualanRepository beli = new penjualanRepository();
     public Laporan1() {
         initComponents();
         btnpenjualan1.setVisible(false);
@@ -31,7 +53,6 @@ public class Laporan1 extends javax.swing.JPanel {
         DefaultTableModel model = new DefaultTableModel();
         
         model.addColumn("ID TRANSAKSI");
-        model.addColumn("NAMA SUPPLIER");
         model.addColumn("TGL TRANSAKSI");
         model.addColumn("JAM");
         model.addColumn("TOTAL HARGA");
@@ -40,14 +61,13 @@ public class Laporan1 extends javax.swing.JPanel {
         
 
         try {
-            for (pembelian apa : beli.get()) {
+            for (penjualan apa : beli.get()) {
                 model.addRow(new Object[]{
-                    apa.getKodepembelian(),
-                    apa.getSupplier().getNama_supplier(),
+                    apa.getKodepenjulan(),
                     apa.getTanggal(),
                     apa.getJam(),
                     apa.getTotal_harga(),
-                    apa.getBayartunai(),
+                    apa.getJumlahbayar(),
                     apa.getKembalian()
                         
                 });
@@ -58,6 +78,91 @@ public class Laporan1 extends javax.swing.JPanel {
         }
 
     }
+    
+    public static boolean convertJTableToPDF(JTable jTable) {
+    JFileChooser fileChooser = new JFileChooser();
+    fileChooser.setDialogTitle("Simpan sebagai PDF");
+    fileChooser.setFileFilter(new FileNameExtensionFilter("File PDF", "pdf"));
+
+    int userSelection = fileChooser.showSaveDialog(null);
+        try {
+            
+        
+    if (userSelection == JFileChooser.APPROVE_OPTION) {
+        String filePath = fileChooser.getSelectedFile().getAbsolutePath() + ".pdf";
+        Document document = new Document(PageSize.A4.rotate());
+
+        try {
+            PdfWriter.getInstance(document, new FileOutputStream(filePath));
+            document.open();
+            
+            // Tambahkan judul laporan
+                Paragraph title = new Paragraph("LAPORAN STOK MENIPIS APOTEK SUKA MAJU", new Font(Font.BOLD, 18, Font.NORMAL));
+                title.setAlignment(Element.ALIGN_CENTER);
+                document.add(title);
+                
+                Paragraph title1 = new Paragraph(" ", new Font(Font.BOLD, 18, Font.NORMAL));
+                title1.setAlignment(Element.ALIGN_CENTER);
+                document.add(title1);
+                
+                
+                
+                
+                // Tambahkan tanggal hari ini
+                SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+                String currentDate = "Tanggal: " + sdf.format(new Date()) ;
+                Paragraph date = new Paragraph(currentDate, new Font(Font.BOLD, 12, Font.NORMAL));
+                date.setAlignment(Element.ALIGN_RIGHT);
+                document.add(date);
+                
+                Paragraph title2 = new Paragraph(" ", new Font(Font.BOLD, 20, Font.NORMAL));
+                title2.setAlignment(Element.ALIGN_CENTER);
+                document.add(title2);
+                
+                date.setSpacingAfter(25);
+            
+            PdfPTable pdfTable = new PdfPTable(jTable.getColumnCount());
+            
+            pdfTable.getDefaultCell().setBorderColor(new Color(219,219,219));
+            
+            pdfTable.setTotalWidth(PageSize.A4.getHeight());
+
+            // Mengisi header tabel PDF dengan nama kolom dari JTable
+            for (int i = 0; i < jTable.getColumnCount(); i++) {
+//                pdfTable.addCell(jTable.getColumnName(i));
+                PdfPCell cell = new PdfPCell(new Phrase(jTable.getColumnName(i)));
+                    cell.setBackgroundColor(new Color(140,170,126)); // Warna latar belakang
+                    cell.setHorizontalAlignment(Element.ALIGN_CENTER); // Pusatkan teks
+                    cell.setPadding(1);
+                    cell.setBorderColor(Color.WHITE);
+                    pdfTable.addCell(cell);
+            }
+//            float[] columnWidths = {1f, 1.5f, 2f, 1.5f}; // Sesuaikan lebar kolom sesuai kebutuhan
+//                pdfTable.setWidths(columnWidths);
+
+
+            // Mengisi data dari JTable ke tabel PDF
+            for (int i = 0; i < jTable.getRowCount(); i++) {
+                for (int j = 0; j < jTable.getColumnCount(); j++) {
+                    pdfTable.addCell(jTable.getValueAt(i, j).toString());
+                }
+            }
+
+            document.add(pdfTable);
+            document.close();
+            JOptionPane.showMessageDialog(null, "Berhasil menyimpan PDF", "Sukses", JOptionPane.INFORMATION_MESSAGE);
+            return true;
+        } catch (DocumentException | FileNotFoundException e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Gagal menyimpan PDF", "Error", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }   
+    }
+    return true;
+    } catch (Exception e) {
+        return false;
+        }
+}
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -215,6 +320,11 @@ public class Laporan1 extends javax.swing.JPanel {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        table.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tableMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(table);
 
         jPanel1.add(jScrollPane1);
@@ -416,7 +526,15 @@ public class Laporan1 extends javax.swing.JPanel {
     }//GEN-LAST:event_btnLogoutMousePressed
 
     private void btnEditMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEditMouseClicked
-        btnEdit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/imagebtn/btnformedit1.png")));
+    if(id != 0){
+       main main = (main)SwingUtilities.getWindowAncestor(this);
+        editLaporanPenjualan apa = new editLaporanPenjualan(main);
+        apa.showPopUp(); 
+    } else {
+        System.out.println("pilih dulu bro");
+    }
+        
+        load_tabel();
     }//GEN-LAST:event_btnEditMouseClicked
 
     private void btnEditMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEditMouseEntered
@@ -452,7 +570,7 @@ public class Laporan1 extends javax.swing.JPanel {
     }//GEN-LAST:event_searchKeyReleased
 
     private void btnCetakMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCetakMouseClicked
-        // TODO add your handling code here:
+        convertJTableToPDF(table);
     }//GEN-LAST:event_btnCetakMouseClicked
 
     private void btnCetakMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCetakMouseEntered
@@ -472,6 +590,14 @@ public class Laporan1 extends javax.swing.JPanel {
         this.setVisible(false);
         main.showLaporan();
     }//GEN-LAST:event_btnpembelianstokMouseClicked
+
+    private void tableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableMouseClicked
+    int baris = table.rowAtPoint(evt.getPoint());
+        String idd = table.getValueAt(baris, 0).toString();
+        int wow = beli.getidbykode(idd).getId();
+        id = wow;
+        System.out.println(id);
+    }//GEN-LAST:event_tableMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

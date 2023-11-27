@@ -10,6 +10,10 @@ public class detail_penjualan implements Entity{
         
     }
     
+    public detail_penjualan(int id){
+        this.id = id;
+    }
+    
     public detail_penjualan(penjualan penjualan,obat id_obat, String nama_obat,int harga, int jumlah_beli,int sub_total){
         this.penjualan = penjualan;
         this.id_obat = id_obat;

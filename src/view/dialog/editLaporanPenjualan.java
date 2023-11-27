@@ -4,7 +4,9 @@
  */
 package view.dialog;
 
-import javax.swing.JFrame;
+import entity.penjualan;import javax.swing.JFrame;
+import panel.Laporan;
+import repository.penjualanRepository;
 import repository.userRepository;
 
 /**
@@ -12,11 +14,14 @@ import repository.userRepository;
  * @author Be Mine
  */
 public class editLaporanPenjualan extends Dialog {
-    userRepository pegawai = new userRepository();
-    
+    penjualanRepository penjualan = new penjualanRepository();
+    private int id = Laporan.id;
     public editLaporanPenjualan(JFrame frame) {
         super(frame);
         initComponents();
+        txt_jumlahbayar.setText(String.valueOf(penjualan.get(id).getJumlahbayar()));
+        txt_kembalian.setText(String.valueOf(penjualan.get(id).getKembalian()));
+        txt_totalharga.setText(String.valueOf(penjualan.get(id).getTotal_harga()));
     }
 
     /**
@@ -31,10 +36,9 @@ public class editLaporanPenjualan extends Dialog {
         jLabel1 = new javax.swing.JLabel();
         btnedit = new javax.swing.JLabel();
         btnbatal = new javax.swing.JLabel();
-        txt_total = new javax.swing.JTextField();
-        txt_jumlah = new javax.swing.JTextField();
-        txt_namaobat = new javax.swing.JTextField();
-        jPanel1 = new javax.swing.JPanel();
+        txt_kembalian = new javax.swing.JTextField();
+        txt_jumlahbayar = new javax.swing.JTextField();
+        txt_totalharga = new javax.swing.JTextField();
         bg = new javax.swing.JLabel();
 
         jLabel1.setText("jLabel1");
@@ -78,21 +82,24 @@ public class editLaporanPenjualan extends Dialog {
         getContentPane().add(btnbatal);
         btnbatal.setBounds(100, 540, 190, 60);
 
-        txt_total.setBorder(null);
-        getContentPane().add(txt_total);
-        txt_total.setBounds(50, 448, 520, 40);
+        txt_kembalian.setBorder(null);
+        txt_kembalian.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        txt_kembalian.setFocusable(false);
+        getContentPane().add(txt_kembalian);
+        txt_kembalian.setBounds(50, 448, 520, 40);
 
-        txt_jumlah.setBorder(null);
-        getContentPane().add(txt_jumlah);
-        txt_jumlah.setBounds(50, 358, 520, 40);
+        txt_jumlahbayar.setBorder(null);
+        txt_jumlahbayar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txt_jumlahbayarKeyReleased(evt);
+            }
+        });
+        getContentPane().add(txt_jumlahbayar);
+        txt_jumlahbayar.setBounds(50, 358, 520, 40);
 
-        txt_namaobat.setBorder(null);
-        getContentPane().add(txt_namaobat);
-        txt_namaobat.setBounds(50, 268, 520, 40);
-
-        jPanel1.setBackground(new java.awt.Color(241, 255, 237));
-        getContentPane().add(jPanel1);
-        jPanel1.setBounds(10, 130, 600, 100);
+        txt_totalharga.setBorder(null);
+        getContentPane().add(txt_totalharga);
+        txt_totalharga.setBounds(50, 268, 520, 40);
 
         bg.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/imagebg/formeditlaporanpenjualan.png"))); // NOI18N
         getContentPane().add(bg);
@@ -103,11 +110,18 @@ public class editLaporanPenjualan extends Dialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btneditMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btneditMouseClicked
-        btnedit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/imagebtn/btnedit1.png")));
+    penjualan apa = new penjualan(id, Integer.valueOf(txt_totalharga.getText()), Integer.valueOf(txt_jumlahbayar.getText()),
+            Integer.valueOf(txt_kembalian.getText()));
+    boolean cobak = penjualan.update(apa);
+    if(cobak){
+        System.out.println("berhasil edit");
+    }else {
+        System.out.println("gagal edit");
+    }
     }//GEN-LAST:event_btneditMouseClicked
 
     private void btnbatalMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnbatalMouseClicked
-        btnbatal.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/imagebtn/btnbatal1.png")));
+    
         closeMessage();
     }//GEN-LAST:event_btnbatalMouseClicked
 
@@ -135,15 +149,18 @@ public class editLaporanPenjualan extends Dialog {
         btnedit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/imagebtn/btnedit3.png")));
     }//GEN-LAST:event_btneditMousePressed
 
+    private void txt_jumlahbayarKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_jumlahbayarKeyReleased
+    txt_kembalian.setText(String.valueOf(Integer.valueOf(txt_jumlahbayar.getText()) - Integer.valueOf(txt_totalharga.getText())));
+    }//GEN-LAST:event_txt_jumlahbayarKeyReleased
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel bg;
     private javax.swing.JLabel btnbatal;
     private javax.swing.JLabel btnedit;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JTextField txt_jumlah;
-    private javax.swing.JTextField txt_namaobat;
-    private javax.swing.JTextField txt_total;
+    private javax.swing.JTextField txt_jumlahbayar;
+    private javax.swing.JTextField txt_kembalian;
+    private javax.swing.JTextField txt_totalharga;
     // End of variables declaration//GEN-END:variables
 }

@@ -671,7 +671,10 @@ private String pilih = "semua stok";
     boolean cobak = datamaster.delete(id);
     if(cobak){
         System.out.println("berhasil");
+        
         load_tabel();
+        int rowCount = table.getRowCount();
+        total.setText(String.valueOf(rowCount));
     } else {
         System.out.println("gagal");
     }
@@ -712,7 +715,10 @@ private String pilih = "semua stok";
         main main =(main)SwingUtilities.getWindowAncestor(this);
         tambahObat tambah = new tambahObat(main);
         tambah.showPopUp();
+        
         load_tabel();
+        int rowCount = table.getRowCount();
+        total.setText(String.valueOf(rowCount));
     }//GEN-LAST:event_btnTambahMouseClicked
 
     private void btnTambahMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnTambahMouseEntered

@@ -68,6 +68,24 @@ public class penjualanRepository implements Repository<penjualan>{
         return us;
     }
     
+    public penjualan getidbykode(String kode) {
+   String sql = "select * from "+tableName+" where kode = ?";
+        penjualan us = new penjualan();
+        
+        try {
+            Connection koneksi = (Connection)Conn.configDB();
+            PreparedStatement pst = koneksi.prepareStatement(sql);
+            pst.setString(1, kode);
+            ResultSet res = pst.executeQuery();
+            while (res.next()) {
+                return mapToEntity(res);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return us;
+    }
+    
     public penjualan getlastid() {
    String sql = "select * from "+tableName+" ORDER BY id DESC LIMIT 1";
         penjualan us = new penjualan();

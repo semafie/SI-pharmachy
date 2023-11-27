@@ -97,6 +97,7 @@ public class tambahObat extends Dialog {
         if(cobanambah){
 //            Obat iyu = new Obat();
             System.out.println("berhasil");
+            
             closeMessage();
 //            iyu.load_tabel();
         } else {

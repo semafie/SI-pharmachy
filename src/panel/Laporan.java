@@ -3,16 +3,34 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
  */
 package panel;
+import com.lowagie.text.Document;
+import com.lowagie.text.DocumentException;
+import com.lowagie.text.Element;
+import com.lowagie.text.Font;
+import com.lowagie.text.PageSize;
+import com.lowagie.text.Paragraph;
+import com.lowagie.text.Phrase;
+import com.lowagie.text.pdf.PdfPCell;
+import com.lowagie.text.pdf.PdfPTable;
+import com.lowagie.text.pdf.PdfWriter;
 import entity.detail_pembelian;
+import entity.detail_penjualan;
 import entity.pembelian;
 import entity.penjualan;
 import java.awt.Color;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
+import javax.swing.JTable;
 import javax.swing.SwingUtilities;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
 import main.main;
 import repository.detail_pembelianRepository;
+import repository.detail_penjualanRepository;
 import repository.pembelianRepository;
 import repository.penjualanRepository;
 import view.dialog.Validasilogout1;
@@ -31,6 +49,7 @@ public class Laporan extends javax.swing.JPanel {
      */
     private String pilih = "pembelian";
     detail_pembelianRepository detailbeli = new detail_pembelianRepository();
+    detail_penjualanRepository detailjual = new detail_penjualanRepository();
     pembelianRepository beli = new pembelianRepository();
     penjualanRepository jual = new penjualanRepository();
     public static int id;
@@ -105,6 +124,90 @@ public class Laporan extends javax.swing.JPanel {
 
     }
 
+    public static boolean convertJTableToPDF(JTable jTable) {
+    JFileChooser fileChooser = new JFileChooser();
+    fileChooser.setDialogTitle("Simpan sebagai PDF");
+    fileChooser.setFileFilter(new FileNameExtensionFilter("File PDF", "pdf"));
+
+    int userSelection = fileChooser.showSaveDialog(null);
+        try {
+            
+        
+    if (userSelection == JFileChooser.APPROVE_OPTION) {
+        String filePath = fileChooser.getSelectedFile().getAbsolutePath() + ".pdf";
+        Document document = new Document(PageSize.A4.rotate());
+
+        try {
+            PdfWriter.getInstance(document, new FileOutputStream(filePath));
+            document.open();
+            
+            // Tambahkan judul laporan
+                Paragraph title = new Paragraph("LAPORAN STOK MENIPIS APOTEK SUKA MAJU", new Font(Font.BOLD, 18, Font.NORMAL));
+                title.setAlignment(Element.ALIGN_CENTER);
+                document.add(title);
+                
+                Paragraph title1 = new Paragraph(" ", new Font(Font.BOLD, 18, Font.NORMAL));
+                title1.setAlignment(Element.ALIGN_CENTER);
+                document.add(title1);
+                
+                
+                
+                
+                // Tambahkan tanggal hari ini
+                SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+                String currentDate = "Tanggal: " + sdf.format(new Date()) ;
+                Paragraph date = new Paragraph(currentDate, new Font(Font.BOLD, 12, Font.NORMAL));
+                date.setAlignment(Element.ALIGN_RIGHT);
+                document.add(date);
+                
+                Paragraph title2 = new Paragraph(" ", new Font(Font.BOLD, 20, Font.NORMAL));
+                title2.setAlignment(Element.ALIGN_CENTER);
+                document.add(title2);
+                
+                date.setSpacingAfter(25);
+            
+            PdfPTable pdfTable = new PdfPTable(jTable.getColumnCount());
+            
+            pdfTable.getDefaultCell().setBorderColor(new Color(219,219,219));
+            
+            pdfTable.setTotalWidth(PageSize.A4.getHeight());
+
+            // Mengisi header tabel PDF dengan nama kolom dari JTable
+            for (int i = 0; i < jTable.getColumnCount(); i++) {
+//                pdfTable.addCell(jTable.getColumnName(i));
+                PdfPCell cell = new PdfPCell(new Phrase(jTable.getColumnName(i)));
+                    cell.setBackgroundColor(new Color(140,170,126)); // Warna latar belakang
+                    cell.setHorizontalAlignment(Element.ALIGN_CENTER); // Pusatkan teks
+                    cell.setPadding(1);
+                    cell.setBorderColor(Color.WHITE);
+                    pdfTable.addCell(cell);
+            }
+//            float[] columnWidths = {1f, 1.5f, 2f, 1.5f}; // Sesuaikan lebar kolom sesuai kebutuhan
+//                pdfTable.setWidths(columnWidths);
+
+
+            // Mengisi data dari JTable ke tabel PDF
+            for (int i = 0; i < jTable.getRowCount(); i++) {
+                for (int j = 0; j < jTable.getColumnCount(); j++) {
+                    pdfTable.addCell(jTable.getValueAt(i, j).toString());
+                }
+            }
+
+            document.add(pdfTable);
+            document.close();
+            JOptionPane.showMessageDialog(null, "Berhasil menyimpan PDF", "Sukses", JOptionPane.INFORMATION_MESSAGE);
+            return true;
+        } catch (DocumentException | FileNotFoundException e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Gagal menyimpan PDF", "Error", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }   
+    }
+    return true;
+    } catch (Exception e) {
+        return false;
+        }
+}
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -535,8 +638,22 @@ System.out.println("gagal");
     }
     }else{
         if(id != 0){
-            
-            
+            detail_penjualan gas = new detail_penjualan(id);
+            boolean cobakdeletedetai = detailjual.delete(id);
+            if (cobakdeletedetai) {
+                
+            } else {
+                System.out.println("gagal");
+            }
+            boolean cobak2 = jual.delete(id);
+            if(cobak2){
+                main main = (main) SwingUtilities.getWindowAncestor(this);
+                validasiberhasil1 apa = new validasiberhasil1(main, "berhasil di delete");
+                apa.showPopUp();
+                load_tabel1();
+            }else{
+                System.out.println("gagal");
+            }
             }else{
         System.out.println("pilih tabel dulu");   
             }
@@ -561,7 +678,7 @@ System.out.println("gagal");
     }//GEN-LAST:event_searchKeyReleased
 
     private void btnCetakMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCetakMouseClicked
-        // TODO add your handling code here:
+        convertJTableToPDF(table);
     }//GEN-LAST:event_btnCetakMouseClicked
 
     private void btnCetakMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCetakMouseEntered
@@ -584,14 +701,23 @@ System.out.println("gagal");
         btnpenjualan1.setVisible(true);
         pilih = "penjualan";
         load_tabel1();
+        id = 0;
     }//GEN-LAST:event_btnpenjualanMouseClicked
 
     private void tableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableMouseClicked
-   int baris = table.rowAtPoint(evt.getPoint());
+   if(pilih.equals("pembelian")){
+       int baris = table.rowAtPoint(evt.getPoint());
         String idd = table.getValueAt(baris, 0).toString();
         int wow = beli.getidbykode(idd).getId();
         id = wow;
+   } else {
+       int baris = table.rowAtPoint(evt.getPoint());
+        String idd = table.getValueAt(baris, 0).toString();
+        int wow = jual.getidbykode(idd).getId();
+        id = wow;
         System.out.println(id);
+   }
+        
     }//GEN-LAST:event_tableMouseClicked
 
     private void btnpembelianstokMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnpembelianstokMouseClicked
@@ -601,6 +727,7 @@ System.out.println("gagal");
         btnpenjualan1.setVisible(false);
         pilih = "pembelian";
         load_tabel();
+        id = 0;
     }//GEN-LAST:event_btnpembelianstokMouseClicked
 
 

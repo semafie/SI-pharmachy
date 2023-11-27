@@ -28,6 +28,14 @@ public class penjualan implements Entity{
         this.kembalian = kembali;
     }
     
+    public penjualan(int id, int total_harga, int jumlahbayar, int kembali){
+        this.id = id;
+        
+        this.total_harga = total_harga;
+        this.jumlahbayar = jumlahbayar;
+        this.kembalian = kembali;
+    }
+    
     public penjualan(Date tanggal, Timestamp jam, int total_harga){
         
         this.tanggal = tanggal; 

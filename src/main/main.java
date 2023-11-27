@@ -1,22 +1,30 @@
 
 package main;
 
-import panel.Dasboard;
+import panel.Dasboarduser;
 import panel.DasboardOwner;
 import panel.Laporan;
 import panel.Laporan1;
 import panel.Obat;
+import panel.Obatuser;
 import panel.Pegawai;
 import panel.Suplier;
 import panel.Transaksi;
 import panel.Transaksi2;
+import panel.Transaksiuser;
+import service.Auth;
 import view.glasspanel.GlassPanePopup;
 
 public class main extends javax.swing.JFrame {
 
     public main() {
         initComponents();
-        showDasboardOwner();
+        if (Auth.level == 1) { 
+            showDasboardOwner();
+        }else {
+            showDasboard();
+        }
+        
         GlassPanePopup.install(this);
     }
     public void showDasboardOwner(){
@@ -27,7 +35,7 @@ public class main extends javax.swing.JFrame {
         this.repaint();
     }
     public void showDasboard(){
-        Dasboard a = new Dasboard();
+        Dasboarduser a = new Dasboarduser();
         
         a.setSize(1366,768);
         this.add(a);
@@ -36,6 +44,14 @@ public class main extends javax.swing.JFrame {
     }
     public void showObat(){
         Obat a = new Obat();
+        a.load_tabel();
+        a.setSize(1366,768);
+        this.add(a);
+        this.revalidate();
+        this.repaint();
+    }
+    public void showObatuser(){
+        Obatuser a = new Obatuser();
         a.load_tabel();
         a.setSize(1366,768);
         this.add(a);
@@ -58,6 +74,13 @@ public class main extends javax.swing.JFrame {
     }
     public void showTransaksi2(){
         Transaksi2 a = new Transaksi2();
+        a.setSize(1366,768);
+        this.add(a);
+        this.revalidate();
+        this.repaint();
+    }
+    public void showTransaksiuser(){
+        Transaksiuser a = new Transaksiuser();
         a.setSize(1366,768);
         this.add(a);
         this.revalidate();
