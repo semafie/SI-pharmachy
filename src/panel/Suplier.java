@@ -11,6 +11,9 @@ import main.main;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.EventObject;
+import javax.swing.DefaultCellEditor;
+import javax.swing.JTextField;
 import repository.supplierRepository;
 import util.Conn;
 import view.dialog.Validasilogout1;
@@ -27,6 +30,13 @@ public class Suplier extends javax.swing.JPanel {
     public Suplier() {
         initComponents();
         load_tabel();
+        DefaultCellEditor cellEditor = new DefaultCellEditor(new JTextField()) {
+    @Override
+    public boolean isCellEditable(EventObject e) {
+        return false;
+    }
+};
+        table.setDefaultEditor(Object.class, cellEditor);
     }
     public void load_tabel(){
         DefaultTableModel model = new DefaultTableModel();

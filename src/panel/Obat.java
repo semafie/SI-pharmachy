@@ -21,9 +21,12 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.EventObject;
+import javax.swing.DefaultCellEditor;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
+import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 import javax.swing.Timer;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -49,6 +52,13 @@ private String pilih = "semua stok";
 //        if(pilih.equals("semua stok")){
         load_tabel();
 //        }
+DefaultCellEditor cellEditor = new DefaultCellEditor(new JTextField()) {
+    @Override
+    public boolean isCellEditable(EventObject e) {
+        return false;
+    }
+};
+        table.setDefaultEditor(Object.class, cellEditor);
         int rowCount = table.getRowCount();
         total.setText(String.valueOf(rowCount));
     }

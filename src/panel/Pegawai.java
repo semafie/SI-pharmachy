@@ -11,6 +11,9 @@ import main.main;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.EventObject;
+import javax.swing.DefaultCellEditor;
+import javax.swing.JTextField;
 import net.sf.jasperreports.components.headertoolbar.actions.EditTextElementData;
 import repository.userRepository;
 import util.Conn;
@@ -24,6 +27,13 @@ public class Pegawai extends javax.swing.JPanel {
     public Pegawai() {
         initComponents();
         load_tabel();
+        DefaultCellEditor cellEditor = new DefaultCellEditor(new JTextField()) {
+    @Override
+    public boolean isCellEditable(EventObject e) {
+        return false;
+    }
+};
+        table.setDefaultEditor(Object.class, cellEditor);
     }
     public void load_tabel(){
         DefaultTableModel model = new DefaultTableModel();

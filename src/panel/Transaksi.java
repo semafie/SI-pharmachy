@@ -22,11 +22,15 @@ import java.sql.PreparedStatement;
 import java.sql.Connection;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.EventObject;
+import javax.swing.DefaultCellEditor;
+import javax.swing.JTextField;
 import repository.detail_pembelianRepository;
 import repository.pembelianRepository;
 import repository.supplierRepository;
 import view.dialog.Validasilogout1;
 import view.dialog.pilihobat;
+import view.dialog.validasiberhasil;
 import view.glasspanel.GlassPanePopup;
 
 /**
@@ -49,6 +53,15 @@ public class Transaksi extends javax.swing.JPanel {
     
     public Transaksi() {
         initComponents();
+        DefaultCellEditor cellEditor = new DefaultCellEditor(new JTextField()) {
+    @Override
+    public boolean isCellEditable(EventObject e) {
+        return false;
+    }
+};
+        table.setDefaultEditor(Object.class, cellEditor);
+        table3.setDefaultEditor(Object.class, cellEditor);
+        table23.setDefaultEditor(Object.class, cellEditor);
         if(kodeterakhir == null){
             txt_idtransaksi.setText("TRB1");
         } else {
@@ -948,10 +961,13 @@ public class Transaksi extends javax.swing.JPanel {
                 System.out.println("berhasil" + row);
                 DefaultTableModel model1 = (DefaultTableModel) table23.getModel();
     model1.setRowCount(0);
+    
             } else {
                 System.out.println("gagal" + row);
             }
-            
+            main main11111 = (main)SwingUtilities.getWindowAncestor(this);
+                validasiberhasil apa1 = new validasiberhasil(main11111, "Pembelian baru berhasil di tambahkan");
+                apa1.showPopUp();
     }
     }//GEN-LAST:event_btnprosestransaksiMouseClicked
 

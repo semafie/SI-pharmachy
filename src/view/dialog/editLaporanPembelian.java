@@ -10,7 +10,10 @@ import entity.supplier;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.EventObject;
+import javax.swing.DefaultCellEditor;
 import javax.swing.JFrame;
+import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableModel;
 import main.main;
@@ -36,6 +39,13 @@ public class editLaporanPembelian extends Dialog {
     public editLaporanPembelian(JFrame frame) {
         super(frame);
         initComponents();
+        DefaultCellEditor cellEditor = new DefaultCellEditor(new JTextField()) {
+    @Override
+    public boolean isCellEditable(EventObject e) {
+        return false;
+    }
+};
+        table.setDefaultEditor(Object.class, cellEditor);
         load_tabelsup();
         jPanel2.setVisible(false);
         txt_supplier.setText(iddsupplier1);

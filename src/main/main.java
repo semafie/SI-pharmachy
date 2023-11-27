@@ -5,6 +5,7 @@ import panel.Dasboarduser;
 import panel.DasboardOwner;
 import panel.Laporan;
 import panel.Laporan1;
+import panel.Laporanuser;
 import panel.Obat;
 import panel.Obatuser;
 import panel.Pegawai;
@@ -88,6 +89,13 @@ public class main extends javax.swing.JFrame {
     }
     public void showLaporan(){
         Laporan a = new Laporan();
+        a.setSize(1366,768);
+        this.add(a);
+        this.revalidate();
+        this.repaint();
+    }
+    public void showLaporanuser(){
+        Laporanuser a = new Laporanuser();
         a.setSize(1366,768);
         this.add(a);
         this.revalidate();

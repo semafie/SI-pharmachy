@@ -21,9 +21,12 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.EventObject;
+import javax.swing.DefaultCellEditor;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
+import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 import javax.swing.Timer;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -50,6 +53,13 @@ private String pilih = "semua stok";
 //        }
         int rowCount = table.getRowCount();
         total.setText(String.valueOf(rowCount));
+        DefaultCellEditor cellEditor = new DefaultCellEditor(new JTextField()) {
+    @Override
+    public boolean isCellEditable(EventObject e) {
+        return false;
+    }
+};
+        table.setDefaultEditor(Object.class, cellEditor);
     }
     public void load_tabel(){
         DefaultTableModel model = new DefaultTableModel();
@@ -225,6 +235,7 @@ private String pilih = "semua stok";
         table = new view.swing.Table();
         total = new javax.swing.JLabel();
         btnCetak = new javax.swing.JLabel();
+        btnLaporan = new javax.swing.JLabel();
         bg = new javax.swing.JLabel();
 
         setLayout(null);
@@ -343,6 +354,24 @@ private String pilih = "semua stok";
         add(btnCetak);
         btnCetak.setBounds(280, 150, 150, 60);
 
+        btnLaporan.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/imagebtn/btnlaporan2.png"))); // NOI18N
+        btnLaporan.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnLaporanMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnLaporanMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnLaporanMouseExited(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                btnLaporanMousePressed(evt);
+            }
+        });
+        add(btnLaporan);
+        btnLaporan.setBounds(10, 370, 230, 60);
+
         bg.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/imagebg/bg Obat stok menipis user.png"))); // NOI18N
         bg.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
@@ -441,11 +470,30 @@ private String pilih = "semua stok";
 //    load_tabel();
     }//GEN-LAST:event_tableMouseEntered
 
+    private void btnLaporanMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnLaporanMouseClicked
+        main main = (main)SwingUtilities.getWindowAncestor(this);
+        this.setVisible(false);
+        main.showLaporanuser();
+    }//GEN-LAST:event_btnLaporanMouseClicked
+
+    private void btnLaporanMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnLaporanMouseEntered
+        btnLaporan.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/imagebtn/btnlaporan3.png")));
+    }//GEN-LAST:event_btnLaporanMouseEntered
+
+    private void btnLaporanMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnLaporanMouseExited
+        btnLaporan.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/imagebtn/btnlaporan2.png")));
+    }//GEN-LAST:event_btnLaporanMouseExited
+
+    private void btnLaporanMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnLaporanMousePressed
+        btnLaporan.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/imagebtn/btnlaporan4.png")));
+    }//GEN-LAST:event_btnLaporanMousePressed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel bg;
     private javax.swing.JLabel btnCetak;
     private javax.swing.JLabel btnDasboard;
+    private javax.swing.JLabel btnLaporan;
     private javax.swing.JLabel btnLogout;
     private javax.swing.JLabel btnObat;
     private javax.swing.JLabel btnTransaksi;

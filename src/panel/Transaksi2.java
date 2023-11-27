@@ -15,7 +15,10 @@ import java.sql.Statement;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.EventObject;
 import java.util.HashMap;
+import javax.swing.DefaultCellEditor;
+import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableModel;
 import main.main;
@@ -52,6 +55,14 @@ public class Transaksi2 extends javax.swing.JPanel {
     private String kodeterakhir = penjualan.getlastid().getKodepenjulan();
     public Transaksi2() {
         initComponents();
+        DefaultCellEditor cellEditor = new DefaultCellEditor(new JTextField()) {
+    @Override
+    public boolean isCellEditable(EventObject e) {
+        return false;
+    }
+};
+        table.setDefaultEditor(Object.class, cellEditor);
+        table1.setDefaultEditor(Object.class, cellEditor);
         if(kodeterakhir == null){
             txt_idtransaksi.setText("TRJ1");
         } else {

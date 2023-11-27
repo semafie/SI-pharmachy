@@ -20,11 +20,17 @@ import entity.penjualan;
 import java.awt.Color;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.EventObject;
+import javax.swing.DefaultCellEditor;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
+import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
@@ -33,6 +39,7 @@ import repository.detail_pembelianRepository;
 import repository.detail_penjualanRepository;
 import repository.pembelianRepository;
 import repository.penjualanRepository;
+import util.Conn;
 import view.dialog.Validasilogout1;
 import view.dialog.editLaporanPembelian;
 import view.dialog.editLaporanPenjualan;
@@ -59,6 +66,13 @@ public class Laporan extends javax.swing.JPanel {
         btnpenjualan1.setVisible(false);
         btnpembelianstok.setVisible(false);
         load_tabel();
+        DefaultCellEditor cellEditor = new DefaultCellEditor(new JTextField()) {
+    @Override
+    public boolean isCellEditable(EventObject e) {
+        return false;
+    }
+};
+        table.setDefaultEditor(Object.class, cellEditor);
         
     }
     
@@ -93,6 +107,49 @@ public class Laporan extends javax.swing.JPanel {
         }
 
     }
+    
+    public void load_tabel(String search) {
+        DefaultTableModel model = new DefaultTableModel();
+        
+        model.addColumn("Id Transaksi");
+        model.addColumn("Nama Supplier");
+        model.addColumn("Tgl Transaksi");
+        model.addColumn("Jam");
+        model.addColumn("Total Harga");
+        model.addColumn("Jumlah Bayar");
+        model.addColumn("Kembalian");
+        
+
+        try {
+    String sql = "SELECT * FROM pembelian " +
+                 "JOIN supplier ON pembelian.id_supplier = supplier.id " +
+                 "WHERE pembelian.kode LIKE ? OR pembelian.tanggal LIKE ? OR supplier.nama_supplier LIKE ?";
+
+    Connection koneksi = (Connection) Conn.configDB();
+    PreparedStatement pst = koneksi.prepareStatement(sql);
+    pst.setString(1, "%" + search + "%");
+    pst.setString(2, "%" + search + "%");
+    pst.setString(3, "%" + search + "%");
+
+    ResultSet res = pst.executeQuery();
+
+    while (res.next()) {
+        model.addRow(new Object[]{
+            res.getString("pembelian.kode"),
+            res.getString("supplier.nama_supplier"),
+            res.getString("pembelian.tanggal"),
+            res.getString("pembelian.jam"),
+            res.getString("pembelian.total_harga"),
+            res.getString("pembelian.jumlah_bayar"),
+            res.getString("pembelian.kembalian")
+        });
+    }
+    table.setModel(model);
+} catch (Exception e) {
+    System.out.println(e.getMessage());
+}
+
+    }
     public void load_tabel1() {
         DefaultTableModel model = new DefaultTableModel();
         
@@ -122,6 +179,43 @@ public class Laporan extends javax.swing.JPanel {
             System.out.println(e.getMessage());
         }
 
+    }
+    
+    public void load_tabel1(String search) {
+        DefaultTableModel model = new DefaultTableModel();
+        
+        model.addColumn("Id Transaksi");
+        model.addColumn("Tgl Transaksi");
+        model.addColumn("Jam");
+        model.addColumn("Total Harga");
+        model.addColumn("Jumlah Bayar");
+        model.addColumn("Kembalian");
+        
+
+        try {
+        String sql = "SELECT * FROM penjualan WHERE kode LIKE ? OR tanggal LIKE ?";
+        Connection koneksi = (Connection) Conn.configDB();
+        PreparedStatement pst = koneksi.prepareStatement(sql);
+        pst.setString(1, "%" + search + "%");
+        pst.setString(2, "%" + search + "%");
+
+        ResultSet res = pst.executeQuery();
+
+        while (res.next()) {
+            model.addRow(new Object[]{
+                res.getString("kode"),
+                res.getString("tanggal"),
+                res.getString("jam"),
+                res.getString("total_harga"),
+                res.getString("jumlah_bayar"),
+                res.getString("kembalian")
+            });
+        }
+
+        table.setModel(model);
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
     }
 
     public static boolean convertJTableToPDF(JTable jTable) {
@@ -415,6 +509,9 @@ public class Laporan extends javax.swing.JPanel {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 searchKeyReleased(evt);
             }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                searchKeyTyped(evt);
+            }
         });
         add(search);
         search.setBounds(1010, 150, 300, 30);
@@ -674,7 +771,11 @@ System.out.println("gagal");
     }//GEN-LAST:event_btnHapusMousePressed
 
     private void searchKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_searchKeyReleased
-        //        load_tabel(search.getText());
+    if(pilih.equals("pembelian")){
+        load_tabel(search.getText());
+    }else {
+        load_tabel1(search.getText());
+    }
     }//GEN-LAST:event_searchKeyReleased
 
     private void btnCetakMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCetakMouseClicked
@@ -729,6 +830,10 @@ System.out.println("gagal");
         load_tabel();
         id = 0;
     }//GEN-LAST:event_btnpembelianstokMouseClicked
+
+    private void searchKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_searchKeyTyped
+        // TODO add your handling code here:
+    }//GEN-LAST:event_searchKeyTyped
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
