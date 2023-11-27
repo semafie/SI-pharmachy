@@ -40,16 +40,16 @@ import view.dialog.editstokObat;
 import view.dialog.tambahObat;
 
 public class Obatuser extends javax.swing.JPanel {
-private String pilih = "semua stok";
+
     obatRepository datamaster = new obatRepository();
     public static int id;
     
     public Obatuser() {
         initComponents();
         
-        btnCetak.setVisible(false);
+        
 //        if(pilih.equals("semua stok")){
-        load_tabel();
+        load_tabel1();
 //        }
         int rowCount = table.getRowCount();
         total.setText(String.valueOf(rowCount));
@@ -61,28 +61,7 @@ private String pilih = "semua stok";
 };
         table.setDefaultEditor(Object.class, cellEditor);
     }
-    public void load_tabel(){
-        DefaultTableModel model = new DefaultTableModel();
-        model.addColumn("ID");
-        model.addColumn("NAMA_OBAT");
-        model.addColumn("HARGA_OBAT");
-        model.addColumn("JUMLAH_STOK");
     
-        try {
-            for(obat apa:datamaster.get()){
-                model.addRow(new Object[]{
-                    apa.getId(),
-                    apa.getNama_obat(),
-                    apa.getHarga_obat(),
-                    apa.getJumlah_stok()
-
-                });
-            }
-            table.setModel(model);
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
-    }
     public void load_tabel1(){
         DefaultTableModel model = new DefaultTableModel();
         model.addColumn("ID");

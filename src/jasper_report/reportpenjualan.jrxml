@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" pageWidth="325" pageHeight="600" columnWidth="200" leftMargin="10" rightMargin="10" topMargin="10" bottomMargin="10" uuid="3f9c5959-36d9-402b-9d0b-0d4fc32af1b9">
 	<property name="ireport.zoom" value="1.9487171000000019"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="2"/>
+	<property name="ireport.y" value="0"/>
 	<queryString>
 		<![CDATA[SELECT *
 FROM detail_penjualan
@@ -111,12 +111,12 @@ JOIN penjualan ON detail_penjualan.id_penjualan = penjualan.id;]]>
 				<text><![CDATA[:]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="77" y="20" width="100" height="20" uuid="44baf95c-26d8-4321-a85a-7e07c01b61c5"/>
-				<textFieldExpression><![CDATA[$F{tanggal}]]></textFieldExpression>
-			</textField>
-			<textField>
 				<reportElement x="77" y="0" width="100" height="20" uuid="ffe778f9-067d-4f5d-84c8-ef577f12a6c8"/>
 				<textFieldExpression><![CDATA[$F{kode}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy h.mm a">
+				<reportElement x="77" y="20" width="100" height="20" uuid="fe3e7b7e-0113-4419-80bf-4064bd16c9bc"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
 			</textField>
 		</band>
 	</pageHeader>

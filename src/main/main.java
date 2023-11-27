@@ -53,7 +53,6 @@ public class main extends javax.swing.JFrame {
     }
     public void showObatuser(){
         Obatuser a = new Obatuser();
-        a.load_tabel();
         a.setSize(1366,768);
         this.add(a);
         this.revalidate();
